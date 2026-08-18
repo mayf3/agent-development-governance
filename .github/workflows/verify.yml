@@ -1,0 +1,27 @@
+name: verify
+
+on:
+  pull_request:
+  push:
+    branches:
+      - main
+
+permissions:
+  contents: read
+
+jobs:
+  distribution-integrity:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+      - name: Check deterministic distribution manifest
+        run: python3 tools/build_manifest.py --check
+      - name: Run distribution tool tests
+        run: python3 -m unittest discover -s tests -v
+      - name: Compile Python entrypoints
+        run: python3 -m py_compile tools/*.py .agents/tools/*.py tests/*.py
+      - name: Parse bootstrap publish script
+        run: bash -n tools/publish_bootstrap.sh
