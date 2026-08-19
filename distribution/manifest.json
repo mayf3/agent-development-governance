@@ -11,13 +11,13 @@
     },
     {
       "path": ".agents/protocol/SPEC_GOVERNANCE_V0.md",
-      "sha256": "118a838bf004ba0e3c5db3fab68b8fd6d4650dc61321871cd2f5c46e3563591c",
-      "size": 15960
+      "sha256": "3ffa395e78adab4143bedf74427a8079d085d5d7ac5431284e309c18af7d6f5b",
+      "size": 15979
     },
     {
       "path": ".agents/protocol/SPEC_FORMAT_V0.md",
-      "sha256": "0ed086865f10af7ea536f4c6decf80293f42095ccc7b69e58e205fcc20b23ed9",
-      "size": 10252
+      "sha256": "6dd0d115dbf60fdd480c491b008527c8312149411ddb31a16b511faf4ba57b83",
+      "size": 11852
     },
     {
       "path": ".agents/skills/spec-governance/SKILL.md",
@@ -71,8 +71,8 @@
     },
     {
       "path": ".agents/templates/GOVERNANCE_ADOPTION_SPEC_TEMPLATE.md",
-      "sha256": "b2702e138ab374685f57827dd7af16ea11f45910648f40f28fbfaa0012cfcec3",
-      "size": 4494
+      "sha256": "71d789e8733747d934335e4d52f6afb6a435cec5b3b6d6ca8f0dd2d8d93d556b",
+      "size": 11143
     },
     {
       "path": ".agents/templates/REVIEW_RECORD_TEMPLATE.md",

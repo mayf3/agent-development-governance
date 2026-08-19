@@ -186,8 +186,92 @@ class DistributionToolsTest(unittest.TestCase):
         acceptance_refs: set[str] = set()
         for line in re.findall(r"^- Contracts: (.+)$", text, re.MULTILINE):
             acceptance_refs.update(re.findall(r"`(CTR-[A-Z0-9-]+)`", line))
+        coverage_rows = set(
+            re.findall(r"^\| `(CTR-[A-Z0-9-]+)` \|", text, re.MULTILINE)
+        )
         self.assertTrue(contracts)
         self.assertEqual(contracts, acceptance_refs)
+        self.assertEqual(contracts, coverage_rows)
+
+    def test_adoption_template_has_required_sections_in_order(self) -> None:
+        path = ROOT / ".agents/templates/GOVERNANCE_ADOPTION_SPEC_TEMPLATE.md"
+        text = path.read_text(encoding="utf-8")
+        required = [
+            "## 1. Goal",
+            "## 2. Scope and non-goals",
+            "## 3. Authority and dependencies",
+            "## 4. Current State",
+            "## 5. Observations",
+            "## 6. Claims and assumptions",
+            "## 7. Evidence relations",
+            "## 8. Decisions",
+            "## 9. Contracts",
+            "## 10. Acceptance",
+            "## 11. Alternatives and disposition",
+            "## 12. Migration, compatibility, and rollback",
+            "## 13. Open questions",
+        ]
+        positions = [text.index(section) for section in required]
+        self.assertEqual(positions, sorted(positions))
+        self.assertIn("### EVD-ADOPT-001", text)
+        self.assertIn("### EVD-ADOPT-002", text)
+
+    def test_adoption_template_contract_coverage_and_acceptance_fields(self) -> None:
+        path = ROOT / ".agents/templates/GOVERNANCE_ADOPTION_SPEC_TEMPLATE.md"
+        text = path.read_text(encoding="utf-8")
+        contracts = set(re.findall(r"^### (CTR-ADOPT-[A-Z0-9-]+) —", text, re.MULTILINE))
+        acceptance_refs: set[str] = set()
+        items = re.split(r"(?=^### ACC-ADOPT-[A-Z0-9-]+ —)", text, flags=re.MULTILINE)
+        acceptance_items = [item for item in items if item.startswith("### ACC-ADOPT-")]
+        self.assertTrue(acceptance_items)
+        for item in acceptance_items:
+            for field in (
+                "- Contracts:",
+                "- Method:",
+                "- Environment:",
+                "- Required evidence:",
+                "- Expected result:",
+                "- Failure condition:",
+            ):
+                self.assertIn(field, item)
+            acceptance_refs.update(re.findall(r"`(CTR-ADOPT-[A-Z0-9-]+)`", item.split("### Contract coverage", 1)[0]))
+        coverage_rows = set(re.findall(r"^\| `(CTR-ADOPT-[A-Z0-9-]+)` \|", text, re.MULTILINE))
+        self.assertEqual(contracts, acceptance_refs)
+        self.assertEqual(contracts, coverage_rows)
+
+    def test_bootstrap_decisions_and_acceptance_have_required_fields(self) -> None:
+        path = ROOT / "docs/specs/AGENT_DEVELOPMENT_GOVERNANCE_BOOTSTRAP_V0.md"
+        text = path.read_text(encoding="utf-8")
+        decision_items = [
+            item for item in re.split(r"(?=^### DEC-[A-Z0-9-]+ —)", text, flags=re.MULTILINE)
+            if item.startswith("### DEC-")
+        ]
+        self.assertTrue(decision_items)
+        for item in decision_items:
+            for field in (
+                "- Decision owner:",
+                "- Decision:",
+                "- Rejected alternative",
+                "- Reason:",
+                "- Owner input remaining:",
+            ):
+                self.assertIn(field, item)
+        acceptance_items = [
+            item for item in re.split(r"(?=^### ACC-GOV-[A-Z0-9-]+ —)", text, flags=re.MULTILINE)
+            if item.startswith("### ACC-GOV-")
+        ]
+        self.assertTrue(acceptance_items)
+        for item in acceptance_items:
+            for field in (
+                "- Contracts:",
+                "- Method:",
+                "- Environment:",
+                "- Required evidence:",
+                "- Expected result:",
+                "- Failure condition:",
+            ):
+                self.assertIn(field, item)
+
 
     def test_distribution_version_is_coherent(self) -> None:
         version = (ROOT / "VERSION").read_text(encoding="utf-8").strip()

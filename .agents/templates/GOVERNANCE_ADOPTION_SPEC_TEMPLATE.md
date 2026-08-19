@@ -22,7 +22,9 @@ owners:
 
 ## 1. Goal
 
-Adopt an exact revision of the shared Development Grammar and Spec-governance distribution while preserving this repository's local product and acceptance authority.
+Adopt an exact revision of the shared Development Grammar and Spec-governance
+distribution while preserving this repository's local product and acceptance
+authority.
 
 ## 2. Scope and non-goals
 
@@ -49,77 +51,228 @@ MANIFEST_SHA256 = <sha256>
 LOCAL_ACCEPTANCE_ACTOR = <role or identity>
 ```
 
-The external distribution supplies grammar and protocol content. It does not own this repository's Product Direction, Architecture, Specs, code, or acceptance actions.
+The external distribution supplies grammar and protocol content. It does not own
+this repository's Product Direction, Architecture, Specs, code, or acceptance
+actions.
 
 ## 4. Current State
 
-Record the repository's existing authority files, current enforcement level, existing `.agents` content, and any known conflicts, with commit and provenance coordinates.
+### STATE-ADOPT-001 — Existing local governance and enforcement
+
+- Subject: this repository's governance surface
+- As of commit: `<consumer-base-commit>`
+- Environment: repository default authority branch and GitHub settings
+- Observed at: `<timestamp>`
+- Projection: `<existing .agents files, governing authorities, manual/automated gates, and known conflicts>`
+- Basis: `OBS-ADOPT-004`, direct repository provenance, and any necessary Claim IDs
 
 ## 5. Observations
 
-Record the exact source checkout, vendor dry-run, resulting diff, lock contents, integrity-verifier result, and local authority inventory.
+### OBS-ADOPT-001 — Source checkout is clean and exact
+
+- Subject: governance distribution source
+- Source revision: `<40-hex source commit>`
+- Environment: local source checkout
+- Observed at: `<timestamp>`
+- Method: `git rev-parse HEAD` plus clean-worktree check
+- Result: `<exact HEAD and clean/dirty result>`
+- Provenance: `<command output or persistent record>`
+
+### OBS-ADOPT-002 — Vendor dry-run produces the bounded adoption diff
+
+- Subject: proposed consumer adoption
+- Source revision: `<40-hex source commit>`
+- Environment: clean consumer worktree at `<consumer-base-commit>`
+- Observed at: `<timestamp>`
+- Method: `tools/vendor.py --dry-run ...` and inspect resulting diff
+- Result: `<files to create/update and any conflict result>`
+- Provenance: `<dry-run output and diff location>`
+
+### OBS-ADOPT-003 — Lock and verifier bind the vendored bytes
+
+- Subject: `.agents/governance.lock.json` and vendored distribution
+- Source revision: `<40-hex source commit>`
+- Environment: proposed consumer worktree
+- Observed at: `<timestamp>`
+- Method: inspect lock and run `.agents/tools/verify_governance.py`
+- Result: `<lock identity, file digests, verifier result>`
+- Provenance: `<lock path and executed verifier output>`
+
+### OBS-ADOPT-004 — Local authority inventory and enforcement are recorded
+
+- Subject: consumer authority map
+- Source revision: `<consumer-base-commit>`
+- Environment: repository files and GitHub settings
+- Observed at: `<timestamp>`
+- Method: inspect Product Direction, Architecture/invariants, accepted Specs,
+  acceptance roles, branch protection, and required checks
+- Result: `<bounded inventory and actual enforcement state>`
+- Provenance: `<file paths, settings evidence, and query output>`
 
 ## 6. Claims and assumptions
 
-State whether forward-only adoption is compatible with current repository practice and identify any open assumption that could weaken authority or merge safety.
+### CLM-ADOPT-001 — Exact vendoring preserves local revision identity
 
-## 7. Decisions
+- Support state: SUPPORTED | INFERRED | OPEN_ASSUMPTION
+- Supported by evidence: `EVD-ADOPT-001`
+- Contradicted by evidence: `<NONE or IDs>`
+- Uncertainty: `<limits of the dry-run and verifier evidence>`
+
+### CLM-ADOPT-002 — Forward-only adoption is compatible with this repository
+
+- Support state: SUPPORTED | INFERRED | OPEN_ASSUMPTION
+- Supported by evidence: `EVD-ADOPT-002`
+- Contradicted by evidence: `<NONE or IDs>`
+- Uncertainty: `<legacy authority or workflow risks>`
+
+## 7. Evidence relations
+
+### EVD-ADOPT-001 — Source, dry-run, lock, and verifier support exact adoption
+
+- Source observations: `OBS-ADOPT-001`, `OBS-ADOPT-002`, `OBS-ADOPT-003`
+- Target: `CLM-ADOPT-001`
+- Relation: SUPPORTS
+- Bound coordinates: source `<40-hex>`, consumer base `<40-hex>`, observed `<timestamp>`
+- Strength/sufficiency: `<sufficiency for exact-byte and lock identity>`
+- Limitations: does not itself prove local semantic acceptance
+- Provenance: `<command outputs, diff, lock, and verifier record>`
+
+### EVD-ADOPT-002 — Local inventory supports forward-only compatibility
+
+- Source observations: `OBS-ADOPT-004`
+- Target: `CLM-ADOPT-002` or `STATE-ADOPT-001`
+- Relation: SUPPORTS
+- Bound coordinates: consumer base `<40-hex>`, repository settings observed `<timestamp>`
+- Strength/sufficiency: `<sufficiency for the bounded repository>`
+- Limitations: future repository changes require a new evaluation
+- Provenance: `<authority inventory and settings evidence>`
+
+## 8. Decisions
 
 ### DEC-ADOPT-001 — Adopt exact vendored governance
 
+- Decision owner: `<authorized local acceptance actor>`
 - Decision: adopt the exact source commit recorded above.
-- Rejected alternative: floating `main`, `latest`, or implicit remote authority.
+- Rejected alternatives: floating `main`, `latest`, implicit remote authority,
+  and an uninitialized default submodule.
 - Reason: local bytes, visible diffs, exact base-branch identity, and explicit updates.
+- Owner input remaining: `<NONE or specific decision>`
 
 ### DEC-ADOPT-002 — Preserve local product authority
 
-- Decision: local Product Direction, Architecture, accepted Specs, and authorized maintainers remain authoritative for this repository.
+- Decision owner: `<authorized local acceptance actor>`
+- Decision: local Product Direction, Architecture, accepted Specs, and authorized
+  maintainers remain authoritative for this repository.
 - Rejected alternative: central repository automatically governs consumer product behavior.
 - Reason: repository ownership and cross-repository authority boundaries.
+- Owner input remaining: `<NONE or specific decision>`
 
-## 8. Contracts
+## 9. Contracts
 
 ### CTR-ADOPT-001 — Exact revision
 
-The repository MUST vendor the distribution from the exact source commit recorded in `.agents/governance.lock.json`. Floating references MUST NOT activate governance.
+The repository MUST vendor the distribution from the exact source commit recorded
+in `.agents/governance.lock.json`. Floating references MUST NOT activate governance.
 
 ### CTR-ADOPT-002 — Truthful adoption state
 
-A prepared snapshot MUST remain `adoption.status: proposed` with null acceptance metadata. Only the authorized local acceptance action MAY set `adoption.status: accepted`.
+A prepared snapshot MUST remain `adoption.status: proposed` with null acceptance
+metadata. Only the authorized local acceptance action MAY set
+`adoption.status: accepted`.
 
 ### CTR-ADOPT-003 — Local authority map
 
-`.agents/local/README.md` MUST identify Product Direction, Architecture/invariants, Spec acceptance actors, mechanical-exemption reviewers, emergency actors, and persistent investigation/conformance locations.
+`.agents/local/README.md` MUST identify Product Direction,
+Architecture/invariants, Spec acceptance actors, mechanical-exemption reviewers,
+emergency actors, and persistent investigation/conformance locations.
 
 ### CTR-ADOPT-004 — Explicit updates
 
-No upstream change MAY alter local governance until a separate docs-only update is reviewed, accepted, and merged in this repository.
+No upstream change MAY alter local governance until a separate docs-only update
+is reviewed, accepted, and merged in this repository.
 
 ### CTR-ADOPT-005 — Honest enforcement
 
-The repository MUST represent manual policy, integrity checks, syntax gates, branch protection, and semantic review according to their actual implemented state.
+The repository MUST represent manual policy, integrity checks, syntax gates,
+branch protection, and semantic review according to their actual implemented state.
 
-## 9. Acceptance
+## 10. Acceptance
 
-Every Contract above must map to an Acceptance item that checks the lock, source commit, vendored bytes, local authority file, review/acceptance record, and actual repository enforcement settings.
+### ACC-ADOPT-001 — Exact source and vendored bytes
 
-## 10. Alternatives and disposition
+- Contracts: `CTR-ADOPT-001`
+- Method: compare clean source `HEAD`, lock source commit, manifest, and vendored file digests
+- Environment: clean source checkout and proposed consumer worktree
+- Required evidence: `OBS-ADOPT-001`, `OBS-ADOPT-002`, `OBS-ADOPT-003`, lock, manifest, and diff
+- Expected result: all identities match the exact source commit and no floating reference activates governance
+- Failure condition: any commit or digest mismatch, dirty source ambiguity, or mutable reference is treated as adoption identity
 
-Record rejected submodule, package, floating branch, or local-copy alternatives only when they were materially considered.
+### ACC-ADOPT-002 — Truthful proposed and accepted states
 
-## 11. Migration, compatibility, and rollback
+- Contracts: `CTR-ADOPT-002`
+- Method: inspect proposed lock, authorized acceptance record, and accepted lock transition
+- Environment: adoption PR before and after the explicit acceptance action
+- Required evidence: proposed lock, reviewer record, acceptance actor identity, accepted lock, and final head
+- Expected result: proposed metadata remains null; accepted metadata appears only after authorized finalization
+- Failure condition: preparation claims acceptance or an unauthorized actor finalizes the lock
+
+### ACC-ADOPT-003 — Local authority map completeness
+
+- Contracts: `CTR-ADOPT-003`
+- Method: review `.agents/local/README.md` against repository authority and role inventory
+- Environment: exact adoption candidate commit
+- Required evidence: `OBS-ADOPT-004`, local governance file, and reviewer finding
+- Expected result: every required authority, actor, and persistence location is explicit and repository-owned
+- Failure condition: a required authority or actor is absent, ambiguous, or delegated to the central repository
+
+### ACC-ADOPT-004 — Explicit update and rollback boundary
+
+- Contracts: `CTR-ADOPT-004`
+- Method: change the upstream checkout without changing the consumer, then simulate a separate vendored update and revert
+- Environment: temporary consumer repository pinned to the adoption commit
+- Required evidence: before/after consumer tree identities, update diff, and rollback diff
+- Expected result: upstream movement has no effect until a consumer commit; reverting that commit restores the prior pin
+- Failure condition: consumer governance changes without a consumer commit or cannot be restored by reverting the complete update
+
+### ACC-ADOPT-005 — Enforcement claims match reality
+
+- Contracts: `CTR-ADOPT-005`
+- Method: compare README/local governance claims with workflows, branch protection, required checks, and semantic review process
+- Environment: repository files plus live GitHub settings at `<timestamp>`
+- Required evidence: workflow files, settings/query evidence, and semantic review record
+- Expected result: manual and automated enforcement are separately and truthfully described
+- Failure condition: an unimplemented parser, required check, branch protection rule, or semantic gate is claimed as active
+
+### Contract coverage
+
+| Contract | Acceptance | Covered |
+|---|---|---|
+| `CTR-ADOPT-001` | `ACC-ADOPT-001` | YES |
+| `CTR-ADOPT-002` | `ACC-ADOPT-002` | YES |
+| `CTR-ADOPT-003` | `ACC-ADOPT-003` | YES |
+| `CTR-ADOPT-004` | `ACC-ADOPT-004` | YES |
+| `CTR-ADOPT-005` | `ACC-ADOPT-005` | YES |
+
+## 11. Alternatives and disposition
+
+Record materially considered floating branch, package, submodule, or local-copy
+alternatives. For each, record disposition, reason, Evidence/Claims considered,
+and what would reopen the option.
+
+## 12. Migration, compatibility, and rollback
 
 ```text
 MIGRATION = forward-only
 HISTORICAL_REWRITE = none
-ROLLBACK = revert the complete adoption commit
+ROLLBACK = revert the complete adoption or update commit
 ```
 
-## 12. Open questions
+## 13. Open questions
 
 ```text
 OPEN_OWNER_DECISIONS = <NONE or list>
 NORMATIVE_TBD = <NONE or list>
 UNRESOLVED_AUTHORITY_CONFLICT = <NONE or list>
+PARTIAL_SUPERSESSION = <NONE or list>
 READY_TO_MARK_ACCEPTED = NO
 ```

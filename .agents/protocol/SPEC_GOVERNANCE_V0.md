@@ -260,7 +260,8 @@ Acceptance items identify:
 - Contract IDs;
 - verification method;
 - environment;
-- expected evidence;
+- expected result;
+- required evidence;
 - failure condition that would make an incorrect implementation fail.
 
 A test filename alone is not an Acceptance result.

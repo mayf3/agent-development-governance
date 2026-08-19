@@ -42,11 +42,26 @@ REUSABLE_AFTER_ACCEPTANCE = NO
 
 The candidate remains proposed and must not be tagged stable until independently reviewed and explicitly accepted by an authorized maintainer.
 
+## Review reconciliation
+
+The first independent review returned `REVISE`. This candidate now closes only the three reported blocker clusters:
+
+- one accepted-`AMEND` boundary across Grammar, Governance Protocol, PREFLIGHT, REVIEW, and Spec Format;
+- a self-conforming Governance Adoption template with explicit `EVD-ADOPT-*` relations and `ACC-ADOPT-*` coverage;
+- a self-conforming bootstrap Spec with direct `OBS-003` properties, persisted review-corpus provenance, complete Decision fields, and complete Acceptance fields.
+
+```text
+PRIMITIVE_DIRECTION = unchanged
+AUTHORITY_MODEL = unchanged
+BOOTSTRAP_STATUS = proposed
+NEW_INDEPENDENT_REVIEW_REQUIRED = YES
+```
+
 ## Validation
 
 ```text
 DISTRIBUTION_MANIFEST = CURRENT
-UNIT_TESTS = 11 PASS
+UNIT_TESTS = 14 PASS
 PYTHON_COMPILE = PASS
 MARKDOWN_LOCAL_LINKS = PASS
 JSON_PARSE = PASS

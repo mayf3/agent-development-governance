@@ -323,6 +323,8 @@ Example:
 - Environment: staging
 - Required evidence: executed command, implementation commit, configuration,
   request/response record, and service-call audit showing zero introspection calls
+- Expected result: authorization succeeds from cached JWKS data with zero live
+  auth-service calls
 - Failure condition: any authorization-time call to auth-service fails acceptance
 ```
 
@@ -358,16 +360,54 @@ Non-normative follow-up work may remain when it cannot change Decision or Contra
 
 ## 14. Accepted immutability
 
-After acceptance, the same `spec_id` and Contract IDs may receive only editorial changes with proven semantic delta `NONE`.
+An accepted rule may later be replaced, but an existing stable ID always keeps
+the meaning that was accepted for that ID.
 
-The following always require a new authority and usually `SUPERSEDE`:
+### 14.1 Existing stable IDs
 
-- changed scope;
-- new or removed normative obligation;
-- changed identity or authorization semantics;
-- changed failure, retry, timeout, transaction, lifecycle, migration, or compatibility behavior;
-- narrowed or expanded Decision meaning;
-- changed Acceptance meaning that could allow a previously failing implementation to pass.
+Text associated with an existing accepted Decision, Contract, Acceptance item,
+or other stable normative ID may receive only editorial changes with proven
+semantic delta `NONE`. An existing ID may not be narrowed, expanded, reversed,
+deleted and reused, or assigned a different meaning.
+
+### 14.2 Strictly additive amendment under the same `spec_id`
+
+A docs-only `AMEND` MAY add new stable IDs to the same accepted Spec only when
+all of the following are true:
+
+- Goal is unchanged;
+- scope and authority ownership are unchanged;
+- `governed_by` and external-authority boundaries are unchanged;
+- every accepted Decision remains unchanged;
+- every existing stable ID and its Acceptance meaning remain unchanged;
+- each new Contract is a bounded elaboration of an already accepted Decision,
+  not a new independent product or architecture choice;
+- the new IDs and their Contract-to-Acceptance mappings receive independent,
+  exact-revision review;
+- no partial supersession is introduced.
+
+This seam permits a newly identified `CTR-*` that makes an existing accepted
+Decision operationally complete. It does not permit changing an existing
+`CTR-*` or smuggling a new Decision into the old authority.
+
+### 14.3 `NEW` and `SUPERSEDE` boundaries
+
+`NEW` is required for:
+
+- a new Decision;
+- expanded scope or changed authority ownership;
+- a new independent obligation;
+- an obligation that is not entailed by the existing accepted Decisions.
+
+`SUPERSEDE` is required for:
+
+- deletion, narrowing, expansion, reversal, or replacement of existing
+  normative meaning;
+- changed identity, authorization, failure, retry, timeout, transaction,
+  lifecycle, migration, compatibility, or security semantics;
+- removal of an existing obligation;
+- changed Acceptance meaning that could cause a previously passing
+  implementation to fail or a previously failing implementation to pass.
 
 ---
 
