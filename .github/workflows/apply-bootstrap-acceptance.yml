@@ -1,0 +1,106 @@
+name: apply bootstrap acceptance transition
+
+on:
+  pull_request:
+    branches:
+      - main
+
+permissions:
+  contents: write
+
+jobs:
+  apply-accepted-head:
+    if: github.event.pull_request.head.ref == 'agent/bootstrap-development-governance-v0'
+    runs-on: ubuntu-latest
+    steps:
+      - name: Check out PR head branch
+        uses: actions/checkout@v4
+        with:
+          ref: agent/bootstrap-development-governance-v0
+          fetch-depth: 0
+
+      - name: Guard staging-only delta
+        run: |
+          reviewed=5fbc64dc0323a1021f794a7a4c25b953990e01f6
+          test "$(git rev-list --count "$reviewed"..HEAD)" = "1"
+          test "$(git diff --name-only "$reviewed"..HEAD)" = ".github/workflows/apply-bootstrap-acceptance.yml"
+
+      - name: Apply acceptance metadata only
+        run: |
+          python3 - <<'PY'
+          from pathlib import Path
+
+          def replace_first(path: str, old: str, new: str) -> None:
+              file = Path(path)
+              text = file.read_text(encoding="utf-8")
+              if old not in text:
+                  raise SystemExit(f"missing expected text in {path}: {old!r}")
+              file.write_text(text.replace(old, new, 1), encoding="utf-8")
+
+          for path in (
+              ".agents/README.md",
+              ".agents/protocol/SPEC_GOVERNANCE_V0.md",
+              ".agents/protocol/SPEC_FORMAT_V0.md",
+          ):
+              replace_first(path, "STATUS = proposed", "STATUS = accepted")
+
+          replace_first(
+              "README.md",
+              "BOOTSTRAP_SPEC_STATUS = proposed",
+              "BOOTSTRAP_SPEC_STATUS = accepted",
+          )
+          replace_first(
+              "README.md",
+              "The initial branch is a bootstrap candidate. It must receive an independent semantic review and explicit repository-owner acceptance before being tagged as `v0.1.0` or adopted as an accepted governance release.",
+              "The bootstrap candidate has received independent semantic review and authorized acceptance preparation. It remains unmerged and must pass the independent final-head recheck before merge or a stable `v0.1.0` tag.",
+          )
+
+          spec = "docs/specs/AGENT_DEVELOPMENT_GOVERNANCE_BOOTSTRAP_V0.md"
+          replace_first(spec, "status: proposed", "status: accepted")
+          replace_first(
+              spec,
+              "### STATE-002 — No stable governance release exists yet",
+              "### STATE-002 — Accepted bootstrap candidate exists; no stable release exists yet",
+          )
+          replace_first(
+              spec,
+              "- Projection: version is `0.1.0-draft.1`; no accepted bootstrap Spec or stable tag exists.",
+              "- Projection: version is `0.1.0-draft.1`; this Spec is prepared as accepted on the candidate branch but becomes active repository authority only after merge; no stable tag exists.",
+          )
+          replace_first(
+              spec,
+              "READY_TO_MARK_ACCEPTED = NO",
+              "READY_TO_MARK_ACCEPTED = YES",
+          )
+          PY
+
+          git rm .github/workflows/apply-bootstrap-acceptance.yml
+          python3 tools/build_manifest.py
+
+      - name: Verify exact final tree delta
+        run: |
+          python3 tools/build_manifest.py --check
+          python3 -m unittest discover -s tests -v
+          python3 -m py_compile tools/*.py .agents/tools/*.py tests/*.py
+          bash -n tools/publish_bootstrap.sh
+          git diff --check
+
+          reviewed=5fbc64dc0323a1021f794a7a4c25b953990e01f6
+          actual="$(git diff --name-only "$reviewed" | sort)"
+          expected="$(printf '%s\n' \
+            .agents/README.md \
+            .agents/protocol/SPEC_FORMAT_V0.md \
+            .agents/protocol/SPEC_GOVERNANCE_V0.md \
+            README.md \
+            distribution/manifest.json \
+            docs/specs/AGENT_DEVELOPMENT_GOVERNANCE_BOOTSTRAP_V0.md | sort)"
+          test "$actual" = "$expected"
+
+      - name: Commit accepted candidate head
+        run: |
+          git config user.name "mayf3"
+          git config user.email "mayf3@users.noreply.github.com"
+          git add -A
+          git commit -m "docs: prepare accepted bootstrap head"
+          git push origin HEAD:agent/bootstrap-development-governance-v0
+          git push origin --delete agent/prepare-bootstrap-acceptance-v2 || true
