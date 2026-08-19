@@ -16,8 +16,8 @@
     },
     {
       "path": ".agents/protocol/SPEC_FORMAT_V0.md",
-      "sha256": "6dd0d115dbf60fdd480c491b008527c8312149411ddb31a16b511faf4ba57b83",
-      "size": 11852
+      "sha256": "4a3bd8b921875076a22d692d0e4e7f76ef6c26ea27a9dd245b66c1c633224a29",
+      "size": 12010
     },
     {
       "path": ".agents/skills/spec-governance/SKILL.md",
@@ -71,8 +71,8 @@
     },
     {
       "path": ".agents/templates/GOVERNANCE_ADOPTION_SPEC_TEMPLATE.md",
-      "sha256": "71d789e8733747d934335e4d52f6afb6a435cec5b3b6d6ca8f0dd2d8d93d556b",
-      "size": 11143
+      "sha256": "b8758487fdf4cec5d67ab28982a84b73add09d2a944a77d59fcb2bb34ee9682a",
+      "size": 11290
     },
     {
       "path": ".agents/templates/REVIEW_RECORD_TEMPLATE.md",

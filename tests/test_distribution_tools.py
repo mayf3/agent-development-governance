@@ -1,6 +1,8 @@
 from __future__ import annotations
 
+import contextlib
 import importlib.util
+import io
 import json
 import re
 import tempfile
@@ -155,6 +157,31 @@ class DistributionToolsTest(unittest.TestCase):
                     verify_source_revision=False,
                 )
 
+    def test_vendor_cli_default_is_no_write_dry_run(self) -> None:
+        with tempfile.TemporaryDirectory() as tmp:
+            target = Path(tmp)
+            source_commit = vendor.git_output(ROOT, "rev-parse", "HEAD")
+            stdout = io.StringIO()
+            with contextlib.redirect_stdout(stdout):
+                result = vendor.main(
+                    [
+                        "--target",
+                        str(target),
+                        "--source-commit",
+                        source_commit,
+                        "--prepared-by",
+                        "test-author",
+                        "--prepared-at",
+                        "2026-08-18T00:00:00Z",
+                    ]
+                )
+
+            output = stdout.getvalue()
+            self.assertEqual(0, result)
+            self.assertIn("DRY-RUN:", output)
+            self.assertIn("No files written.", output)
+            self.assertEqual([], list(target.iterdir()))
+
     def test_local_markdown_links_resolve(self) -> None:
         link_pattern = re.compile(r"\[[^\]]+\]\(([^)]+)\)")
         errors: list[str] = []
@@ -216,6 +243,13 @@ class DistributionToolsTest(unittest.TestCase):
         self.assertIn("### EVD-ADOPT-001", text)
         self.assertIn("### EVD-ADOPT-002", text)
 
+        observation = text.split("### OBS-ADOPT-002", 1)[1].split(
+            "### OBS-ADOPT-003", 1
+        )[0]
+        self.assertIn("python3 tools/vendor.py", observation)
+        self.assertNotIn("--dry-run", observation)
+        self.assertNotIn("--apply", observation)
+
     def test_adoption_template_contract_coverage_and_acceptance_fields(self) -> None:
         path = ROOT / ".agents/templates/GOVERNANCE_ADOPTION_SPEC_TEMPLATE.md"
         text = path.read_text(encoding="utf-8")
@@ -271,7 +305,6 @@ class DistributionToolsTest(unittest.TestCase):
                 "- Failure condition:",
             ):
                 self.assertIn(field, item)
-
 
     def test_distribution_version_is_coherent(self) -> None:
         version = (ROOT / "VERSION").read_text(encoding="utf-8").strip()

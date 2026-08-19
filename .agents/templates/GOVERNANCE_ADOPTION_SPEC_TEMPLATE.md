@@ -78,15 +78,17 @@ actions.
 - Result: `<exact HEAD and clean/dirty result>`
 - Provenance: `<command output or persistent record>`
 
-### OBS-ADOPT-002 — Vendor dry-run produces the bounded adoption diff
+### OBS-ADOPT-002 — Default vendor invocation produces a bounded no-write plan
 
 - Subject: proposed consumer adoption
 - Source revision: `<40-hex source commit>`
 - Environment: clean consumer worktree at `<consumer-base-commit>`
 - Observed at: `<timestamp>`
-- Method: `tools/vendor.py --dry-run ...` and inspect resulting diff
-- Result: `<files to create/update and any conflict result>`
-- Provenance: `<dry-run output and diff location>`
+- Method: run `python3 tools/vendor.py --target <consumer-path>
+  --source-commit <40-hex> --prepared-by <actor>`, then inspect the `DRY-RUN`
+  file-operation plan
+- Result: `<planned files to create/update, no-files-written confirmation, and any conflict result>`
+- Provenance: `<captured DRY-RUN output>`
 
 ### OBS-ADOPT-003 — Lock and verifier bind the vendored bytes
 
@@ -135,7 +137,7 @@ actions.
 - Bound coordinates: source `<40-hex>`, consumer base `<40-hex>`, observed `<timestamp>`
 - Strength/sufficiency: `<sufficiency for exact-byte and lock identity>`
 - Limitations: does not itself prove local semantic acceptance
-- Provenance: `<command outputs, diff, lock, and verifier record>`
+- Provenance: `<command outputs, planned file set, lock, and verifier record>`
 
 ### EVD-ADOPT-002 — Local inventory supports forward-only compatibility
 

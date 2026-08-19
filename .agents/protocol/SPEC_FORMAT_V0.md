@@ -26,7 +26,11 @@ AGENT_FORUM_CORE_INVARIANTS_V1
 AUTH_SERVICE_CREDENTIAL_ROTATION_V2
 ```
 
-A new normative meaning uses a new Spec ID.
+A change to existing accepted normative meaning, or a new independent normative
+meaning, uses a new Spec ID.
+
+A strictly additive bounded elaboration under an existing accepted Decision
+follows §14.2.
 
 ---
 
