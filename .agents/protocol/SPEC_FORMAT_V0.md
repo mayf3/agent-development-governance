@@ -2,7 +2,7 @@
 
 ```text
 FORMAT_VERSION = 0.1.0-draft.1
-STATUS = proposed
+STATUS = accepted
 ```
 
 This file defines the minimum syntax contract for governing Specs. It is deliberately narrower than semantic review.

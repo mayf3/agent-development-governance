@@ -1,6 +1,6 @@
 ---
 spec_id: AGENT_DEVELOPMENT_GOVERNANCE_BOOTSTRAP_V0
-status: proposed
+status: accepted
 spec_kind: implementation
 authority_level: governing_spec
 implementation_authority: contracts
@@ -73,13 +73,13 @@ The distribution becomes authoritative in a consumer only through that consumer�
 - Projection: reviewers consistently support the six entity primitives, Evidence relation model, `.agents` / `docs/specs` split, lifecycle/conformance separation, base-branch rule, and four Skill modes; unresolved findings concentrate on authority precedence, immutable accepted meaning, commit-bound review, qualified conformance, and State/Observation boundaries.
 - Basis: `OBS-001`, `OBS-002`, `EVD-001`, `CLM-001`
 
-### STATE-002 — No stable governance release exists yet
+### STATE-002 — Accepted bootstrap candidate exists; no stable release exists yet
 
 - Subject: this repository distribution
 - As of artifact: the repository revision containing this Spec
 - Environment: Git repository candidate branch and release metadata
 - Observed at: 2026-08-19
-- Projection: version is `0.1.0-draft.1`; no accepted bootstrap Spec or stable tag exists.
+- Projection: version is `0.1.0-draft.1`; this Spec is prepared as accepted on the candidate branch but becomes active repository authority only after merge; no stable tag exists.
 - Basis: repository `VERSION`, `README.md`, this Spec status
 
 ## 5. Observations
@@ -405,5 +405,5 @@ NORMATIVE_TBD = NONE
 UNRESOLVED_AUTHORITY_CONFLICT = NONE
 PARTIAL_SUPERSESSION = NONE
 INDEPENDENT_REVIEW_REQUIRED = YES
-READY_TO_MARK_ACCEPTED = NO
+READY_TO_MARK_ACCEPTED = YES
 ```

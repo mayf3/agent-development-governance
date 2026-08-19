@@ -19,14 +19,14 @@ It is not a central product authority. A consuming repository adopts an exact im
 
 ```text
 DISTRIBUTION_VERSION = 0.1.0-draft.1
-BOOTSTRAP_SPEC_STATUS = proposed
+BOOTSTRAP_SPEC_STATUS = accepted
 ENFORCEMENT_LEVEL = manual_policy
 SEMANTIC_SPEC_VERIFIER = not_implemented
 DISTRIBUTION_INTEGRITY_TOOLS = implemented
 READY_TO_TAG_STABLE_RELEASE = no
 ```
 
-The initial branch is a bootstrap candidate. It must receive an independent semantic review and explicit repository-owner acceptance before being tagged as `v0.1.0` or adopted as an accepted governance release.
+The bootstrap candidate has received independent semantic review and authorized acceptance preparation. It remains unmerged and must pass the independent final-head recheck before merge or a stable `v0.1.0` tag.
 
 ## What is frozen in the V0 candidate
 

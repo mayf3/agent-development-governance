@@ -6,17 +6,17 @@
   "files": [
     {
       "path": ".agents/README.md",
-      "sha256": "093660bd1548315014b6c2c98527a4353db7d8a7f315c17c567e4aca0d368389",
+      "sha256": "276081dae1e48959e98e8d2a7d379a10514d2318891cb286d099c67268b8fb39",
       "size": 15418
     },
     {
       "path": ".agents/protocol/SPEC_GOVERNANCE_V0.md",
-      "sha256": "3ffa395e78adab4143bedf74427a8079d085d5d7ac5431284e309c18af7d6f5b",
+      "sha256": "7a85b39f4fd9ca4965c90f85d3521d5e0334793f76194cd2f16a0e61a15be9a5",
       "size": 15979
     },
     {
       "path": ".agents/protocol/SPEC_FORMAT_V0.md",
-      "sha256": "4a3bd8b921875076a22d692d0e4e7f76ef6c26ea27a9dd245b66c1c633224a29",
+      "sha256": "c9a5e3bebb6f8928de5559c1f9024038c10530bd8da1f1aeee9fbbf9f6c6b036",
       "size": 12010
     },
     {
