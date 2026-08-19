@@ -1,0 +1,17 @@
+{
+  "schema_version": 1,
+  "distribution": "development-governance-v0",
+  "version": "0.1.0",
+  "source_repository": "mayf3/agent-development-governance",
+  "source_commit": "0000000000000000000000000000000000000000",
+  "distribution_manifest_sha256": "0000000000000000000000000000000000000000000000000000000000000000",
+  "adoption": {
+    "mode": "vendored",
+    "status": "proposed",
+    "prepared_by": "REPLACE_WITH_ADOPTION_AUTHOR",
+    "prepared_at": "YYYY-MM-DDTHH:MM:SSZ",
+    "accepted_by": null,
+    "accepted_at": null
+  },
+  "files": []
+}
