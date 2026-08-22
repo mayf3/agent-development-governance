@@ -27,7 +27,7 @@ DISTRIBUTION_INTEGRITY_TOOLS = implemented
 READY_TO_TAG_STABLE_RELEASE = no
 ```
 
-The bootstrap candidate has received independent semantic review and authorized acceptance preparation. It remains unmerged and must pass the independent final-head recheck before merge or a stable `v0.1.0` tag.
+The bootstrap candidate has received independent semantic review and authorized acceptance preparation. It remains unmerged and must pass the independent final-head recheck before merge or a stable `v0.2.0` tag.
 
 ## What is frozen in the V0 candidate
 
@@ -128,7 +128,7 @@ A consumer pins an exact source revision and uses a two-stage local adoption rec
   "source_repository": "mayf3/agent-development-governance",
   "source_commit": "<40-hex commit>",
   "distribution": "development-governance-v0",
-  "version": "0.1.0",
+  "version": "0.2.0-draft.1",
   "adoption": {
     "status": "proposed | accepted"
   }
@@ -164,7 +164,7 @@ Before the first stable release:
 2. the repository owner explicitly accepts the exact final head;
 3. any semantic delta after review triggers a new review;
 4. the bootstrap Spec becomes `accepted` in a docs-only acceptance commit;
-5. `VERSION` becomes `0.1.0` and the immutable release tag is created.
+5. `VERSION` becomes `0.2.0` and the immutable `v0.2.0` release tag is created.
 
 ## Publishing the bootstrap repository
 
