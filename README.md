@@ -18,15 +18,16 @@ It is not a central product authority. A consuming repository adopts an exact im
 ## Current status
 
 ```text
-DISTRIBUTION_VERSION = 0.1.0-draft.1
+DISTRIBUTION_VERSION = 0.2.0-draft.1
 BOOTSTRAP_SPEC_STATUS = accepted
 ENFORCEMENT_LEVEL = manual_policy
 SEMANTIC_SPEC_VERIFIER = not_implemented
+SPEC_TRANSITION_VALIDATOR = implemented_for_cross_record_lifecycle_closure
 DISTRIBUTION_INTEGRITY_TOOLS = implemented
 READY_TO_TAG_STABLE_RELEASE = no
 ```
 
-The bootstrap candidate has received independent semantic review and authorized acceptance preparation. It remains unmerged and must pass the independent final-head recheck before merge or a stable `v0.1.0` tag.
+The bootstrap candidate has received independent semantic review and authorized acceptance preparation. It remains unmerged and must pass the independent final-head recheck before merge or a stable `v0.2.0` tag.
 
 ## What is frozen in the V0 candidate
 
@@ -39,6 +40,7 @@ The bootstrap candidate has received independent semantic review and authorized 
 - Non-mechanical implementation requires an accepted implementation-authorizing Spec already present in the implementation PR base.
 - Accepted Decision and Contract meaning is immutable under the same stable ID.
 - V0 forbids partial supersession.
+- Grandfathered legacy governing-Spec IDs have a retirement-only atomic transition; new active legacy IDs remain forbidden.
 - External authorities may be referenced at an exact revision, but one repository may not govern or supersede another repository.
 - Review recommendations are bound to exact commits and do not themselves perform acceptance.
 - Vendoring records preparation and acceptance as separate states; preparing bytes never fabricates acceptance.
@@ -66,6 +68,7 @@ AGENTS.md
 │           ├── REVIEW.md
 │           └── COMPLIANCE.md
 ├── tools/
+│   ├── validate_spec_transition.py
 │   └── verify_governance.py
 └── templates/
     ├── SPEC_TEMPLATE.md
@@ -125,7 +128,7 @@ A consumer pins an exact source revision and uses a two-stage local adoption rec
   "source_repository": "mayf3/agent-development-governance",
   "source_commit": "<40-hex commit>",
   "distribution": "development-governance-v0",
-  "version": "0.1.0",
+  "version": "0.2.0-draft.1",
   "adoption": {
     "status": "proposed | accepted"
   }
@@ -161,7 +164,7 @@ Before the first stable release:
 2. the repository owner explicitly accepts the exact final head;
 3. any semantic delta after review triggers a new review;
 4. the bootstrap Spec becomes `accepted` in a docs-only acceptance commit;
-5. `VERSION` becomes `0.1.0` and the immutable release tag is created.
+5. `VERSION` becomes `0.2.0` and the immutable `v0.2.0` release tag is created.
 
 ## Publishing the bootstrap repository
 

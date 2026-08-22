@@ -1,0 +1,28 @@
+[
+  {
+    "spec_id": "SOME_AUTHORITY_V2_HEADING_NORMALIZATION_AMENDMENT",
+    "status": "superseded",
+    "spec_kind": "implementation",
+    "authority_level": "governing_spec",
+    "implementation_authority": "contracts",
+    "scope": ["historical heading behavior"],
+    "governed_by": ["SOME_AUTHORITY_V2"],
+    "external_authorities": [],
+    "supersedes": [],
+    "superseded_by": "SOME_AUTHORITY_V3",
+    "owners": ["fixture-owner"]
+  },
+  {
+    "spec_id": "SOME_AUTHORITY_V3",
+    "status": "accepted",
+    "spec_kind": "implementation",
+    "authority_level": "governing_spec",
+    "implementation_authority": "contracts",
+    "scope": ["complete replacement authority"],
+    "governed_by": [],
+    "external_authorities": [],
+    "supersedes": ["SOME_AUTHORITY_V2_HEADING_NORMALIZATION_AMENDMENT"],
+    "superseded_by": null,
+    "owners": ["fixture-owner"]
+  }
+]

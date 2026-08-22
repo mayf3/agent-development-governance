@@ -64,6 +64,7 @@ class DistributionToolsTest(unittest.TestCase):
                 f".agents/skills/spec-governance/modes/{mode}.md", paths
             )
         self.assertIn(".agents/tools/verify_governance.py", paths)
+        self.assertIn(".agents/tools/validate_spec_transition.py", paths)
         self.assertTrue(all(path.startswith(".agents/") for path in paths))
 
     def test_vendor_proposed_adoption_and_tamper_detection(self) -> None:

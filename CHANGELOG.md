@@ -1,5 +1,15 @@
 # Changelog
 
+## 0.2.0-draft.1
+
+Backward-compatible governance capability:
+
+- permit an already-existing accepted legacy governing-Spec ID in a narrow, strict-ID-disjoint class to become schema-valid only in its superseded historical state;
+- allow strict successors to reference exact legacy whole-authority IDs solely for atomic retirement;
+- keep proposed/accepted IDs, `governed_by`, external authority IDs, and successors on strict `_V<number>` identifiers;
+- add a distributed cross-record transition validator and positive/negative fixtures for existence, whole-authority closure, backlinks, and active-legacy-set monotonicity;
+- retain the prohibition on new legacy Specs, accepted semantic mutation, and partial supersession.
+
 ## 0.1.0-draft.1
 
 Initial bootstrap candidate:
