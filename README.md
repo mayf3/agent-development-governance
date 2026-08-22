@@ -18,10 +18,11 @@ It is not a central product authority. A consuming repository adopts an exact im
 ## Current status
 
 ```text
-DISTRIBUTION_VERSION = 0.1.0-draft.1
+DISTRIBUTION_VERSION = 0.2.0-draft.1
 BOOTSTRAP_SPEC_STATUS = accepted
 ENFORCEMENT_LEVEL = manual_policy
 SEMANTIC_SPEC_VERIFIER = not_implemented
+SPEC_TRANSITION_VALIDATOR = implemented_for_cross_record_lifecycle_closure
 DISTRIBUTION_INTEGRITY_TOOLS = implemented
 READY_TO_TAG_STABLE_RELEASE = no
 ```
@@ -39,6 +40,7 @@ The bootstrap candidate has received independent semantic review and authorized 
 - Non-mechanical implementation requires an accepted implementation-authorizing Spec already present in the implementation PR base.
 - Accepted Decision and Contract meaning is immutable under the same stable ID.
 - V0 forbids partial supersession.
+- Grandfathered legacy governing-Spec IDs have a retirement-only atomic transition; new active legacy IDs remain forbidden.
 - External authorities may be referenced at an exact revision, but one repository may not govern or supersede another repository.
 - Review recommendations are bound to exact commits and do not themselves perform acceptance.
 - Vendoring records preparation and acceptance as separate states; preparing bytes never fabricates acceptance.
@@ -66,6 +68,7 @@ AGENTS.md
 │           ├── REVIEW.md
 │           └── COMPLIANCE.md
 ├── tools/
+│   ├── validate_spec_transition.py
 │   └── verify_governance.py
 └── templates/
     ├── SPEC_TEMPLATE.md

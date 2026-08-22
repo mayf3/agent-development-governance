@@ -20,6 +20,7 @@ DISTRIBUTED_PATHS = (
     ".agents/skills/spec-governance/modes/REVIEW.md",
     ".agents/skills/spec-governance/modes/COMPLIANCE.md",
     ".agents/tools/verify_governance.py",
+    ".agents/tools/validate_spec_transition.py",
     ".agents/schemas/distribution-manifest.schema.json",
     ".agents/schemas/spec-frontmatter.schema.json",
     ".agents/schemas/governance-lock.schema.json",
