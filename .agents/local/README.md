@@ -10,13 +10,15 @@ Publish immutable, versioned governance distributions that consuming repositorie
 
 ```text
 BOOTSTRAP_SPEC = AGENT_DEVELOPMENT_GOVERNANCE_BOOTSTRAP_V0
-BOOTSTRAP_SPEC_STATUS = proposed
-BOOTSTRAP_EXCEPTION = initial_repository_creation_only
+BOOTSTRAP_SPEC_STATUS = accepted
+BOOTSTRAP_EXCEPTION = closed_after_acceptance
+PROPOSED_EXTENSION = AGENT_OPERATIONAL_LAYER_V1
+PROPOSED_EXTENSION_STATUS = proposed
 ACCEPTANCE_ACTOR = mayf3 or another explicitly authorized maintainer
 STABLE_RELEASE = none
 ```
 
-The initial repository cannot have an accepted governing Spec already present in its own base branch. That one-time bootstrap fact does not create a reusable exemption for later work.
+The one-time bootstrap exception ended when the accepted bootstrap Spec merged to `main`. It does not authorize this proposed operational-layer Spec, its later implementation, or any consumer change.
 
 ## Local precedence
 
