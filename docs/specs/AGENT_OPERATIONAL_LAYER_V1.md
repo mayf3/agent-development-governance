@@ -21,11 +21,11 @@ owners:
 
 ## 1. Goal
 
-Add a bounded operational layer around the accepted development grammar so Agents can reliably select and execute recurring repository tasks and preserve durable, non-normative engineering knowledge without confusing either surface with governing authority.
+Add a bounded operational layer around the accepted development grammar so Agents can reliably select and execute recurring repository tasks and preserve durable, non-normative engineering knowledge without confusing either surface with governing authority or mutation permission.
 
 ```text
 GOAL = discoverable task Skills plus a typed repository-local Record corpus
-SUCCESS_OUTCOME = Agents can execute recurring workflows and preserve rationale while Spec authority, implementation state, review, and conformance remain semantically separate
+SUCCESS_OUTCOME = recurring work is executable and durable rationale is preserved while authority, write permission, implementation state, review, and conformance remain separate and auditable
 ```
 
 ## 2. Scope and non-goals
@@ -35,24 +35,33 @@ SUCCESS_OUTCOME = Agents can execute recurring workflows and preserve rationale 
 - a normative package contract for repository-scoped Agent Skills;
 - thin task-oriented Skill entrypoints that delegate shared semantics to one owning router;
 - optional Skill-local `references/`, deterministic `scripts/`, tests, and provider interface metadata;
-- explicit trigger, anti-trigger, input, mutation, stop, output, and completion boundaries;
+- explicit trigger, anti-trigger, input, authority, mutation, stop, output, failure, and completion boundaries;
+- an external authority chain for every local or remote mutation performed through a Skill;
+- target-coordinate rechecks, bounded credentials, confirmation, idempotency, retry, unknown-outcome, and compensation rules for side effects;
 - a typed, non-normative Record corpus for investigations, implementation rationale, reviews, and conformance;
-- stable Record identity, coordinates, lifecycle metadata, supersession links, and archive policy;
-- deterministic validation of Skill and Record structure without claiming semantic review;
+- stable Record identity, exact coordinates, type-specific mutability, lifecycle metadata, supersession links, and archive policy;
+- immutable Review and Conformance attestations with correction-by-supersession;
+- deterministic validation of machine-declared Skill and Record structure without claiming semantic review;
+- an explicit semantic-review layer for prose-level authority and meaning;
 - a central-distribution versus repository-local ownership boundary;
-- a durable-record impact declaration for non-trivial changes.
+- set-valued durable-record impact accounting for non-trivial changes;
+- forward-only applicability and migration rules for legacy repository records;
+- break-glass archive tombstoning/redaction and downgrade compatibility.
 
 ### Out of scope
 
 - changing the accepted semantic primitives or authority precedence;
 - changing the lifecycle or meaning of governing Specs;
-- making Skills, provider metadata, scripts, tests, Notes, or Records normative authority;
-- treating `implemented`, `reviewed`, `verified`, or `archived` as interchangeable states;
-- requiring one new Record file for every non-trivial change when an existing record already owns the rationale;
+- making Skills, provider metadata, scripts, tests, Notes, Records, or impact declarations normative authority;
+- letting a Skill create its own mutation permission;
+- treating `implemented`, `reviewed`, `accepted`, `verified`, `conforming`, or `archived` as interchangeable states;
+- allowing a mutable branch name to support a durable implementation claim;
+- requiring one new Record file for every non-trivial change when an existing durable owner already covers the knowledge;
 - copying DeepSeek Harness Agent Notes or Skills wholesale;
 - provider-specific runtime implementation;
-- implementing the protocols, templates, schemas, validators, or consumer migrations in this docs-only Spec PR;
-- retroactively migrating historical consumer repositories.
+- implementing the protocols, templates, schemas, validators, archive ledger, or consumer migrations in this docs-only Spec PR;
+- retroactively converting untouched historical records at adoption time;
+- claiming that deterministic tooling can detect arbitrary prose-level semantic violations.
 
 ## 3. Authority and dependencies
 
@@ -65,9 +74,13 @@ IMPLEMENTATION_AUTHORITY = contracts
 EXTERNAL_AUTHORITIES = NONE
 EXTERNAL_PRIOR_ART = deepseek-ai/deepseek-harness@b150a551b8d465e31e418e1b2eaf5e79bbb7d28e
 AUTHORITY_CONFLICT = NONE
+AMENDMENT_REVIEW_ID = 5020251145
+AMENDMENT_REVIEWED_HEAD = 02be9c8521154d7808f3f3d4ba06728394f43659
 ```
 
 DeepSeek Harness is studied only as non-normative prior art. Its repository does not own, constrain, or supersede this repository's governance.
+
+A Skill operational contract is subordinate to accepted authority and to an explicit, persistently recorded owner action where that action is required. A Skill may describe and further narrow an available write scope; it cannot create, broaden, or substitute for that scope.
 
 ## 4. Current State
 
@@ -77,7 +90,7 @@ DeepSeek Harness is studied only as non-normative prior art. Its repository does
 - As of commit: `d32b946cbbbc1baa99165d7656fc22e8823a651f`
 - Environment: repository `main`
 - Observed at: 2026-08-25
-- Projection: the distribution contains `spec-governance/SKILL.md` and four mode files, with shared invariants and read-order guidance, but does not define a reusable contract for task-oriented entrypoints, Skill-local scripts/references, provider metadata, validation, or completion semantics.
+- Projection: the distribution contains `spec-governance/SKILL.md` and four mode files, with shared invariants and read-order guidance, but does not define a reusable contract for task-oriented entrypoints, Skill-local scripts/references, provider metadata, validation, write authorization, or completion semantics.
 - Basis: `OBS-OPL-001`, `OBS-OPL-002`, `CLM-OPL-001`
 
 ### STATE-OPL-002 — Durable Record templates exist without a common repository corpus contract
@@ -86,7 +99,7 @@ DeepSeek Harness is studied only as non-normative prior art. Its repository does
 - As of commit: `d32b946cbbbc1baa99165d7656fc22e8823a651f`
 - Environment: repository `main`
 - Observed at: 2026-08-25
-- Projection: Investigation, Review, and Conformance templates exist, but there is no common Record identity schema, canonical repository-local corpus, implementation-rationale record type, archive lifecycle, supersession rule, or deterministic cross-record validator.
+- Projection: Investigation, Review, and Conformance templates exist, but there is no common Record identity schema, canonical repository-local corpus, implementation-rationale record type, type-specific mutability, archive lifecycle, legacy applicability rule, supersession closure, or deterministic cross-record validator.
 - Basis: `OBS-OPL-003`, `CLM-OPL-002`
 
 ### STATE-OPL-003 — DeepSeek Harness demonstrates useful operational and memory mechanisms with incompatible authority semantics
@@ -95,8 +108,17 @@ DeepSeek Harness is studied only as non-normative prior art. Its repository does
 - As of commit: `b150a551b8d465e31e418e1b2eaf5e79bbb7d28e`
 - Environment: public repository source
 - Observed at: 2026-08-25
-- Projection: task-oriented Skill packages and mechanically maintained Agent Notes provide useful discoverability, workflows, rationale, alternatives, archival, and validation; however, lifecycle moves such as `proposed` to `implemented` and in-place updates of shipped facts cannot be copied onto accepted governing authority.
+- Projection: task-oriented Skill packages and mechanically maintained Agent Notes provide useful discoverability, workflows, rationale, alternatives, archival, and validation; however, lifecycle moves such as `proposed` to `implemented` and in-place updates of shipped facts cannot be copied onto accepted governing authority or immutable attestations.
 - Basis: `OBS-OPL-004`, `OBS-OPL-005`, `OBS-OPL-006`, `CLM-OPL-003`
+
+### STATE-OPL-004 — Independent review found five closure gaps in the first proposed Head
+
+- Subject: Draft PR #3 proposed Spec at `02be9c8521154d7808f3f3d4ba06728394f43659`
+- As of artifact: GitHub review `5020251145`
+- Environment: independent semantic review
+- Observed at: 2026-08-25
+- Projection: the direction and primitive boundaries passed, while mutation authority, Record immutability, archive/rollback closure, legacy applicability, and deterministic-versus-semantic Acceptance required revision.
+- Basis: `OBS-OPL-007`, `CLM-OPL-005`, `EVD-OPL-005`
 
 ## 5. Observations
 
@@ -119,7 +141,7 @@ DeepSeek Harness is studied only as non-normative prior art. Its repository does
 - Environment: repository source
 - Observed at: 2026-08-25
 - Method: inspect repository tree and `distribution/manifest.json`
-- Result: the distribution includes one Skill tree, but no protocol or validator defines optional `references/`, `scripts/`, tests, provider interface metadata, anti-triggers, allowed mutations, stop conditions, or done criteria for Skills generally.
+- Result: the distribution includes one Skill tree, but no protocol or validator defines optional `references/`, `scripts/`, tests, provider interface metadata, anti-triggers, mutation-authority references, allowed mutations, stop conditions, or done criteria for Skills generally.
 - Provenance: `.agents/skills/`, `distribution/manifest.json`
 
 ### OBS-OPL-003 — Existing Record templates are typed but not governed as one corpus
@@ -130,7 +152,7 @@ DeepSeek Harness is studied only as non-normative prior art. Its repository does
 - Environment: repository source
 - Observed at: 2026-08-25
 - Method: inspect `.agents/templates/INVESTIGATION_RECORD_TEMPLATE.md`, `REVIEW_RECORD_TEMPLATE.md`, and `CONFORMANCE_RECORD_TEMPLATE.md`
-- Result: each template defines useful type-specific fields, but there is no common Record ID contract, shared path or metadata schema, implementation-rationale template, supersession closure, archive policy, or corpus validator.
+- Result: each template defines useful type-specific fields, but there is no common Record ID contract, shared path or metadata schema, implementation-rationale template, mutability matrix, supersession closure, archive policy, legacy adoption boundary, or corpus validator.
 - Provenance: `.agents/templates/`
 
 ### OBS-OPL-004 — DeepSeek Harness uses task-oriented Skill packages
@@ -166,6 +188,17 @@ DeepSeek Harness is studied only as non-normative prior art. Its repository does
 - Result: closed lifecycle/class sets, filename rules, complete artifacts, archive metadata, content hashes, and append-only seals are mechanically checked; archive selection itself remains semantic and based on future decision value rather than age or word count.
 - Provenance: `scripts/agent-note-tree.ts`, `scripts/archived-agent-notes.ts`, `.agents/skills/dsh-archive-agent-notes/SKILL.md`
 
+### OBS-OPL-007 — Review 5020251145 identified five precise semantic blockers
+
+- Subject: `AGENT_OPERATIONAL_LAYER_V1` first proposed Head
+- Repository/source: `mayf3/agent-development-governance` Draft PR #3
+- Commit/artifact: `02be9c8521154d7808f3f3d4ba06728394f43659`, review `5020251145`
+- Environment: independent REVIEW mode
+- Observed at: 2026-08-25
+- Method: review authority, primitive boundaries, Contracts, Acceptance coverage, and immutability against the accepted bootstrap authority
+- Result: `SPEC_REVIEW = REVISE` with blockers for Skill self-authorization, attestation mutability, archive/rollback closure, legacy applicability, and overclaimed deterministic Acceptance.
+- Provenance: PR #3 review `5020251145`
+
 ## 6. Claims and assumptions
 
 ### CLM-OPL-001 — Thin task entrypoints improve discovery without requiring duplicated governance semantics
@@ -196,6 +229,13 @@ DeepSeek Harness is studied only as non-normative prior art. Its repository does
 - Contradicted by evidence: none known
 - Uncertainty: a later machine-readable catalog may provide equally stable redirects for path moves.
 
+### CLM-OPL-005 — Operational safety requires explicit authority, immutability, lifecycle, compatibility, and review-layer closure
+
+- Support state: SUPPORTED
+- Supported by evidence: `EVD-OPL-005`
+- Contradicted by evidence: none known
+- Uncertainty: exact schema field names and ledger encodings remain implementation choices constrained by the Contracts below.
+
 ## 7. Evidence relations
 
 ### EVD-OPL-001 — Current routing and DSH task Skills support thin task entrypoints
@@ -224,8 +264,8 @@ DeepSeek Harness is studied only as non-normative prior art. Its repository does
 - Target: `CLM-OPL-003`
 - Relation: SUPPORTS
 - Bound coordinates: DeepSeek Harness `b150a551`; parent authority `AGENT_DEVELOPMENT_GOVERNANCE_BOOTSTRAP_V0`
-- Strength/sufficiency: decisive for forbidding copied Note lifecycle from mutating accepted Spec meaning
-- Limitations: non-normative implementation facts may still be updated or superseded
+- Strength/sufficiency: decisive for forbidding copied Note lifecycle from mutating accepted Spec meaning or attestations
+- Limitations: permitted append-only updates to non-attestation Records still require type-specific rules
 - Provenance: parent Spec and DSH prior-art paths
 
 ### EVD-OPL-004 — Stable identity requirements support stable paths plus lifecycle metadata
@@ -238,13 +278,23 @@ DeepSeek Harness is studied only as non-normative prior art. Its repository does
 - Limitations: path redirects and generated catalogs could support a different future design
 - Provenance: repositories and paths named by the source observations
 
+### EVD-OPL-005 — Independent review supports the five closure requirements
+
+- Source observations: `OBS-OPL-007`
+- Target: `CLM-OPL-005`
+- Relation: SUPPORTS
+- Bound coordinates: Draft PR #3, reviewed Head `02be9c8521154d7808f3f3d4ba06728394f43659`, review `5020251145`
+- Strength/sufficiency: decisive for amendment scope
+- Limitations: the amended Head requires a new independent review
+- Provenance: PR #3 review `5020251145`
+
 ## 8. Decisions
 
 ### DEC-OPL-001 — Separate authority, operational workflow, and durable Record layers
 
 - Decision owner: repository owner
-- Decision: governing authority remains in Product Direction, Architecture/invariant authority, and accepted Specs; Skills execute bounded workflows; Records preserve qualified non-normative knowledge.
-- Rejected alternatives: treat Skills as policy authority; infer Contracts from implementation records; use one undifferentiated `.agents` knowledge tree.
+- Decision: governing authority remains in Product Direction, Architecture/invariant authority, and accepted Specs; explicit owner actions may authorize bounded execution; Skills execute only within an externally available scope; Records preserve qualified non-normative knowledge.
+- Rejected alternatives: treat Skills as policy or write authority; infer Contracts from implementation records; use one undifferentiated `.agents` knowledge tree.
 - Reason: the separation preserves the accepted grammar while making recurring work and durable rationale easier to execute and retrieve.
 - Owner decision remaining: NONE
 
@@ -259,64 +309,96 @@ DeepSeek Harness is studied only as non-normative prior art. Its repository does
 ### DEC-OPL-003 — Define Skills as executable operational contracts
 
 - Decision owner: repository owner
-- Decision: every distributed Skill declares its purpose, trigger and anti-trigger, required inputs and coordinates, sources of truth, allowed and forbidden mutations, stop conditions, procedure, required output, failure output, and done criteria.
-- Rejected alternative: prose that merely describes a capability without defining when execution must stop or what completion means.
+- Decision: every distributed Skill declares its purpose, trigger and anti-trigger, required inputs and coordinates, sources of truth, mutation-authority inputs, allowed and forbidden mutations, stop conditions, procedure, required output, failure output, and done criteria.
+- Rejected alternative: prose that merely describes a capability without defining authority, stop, failure, or completion semantics.
 - Reason: explicit operational boundaries make Skill execution auditable and reduce invented workflow.
 - Owner decision remaining: NONE
 
 ### DEC-OPL-004 — Permit layered Skill packages without granting authority to auxiliary files
 
 - Decision owner: repository owner
-- Decision: a Skill package may contain `SKILL.md`, modes, references, deterministic scripts, tests, and provider interface metadata. `SKILL.md` owns the operational contract; references explain; scripts mechanize bounded checks; provider metadata aids discovery only.
-- Rejected alternative: place provider-specific interface metadata or long examples inside the normative governance protocol.
-- Reason: separate layers reduce context and permit tooling without creating hidden authority.
+- Decision: a Skill package may contain `SKILL.md`, modes, references, deterministic scripts, tests, and provider interface metadata. `SKILL.md` owns the operational contract but remains non-authoritative; references explain; scripts mechanize bounded checks; provider metadata aids discovery only.
+- Rejected alternative: let a script, reference, or provider file introduce mutation permission or normative meaning.
+- Reason: separate layers reduce context and permit tooling without hidden authority.
 - Owner decision remaining: NONE
 
 ### DEC-OPL-005 — Establish a typed non-normative Record corpus
 
 - Decision owner: repository owner
-- Decision: V1 recognizes `investigation`, `implementation_rationale`, `review`, and `conformance` Record types. Every Record explicitly states that it is not governing authority and cannot authorize implementation or change a Contract.
+- Decision: V1 recognizes `investigation`, `implementation_rationale`, `review`, and `conformance` Record types. Every Record explicitly declares `authority_effect: none` and is subject to type-specific mutability.
 - Rejected alternative: one generic Agent Note type containing decisions, reviews, implementation status, and evidence.
 - Reason: type-specific Records preserve useful knowledge without collapsing the grammar.
 - Owner decision remaining: NONE
 
-### DEC-OPL-006 — Keep Record lifecycle separate and paths stable
+### DEC-OPL-006 — Keep paths stable and make the Record lifecycle a closed state machine
 
 - Decision owner: repository owner
-- Decision: repository-file Records use stable type/ID paths and lifecycle metadata `active | superseded | archived`; type-specific disposition, implementation, verification, and conformance fields remain independent.
-- Rejected alternative: encode lifecycle by moving every active Record among directories.
-- Reason: stable paths preserve references and exact identity, while metadata remains mechanically queryable.
+- Decision: V1-managed repository-file Records use stable type/ID paths and lifecycle metadata `active | superseded | archived`; only the transitions defined by this Spec are legal, and `archived` is terminal.
+- Rejected alternative: encode lifecycle by moving every active Record among directories or permit ad hoc transitions.
+- Reason: stable paths preserve references while a closed graph prevents supersession links from conflicting with sealed content.
 - Owner decision remaining: NONE
 
 ### DEC-OPL-007 — Add an Implementation Rationale Record
 
 - Decision owner: repository owner
-- Decision: an Implementation Rationale Record explains an internal implementation choice within an accepted Spec's Contracts, binds the governing Spec revision and relevant implementation coordinates, and records alternatives, consequences, and reopening conditions.
-- Rejected alternative: put implementation choices into accepted Contract text or leave them only in chat and code review.
+- Decision: an Implementation Rationale Record explains an internal implementation choice within an accepted Spec's Contracts, binds the governing Spec revision and exact implementation commits for every durable claim, and records alternatives, consequences, and reopening conditions.
+- Rejected alternative: put implementation choices into accepted Contract text, bind durable claims only to a branch, or leave rationale only in chat and code review.
 - Reason: internal choices can guide future maintenance without becoming normative system obligations.
 - Owner decision remaining: NONE
 
-### DEC-OPL-008 — Require durable-record impact accounting, not record quotas
+### DEC-OPL-008 — Require set-valued durable-record impact accounting, not record quotas
 
 - Decision owner: repository owner
-- Decision: every non-trivial change reports `DURABLE_RECORD_IMPACT = CREATED | UPDATED | NONE`; `NONE` names the existing owner or explains why the change introduces no reusable rationale.
-- Rejected alternative: require a newly created Note for every non-trivial change.
-- Reason: impact accounting catches missing knowledge without producing duplicate or low-value Records.
+- Decision: every non-trivial change persists one impact declaration that may simultaneously name created and updated Records, exact change coordinates, actor/time, existing durable owners, and a bounded no-new-record reason.
+- Rejected alternative: a single `CREATED | UPDATED | NONE` enum or a requirement to create a new Note for every non-trivial change.
+- Reason: set-valued accounting represents real changes and catches missing knowledge without producing duplicates.
 - Owner decision remaining: NONE
 
-### DEC-OPL-009 — Archive by future decision value and freeze sealed Records
+### DEC-OPL-009 — Archive by future decision value, freeze ordinary history, and preserve a break-glass audit path
 
 - Decision owner: repository owner
-- Decision: a Record is archived only when it is no longer likely to guide a future decision. Sealed archive content is immutable and mechanically protected; age, word count, and target quotas are discovery aids, not archive criteria.
-- Rejected alternative: archive automatically after a time threshold or to maintain a target corpus size.
-- Reason: rationale, negative guarantees, security rules, durable semantics, ownership boundaries, and reopening conditions may remain valuable indefinitely.
+- Decision: eligible Records are archived only when they are no longer likely to guide a future decision. Ordinary sealed content is immutable. Unsafe content may be replaced only through an owner-authorized append-only redaction/tombstone ledger that preserves path and hash evidence without retaining dangerous bytes in the active tree.
+- Rejected alternative: archive automatically by age/size, forbid legally or operationally required removal, or permit ordinary edits under a redaction label.
+- Reason: future-useful rationale must survive while secrets, personal data, malware, and legally removable content need a narrow auditable escape hatch.
+- Owner decision remaining: NONE
+
+### DEC-OPL-010 — Mutation authority originates outside the Skill
+
+- Decision owner: repository owner
+- Decision: a Skill may only consume and narrow mutation permission established by an exact accepted authority and/or an explicit persistent owner action as required for the task. Effective write scope is the intersection of that permission, the task request, the execution identity and credential scope, the target coordinates, and the Skill's own narrower declaration.
+- Rejected alternative: permit `SKILL.md`, a script, or provider metadata to authorize its own installation, deployment, remote write, or irreversible action.
+- Reason: a non-authoritative operational artifact cannot be the source of the permission that lets it mutate state.
+- Owner decision remaining: NONE
+
+### DEC-OPL-011 — Attestations are immutable and other Record updates are append-only or superseding
+
+- Decision owner: repository owner
+- Decision: Review recommendation/findings/coordinates and Conformance evaluation tuple/result/evidence are immutable after creation except for atomic lifecycle/backlink metadata. Investigation and Implementation Rationale updates are limited to the append-only fields specified below; a changed conclusion, chosen implementation, governed Contract set, correction of an attestation, or other semantic replacement creates a new superseding Record.
+- Rejected alternative: rely on Git history while allowing the current durable artifact under one `RECORD_ID` to present a different review or conformance claim.
+- Reason: durable attestations must remain stable at their exact coordinates and corrections must be independently auditable.
+- Owner decision remaining: NONE
+
+### DEC-OPL-012 — Apply V1 forward from an exact local adoption boundary
+
+- Decision owner: repository owner
+- Decision: V1 canonical schema and paths apply to Records created after the local adoption commit and to legacy Records explicitly migrated before material update. Untouched legacy records remain valid, non-authoritative historical artifacts with an explicit `legacy_unmanaged` classification and do not claim V1 conformance.
+- Rejected alternative: fail every consumer immediately at adoption or silently exempt all later edits to legacy files.
+- Reason: forward-only adoption preserves history without making the new contract optional.
+- Owner decision remaining: NONE
+
+### DEC-OPL-013 — Separate deterministic validation from semantic review
+
+- Decision owner: repository owner
+- Decision: deterministic tooling validates explicit machine-declared structure and relations; independent semantic review evaluates prose-level authority, hidden authorization, copied or reinterpreted meaning, Contract changes, false owner acceptance, and misleading completeness claims.
+- Rejected alternative: ask a schema validator to infer arbitrary semantic meaning or make all structure review-only.
+- Reason: honest enforcement requires each layer to claim only what it can establish.
 - Owner decision remaining: NONE
 
 ## 9. Contracts
 
-### CTR-OPL-001 — Skills and Records are not governing authority
+### CTR-OPL-001 — Skills and Records are not governing or mutation authority
 
-A Skill, script, test, provider metadata file, generated catalog, Record, PR discussion, or archive MUST NOT create, accept, amend, supersede, or reinterpret a governing Decision or Contract. Every distributed Skill and Record template MUST state its authority boundary. When any operational instruction conflicts with accepted authority, execution MUST stop and report the conflict.
+A Skill, script, test, provider metadata file, generated catalog, Record, impact declaration, PR discussion, or archive MUST NOT create, accept, amend, supersede, or reinterpret a governing Decision or Contract. It also MUST NOT create or broaden mutation permission. Every distributed Skill and Record template MUST machine-declare `authority_effect: none` and explain its authority boundary. When operational instructions conflict with accepted authority or an explicit owner action, execution MUST stop and report the conflict.
 
 ### CTR-OPL-002 — Every Skill has a bounded invocation contract
 
@@ -329,6 +411,8 @@ do_not_use_when
 required_inputs
 fixed_coordinates
 sources_of_truth
+authority_effect = none
+mutation_authority_inputs
 allowed_mutations
 forbidden_actions
 stop_conditions
@@ -338,21 +422,22 @@ failure_output
 done_criteria
 ```
 
-Missing information MAY be resolved from repository state when a deterministic read can establish it. The Skill MUST NOT begin semantic mutation while a required coordinate, authority, or write boundary remains unresolved.
+Missing information MAY be resolved from repository state when a deterministic read can establish it. No mutation, including an otherwise mechanical local change, MAY begin while a required authority reference, owner-action reference, target coordinate, execution identity, credential scope, or effective write boundary remains unresolved. Read-only investigation MAY continue when it cannot itself create a side effect or expose credentials.
 
 ### CTR-OPL-003 — Shared semantics have one owner
 
-A task-oriented entry Skill MAY route to an owning Skill mode or protocol section. It MUST name that owner and MUST NOT duplicate shared normative semantics. If the owner changes, entrypoints MUST continue to delegate or fail validation rather than silently retaining stale copied rules.
+A task-oriented entry Skill MAY route to an owning Skill mode or protocol section. It MUST name an exact machine-resolvable delegation target in the same distributed revision and MUST NOT duplicate shared normative semantics. If the owner changes, entrypoints MUST continue to delegate or fail validation rather than silently retaining stale copied rules.
 
 ### CTR-OPL-004 — Skill auxiliary layers remain bounded
 
 A Skill package MAY include `modes/`, `references/`, `scripts/`, `tests/`, and `agents/<provider>.yaml`.
 
-- `SKILL.md` MUST own the executable operational contract.
+- `SKILL.md` MUST own the executable operational contract but MUST remain subordinate to accepted authority and owner actions.
 - A reference MUST NOT become required authority merely because it is linked.
 - A deterministic script MUST report only the properties it actually checks.
-- Provider metadata MUST be optional for governance semantics and MUST NOT weaken trigger, mutation, stop, or output rules.
-- Bundled scripts MUST have focused validation and MUST NOT install dependencies or mutate remote state unless the Skill explicitly authorizes that mutation.
+- Provider metadata MUST be optional for governance semantics and MUST NOT weaken trigger, authority, mutation, stop, failure, or output rules.
+- Bundled scripts MUST have focused validation and MUST NOT install dependencies or mutate local or remote state merely because the Skill mentions that action.
+- Any auxiliary layer that declares `authority_effect` other than `none`, supplies its own owner approval, broadens credential scope, or overrides the owning contract MUST fail deterministic validation.
 
 ### CTR-OPL-005 — Record types are explicit and non-interchangeable
 
@@ -365,11 +450,11 @@ review
 conformance
 ```
 
-An Investigation Record MUST NOT grant implementation permission. An Implementation Rationale Record MUST NOT create or change a Contract. A Review Record MUST NOT perform owner acceptance. A Conformance Record MUST remain qualified to exact Spec revision, implementation revision, environment, time, and evidence.
+An Investigation Record MUST NOT grant implementation permission. An Implementation Rationale Record MUST NOT create or change a Contract. A Review Record MUST NOT perform owner acceptance. A Conformance Record MUST remain qualified to exact Spec revision, implementation revision, environment, time, and evidence. Every Record MUST declare `authority_effect: none`; a machine field claiming any other authority effect is invalid, while prose-level coercion remains a semantic-review concern.
 
-### CTR-OPL-006 — Every Record has stable identity and coordinates
+### CTR-OPL-006 — Every V1-managed Record has stable identity and exact coordinates
 
-Every repository-file Record MUST have a stable `RECORD_ID`, `RECORD_TYPE`, stable repository path, owner, created time, lifecycle, related authority IDs and exact revisions where applicable, stable provenance links, and supersession fields. IDs MUST NOT be reused or renumbered. A Record MUST NOT claim “current” implementation or runtime state without the coordinates required by the accepted grammar.
+A `V1-managed Record` is either created after the repository's exact local adoption commit or explicitly migrated under `CTR-OPL-015`. Every V1-managed repository-file Record MUST have a stable `RECORD_ID`, `RECORD_TYPE`, stable repository path, owner, creator, created time, lifecycle, authority effect, related authority IDs and exact revisions where applicable, stable provenance links, supersession fields, and format version. IDs MUST NOT be reused or renumbered. A Record MUST NOT claim current implementation or runtime state without the coordinates required by the accepted grammar.
 
 V1 file-backed ID forms are:
 
@@ -380,23 +465,28 @@ REV-YYYY-NNN   review
 CONF-YYYY-NNN  conformance
 ```
 
-The canonical repository-file path form is:
+The canonical V1 path form is:
 
 ```text
 .agents/local/records/<record_type>/<RECORD_ID>.md
 ```
 
-The lifecycle value is metadata and MUST NOT require a path move. A supersession transition MUST atomically set forward and backward links. The old Record MUST retain its historical meaning and MUST NOT be rewritten to pretend it made the successor's decision.
+Durable implementation claims MUST bind a 40-hex implementation commit. A branch MAY be recorded only as informational discovery context and MUST NOT substitute for the commit. The lifecycle value is metadata and MUST NOT require a path move. Duplicate IDs across canonical Records, legacy aliases, redirect entries, or migrated sources MUST fail validation.
 
-### CTR-OPL-007 — Record lifecycle does not collapse other state dimensions
+### CTR-OPL-007 — Record lifecycle is a closed state machine and does not collapse other dimensions
 
-Record lifecycle is:
+The only legal lifecycle transitions are:
 
 ```text
-active | superseded | archived
+active -> superseded
+active -> archived
+superseded -> archived
+archived -> <none>
 ```
 
-It MUST remain separate from:
+`active -> archived` is allowed only after the type-specific work is closed and future-value review finds no active decision value. `superseded -> archived` is allowed only after the forward and backward supersession links were atomically established while both Records were unsealed. `archived` is terminal: an archived Record MUST NOT be edited, returned to active, or named as a target of `supersedes`. A later Record MAY cite it through `historical_sources` or `related_records`; that citation does not create a supersession backlink.
+
+Record lifecycle MUST remain separate from:
 
 ```text
 investigation disposition
@@ -409,7 +499,7 @@ runtime state
 Spec lifecycle
 ```
 
-`archived` MUST NOT mean rejected, implemented, verified, conforming, or obsolete authority.
+`archived` MUST NOT mean rejected, implemented, accepted, verified, conforming, or obsolete authority.
 
 ### CTR-OPL-008 — Implementation rationale stays within accepted Contracts
 
@@ -420,8 +510,9 @@ governing_spec_id
 governing_spec_revision
 covered_contracts
 implementation_repository
-implementation_base
-implementation_revision_or_branch
+implementation_base_commit
+implementation_commits
+informational_branch_or_pr
 chosen_implementation
 alternatives_considered
 consequences
@@ -429,126 +520,294 @@ verification_references
 reopen_conditions
 ```
 
-It MUST stop and request Spec governance when the proposed rationale would alter external behavior, identity, authorization, failure, retry, timeout, transaction, lifecycle, migration, compatibility, observability, or security semantics beyond the accepted Contracts.
+Every durable claim that an implementation exists, behaves a certain way, or received verification MUST identify the exact implementation commit. A branch or PR MAY help locate work but is not evidence of a durable state. The Record MUST stop and request Spec governance when the rationale would alter external behavior, identity, authorization, failure, retry, timeout, transaction, lifecycle, migration, compatibility, observability, or security semantics beyond the accepted Contracts.
 
-### CTR-OPL-009 — Non-trivial changes account for durable knowledge
+### CTR-OPL-009 — Non-trivial changes persist a set-valued durable-record impact declaration
 
-Every non-trivial change under adopted governance MUST persist:
+Every non-trivial change under adopted governance MUST persist the following declaration in the pull request body under the exact heading `## Durable Record Impact`:
 
-```text
-DURABLE_RECORD_IMPACT = CREATED | UPDATED | NONE
+```yaml
+actor: <identity>
+recorded_at: <timestamp>
+repository: <owner/repository>
+base_commit: <40-hex>
+head_commit: <40-hex candidate or final head>
+persistent_surface: <pull-request URL>
+created_records: [<RECORD_ID>...]
+updated_records: [<RECORD_ID>...]
+existing_durable_owners: [<authority or RECORD_ID>...]
+no_new_record_reason: <text or null>
 ```
 
-`CREATED` and `UPDATED` MUST name the Record IDs. `NONE` MUST name the existing durable owner of the decision/rationale or state why the change is mechanical/local and adds no reusable knowledge. The rule MUST NOT require duplicate Records when an existing Record or accepted authority already owns the material.
+`created_records` and `updated_records` MAY both be non-empty. When both are empty, `existing_durable_owners` and/or `no_new_record_reason` MUST explain why no new durable Record is required. A declaration MUST name the canonical persistent location for every created or updated Record. It MUST NOT require duplicate Records when accepted authority or an existing Record already owns the material.
 
-### CTR-OPL-010 — Archive selection is semantic and sealing is mechanical
+When a permitted emergency action has no pull request, the same structure MUST be persisted in the incident record or in `.agents/local/change-impact/<HEAD_OR_INCIDENT_ID>.yaml`, with a stable link added to the eventual reconciliation PR.
+
+### CTR-OPL-010 — Archive selection is semantic, sealing is mechanical, and unsafe content has a narrow redaction path
 
 A Record MAY become `archived` only after a semantic future-value review. Records that preserve active rationale, alternatives, negative guarantees, ownership or security boundaries, durable or wire semantics, compatibility obligations, or reopening conditions MUST remain active or superseded as appropriate.
 
-After archive sealing:
+Ordinary archive sealing MUST provide:
 
-- content MUST be immutable;
-- the seal manifest MUST be append-only;
-- existing sealed paths and hashes MUST NOT be removed or changed;
-- an archived Record MUST remain historical, non-authoritative material;
-- generated catalogs MAY omit it from default active views without deleting it.
+```text
+record format version
+seal manifest version
+minimum compatible reader/verifier version
+stable path
+content hash
+sealed_at
+sealed_by
+future-value review reference
+```
 
-### CTR-OPL-011 — Validation claims remain honest
+The seal manifest MUST be append-only. Existing ordinary sealed paths and hashes MUST NOT be removed, changed, reordered into a different meaning, or silently accepted after mismatch.
 
-Deterministic tooling MAY validate package layout, metadata fields, ID patterns, stable references, type-specific required sections, supersession closure, archive seals, and declared output schemas. It MUST NOT claim to establish semantic completeness, decision quality, evidence sufficiency, independent review, acceptance, or conformance.
+A sealed artifact containing a credential, secret, personal data, malicious content, or material subject to a lawful removal requirement MAY be removed from the active tree only through a break-glass action that:
+
+1. has explicit owner authorization and an incident, privacy, security, or legal reference;
+2. records an append-only redaction entry containing the original path and hash, actor, approver, timestamp, reason class, replacement tombstone path/hash, and repository-history purge status, without reproducing the unsafe bytes;
+3. replaces the current artifact with a deterministic tombstone and performs history/cache purge when the hazard requires it;
+4. preserves the original seal entry and overlays the authorized redaction entry so the verifier can distinguish sanctioned removal from tampering;
+5. cannot be used to revise rationale, recommendation, evidence, or result.
+
+While any sealed or redacted corpus exists, a rollback or downgrade MUST retain a compatible reader and seal/redaction verifier. A consumer MUST NOT adopt or revert to a distribution revision below the recorded minimum compatible reader/verifier version unless an accepted migration exports the corpus to another verifiable format and proves every seal/redaction entry remains readable and checkable.
+
+### CTR-OPL-011 — Deterministic validation and semantic review are separate, mandatory layers
+
+Deterministic tooling MAY validate only explicit machine-declared properties, including:
+
+- package layout, metadata fields, enums, and ID/path patterns;
+- exact delegation references and distributed-file existence;
+- `authority_effect: none` and forbidden machine-declared authority effects;
+- required side-effect authorization/runtime fields and coordinate formats;
+- exact commit formats, declared output schemas, and impact-declaration structure;
+- type-specific required sections and allowed lifecycle transitions;
+- duplicate IDs, stable references, redirects, and supersession closure;
+- immutable-field fingerprints or equivalent attestation-change detection;
+- archive seals, redaction-ledger structure, and reader-version compatibility.
+
+It MUST NOT claim to establish semantic completeness, decision quality, evidence sufficiency, independent review, acceptance, conformance, absence of copied meaning, absence of hidden authorization in prose, or absence of Contract reinterpretation.
+
+Independent semantic review MUST evaluate at least:
+
+- copied, contradicted, or independently reinterpreted governance meaning;
+- prose that grants hidden write authority or broadens an owner action;
+- rationale that changes a Contract;
+- a Review that performs or falsely reports owner acceptance;
+- a Conformance Record that overstates evidence or result;
+- misleading claims that deterministic validation proves semantic correctness.
+
+A release or adoption candidate fails if either a machine-detectable violation passes deterministic validation or a semantic violation is found by the required independent review.
 
 ### CTR-OPL-012 — Central distribution and repository-local knowledge remain separate
 
-The central distribution MAY contain the Skill-package protocol, Record-corpus protocol, schemas, templates, validators, and reusable Skills. Consumer-specific Records MUST remain in their owning repository and MUST NOT be copied back into the central distribution manifest as shared governance. A consumer update MUST preserve its local Records and local authority ownership.
+The central distribution MAY contain the Skill-package protocol, Record-corpus protocol, schemas, templates, validators, reader/verifier compatibility code, and reusable Skills. Consumer-specific Records, impact declarations, redirect maps, seal manifests, and redaction ledgers MUST remain in their owning repository and MUST NOT be copied back into the central distribution manifest as shared governance. A consumer update MUST preserve local Records, local redaction/seal state, and local authority ownership.
+
+### CTR-OPL-013 — Side-effecting Skills require external authorization and safe execution semantics
+
+Before any local or remote mutation, a side-effecting Skill invocation MUST resolve and persist:
+
+```text
+accepted_authority_reference
+owner_action_reference_or_not_required_reason
+execution_actor
+execution_identity
+credential_scope
+target_coordinates
+requested_mutation
+skill_declared_narrower_scope
+confirmation_boundary
+pre_mutation_recheck
+retry_class
+idempotency_mechanism
+unknown_outcome_probe
+rollback_or_compensation
+```
+
+`accepted_authority_reference` MUST identify an exact accepted authority revision and relevant Contract for a durable behavior change. `owner_action_reference` MUST identify a persistent action with actor, timestamp, target, scope, and expiry or one-use boundary when repository policy or the operation requires owner authorization. Neither may be supplied or fabricated solely by the Skill package.
+
+Effective mutation scope is the intersection of all resolved scopes. Immediately before each irreversible or externally visible mutation, the Skill MUST re-read the target coordinates and authorization boundary. Drift, scope expansion, expired authorization, or credential mismatch MUST stop execution.
+
+Remote mutation with an ambiguous outcome MUST NOT be blindly retried. The Skill MUST use the declared idempotency mechanism or first reconcile the target through the unknown-outcome probe, then report whether the operation is confirmed applied, confirmed absent, or unresolved. An unresolved outcome MUST remain a blocker for dependent actions.
+
+### CTR-OPL-014 — Record mutability is type-specific and attestations are correction-by-supersession
+
+The following fields are immutable for every V1-managed Record after creation, except that lifecycle and link metadata may change only through a valid atomic transition:
+
+```text
+RECORD_ID
+RECORD_TYPE
+authority_effect
+created_at
+created_by
+original authority and source coordinates
+```
+
+Type-specific rules are:
+
+| Record type | Permitted in-place change while `active` | Requires a new Record |
+|---|---|---|
+| `investigation` | append timestamped Observations, Claims, Evidence, alternatives, related links, and one transition from `open` to a final disposition; append a correction entry without deleting the original statement | replacement of a final disposition or historical Observation/Claim/alternative; a different investigated question |
+| `implementation_rationale` | append exact implementation commits, verification references, newly observed consequences, and reopening information while governing Spec revision, covered Contracts, and chosen implementation remain unchanged | changed governing revision or Contract set, changed chosen implementation, rewritten alternative/rationale, or correction that changes the original decision |
+| `review` | no substantive in-place change; only valid lifecycle/backlink metadata | any correction to reviewed base/head, reviewer identity, recommendation, finding, evidence, or conclusion |
+| `conformance` | no substantive in-place change; only valid lifecycle/backlink metadata | any correction to Spec revision, implementation commit, environment, evaluated time, Contract result, evidence, aggregate result, or conclusion |
+
+A correction of a Review or Conformance attestation MUST create a new Record whose `supersedes` points to the erroneous Record and whose reason explains the correction; the old Record receives the atomic backlink and retains its original attestation. A later Conformance evaluation at different coordinates does not automatically supersede the earlier valid evaluation; it uses `related_records` unless it corrects the same evaluation tuple.
+
+### CTR-OPL-015 — V1 applicability and legacy migration are explicit and forward-only
+
+The consuming repository MUST record the exact commit at which this operational layer becomes locally adopted. Records are classified as:
+
+```text
+v1_managed        created after adoption or explicitly migrated
+legacy_unmanaged  pre-adoption artifact not yet materially updated
+redirect_stub     non-Record path-preservation artifact created by migration
+```
+
+An untouched `legacy_unmanaged` artifact remains valid historical, non-authoritative material. It is excluded from V1 required-field/path validation, but discovery and collision checks MUST ensure that its path, any legacy identifier, and any redirect alias do not collide with a V1-managed `RECORD_ID`. It MUST NOT claim V1 conformance or satisfy a post-adoption requirement to create/update a V1-managed Record.
+
+A material update is any semantic change to authority context, coordinates, Observation, Claim, Evidence, alternative, disposition, chosen implementation, covered Contract, review recommendation/finding, conformance result/evidence, lifecycle, or supersession relation. Formatting, spelling, or link repair with independently classified semantic delta `NONE` is not material.
+
+Before a legacy Investigation or Implementation Rationale receives a material update, the repository MUST migrate it atomically. A legacy Review or Conformance attestation is never substantively migrated in place; a new V1-managed Record references the legacy source and preserves it unchanged.
+
+An elected file migration MUST:
+
+1. record the legacy path and source blob hash;
+2. assign or preserve one unique V1 `RECORD_ID`;
+3. move the canonical content to the V1 path without creating a duplicate Record;
+4. preserve historical links through an append-only redirect map and, when needed, a minimal old-path stub containing no `RECORD_ID` and no duplicate body;
+5. validate every redirect target, ID/alias collision, and source hash;
+6. keep the legacy identifier as an alias when it cannot be the V1 ID.
+
+Broken redirects, duplicate IDs, copied canonical bodies at both paths, missing source hashes, or a material legacy edit without migration MUST fail deterministic validation.
 
 ## 10. Acceptance
 
-### ACC-OPL-001 — Skill package contract validation
+### ACC-OPL-001 — Deterministic Skill package validation
 
-- Contracts: `CTR-OPL-001`, `CTR-OPL-002`, `CTR-OPL-003`, `CTR-OPL-004`, `CTR-OPL-011`
-- Method: validate representative router, thin-entry, script-bearing, reference-bearing, and provider-metadata Skill fixtures; include invalid fixtures for copied owner semantics, missing stop conditions, and provider overrides
+- Contracts: `CTR-OPL-001`, `CTR-OPL-002`, `CTR-OPL-003`, `CTR-OPL-004`, `CTR-OPL-011`, `CTR-OPL-013`
+- Method: validate representative router, thin-entry, script-bearing, reference-bearing, provider-metadata, read-only, local-mutation, and remote-mutation fixtures
 - Environment: repository unit test
-- Required evidence: executed validator result bound to implementation commit
-- Expected result: valid packages pass; every named invalid package fails for the intended rule
-- Failure condition: a Skill with ambiguous mutation authority, no completion contract, copied shared semantics, or provider-weakened rules passes
+- Required evidence: executed validator result bound to implementation commit; negative fixtures for missing exact delegation, non-`none` machine authority effect, unresolved mutation fields, provider override, malformed coordinates, and missing unknown-outcome policy
+- Expected result: machine-valid packages pass and every explicit structural violation fails for the intended rule
+- Failure condition: a machine-detectable Skill violation passes; prose-level semantic safety is evaluated separately by `ACC-OPL-007`
 
-### ACC-OPL-002 — Record corpus schema and type-boundary validation
+### ACC-OPL-002 — Deterministic Record corpus and mutability validation
 
-- Contracts: `CTR-OPL-001`, `CTR-OPL-005`, `CTR-OPL-006`, `CTR-OPL-007`, `CTR-OPL-008`, `CTR-OPL-011`
-- Method: validate one complete fixture of each Record type plus invalid cross-type coercions
+- Contracts: `CTR-OPL-005`, `CTR-OPL-006`, `CTR-OPL-007`, `CTR-OPL-008`, `CTR-OPL-011`, `CTR-OPL-014`
+- Method: validate one complete fixture of each Record type, immutable-field fingerprints or equivalent before/after pairs, exact implementation commits, and legal/illegal lifecycle transitions
 - Environment: repository unit test
 - Required evidence: executed validator result and fixture inventory bound to implementation commit
-- Expected result: valid Records pass; an Investigation granting implementation permission, rationale changing a Contract, Review claiming acceptance, and unqualified Conformance each fail
-- Failure condition: type-specific authority or coordinate violations pass
+- Expected result: valid Records and permitted append-only updates pass; changed Review/Conformance attestations, mutable-branch-only claims, illegal transitions, and forbidden field changes fail
+- Failure condition: a machine-detectable Record or attestation mutation violation passes; hidden prose coercion is evaluated separately by `ACC-OPL-008`
 
-### ACC-OPL-003 — Stable identity and supersession closure
+### ACC-OPL-003 — Stable identity, supersession, and archived-reference closure
 
-- Contracts: `CTR-OPL-006`, `CTR-OPL-007`
-- Method: execute cross-record validation for stable IDs, duplicate IDs, backlinks, missing targets, and path/ID consistency
+- Contracts: `CTR-OPL-006`, `CTR-OPL-007`, `CTR-OPL-014`, `CTR-OPL-015`
+- Method: execute cross-record validation for stable IDs, duplicate IDs/aliases, backlinks, missing targets, path/ID consistency, archived terminal state, and historical-source references
 - Environment: temporary repository tree
 - Required evidence: positive and negative executed cases
-- Expected result: stable complete graphs pass and every duplicate, reused, dangling, or one-way supersession fails
-- Failure condition: identity or closure defects pass
+- Expected result: stable complete graphs pass; duplicate, reused, dangling, one-way, post-archive supersession, or invalid historical-source relations fail
+- Failure condition: identity, transition, or closure defects pass deterministic validation
 
-### ACC-OPL-004 — Durable-record impact gate
+### ACC-OPL-004 — Durable-record impact persistence and set semantics
 
 - Contracts: `CTR-OPL-009`, `CTR-OPL-011`
-- Method: evaluate representative non-trivial and mechanical change fixtures with `CREATED`, `UPDATED`, and `NONE`
-- Environment: repository unit test plus semantic review
-- Required evidence: declaration, changed paths, related authority/Record IDs, and negative fixtures
-- Expected result: valid ownership explanations pass; empty `NONE`, missing named Records, and duplicate-Record requirements fail
-- Failure condition: the mechanism becomes either optional boilerplate or a quota that forces a new Record
+- Method: evaluate pull-request fixtures where one change creates and updates Records simultaneously, reuses an existing owner, makes no new Record, and uses the emergency fallback surface
+- Environment: repository unit test plus exact-Head inspection
+- Required evidence: actor/time, repository, base/head, persistent surface, canonical Record locations, created/updated sets, and negative fixtures
+- Expected result: valid mixed sets and justified empty sets pass; missing coordinates, mutable/unresolved head, nonexistent Record paths, and empty explanations fail
+- Failure condition: a machine-detectable impact declaration violation passes or the declaration cannot represent both creation and update
 
-### ACC-OPL-005 — Archive future-value review and tamper detection
+### ACC-OPL-005 — Archive future-value review, sealing, and break-glass redaction
 
-- Contracts: `CTR-OPL-010`, `CTR-OPL-011`
-- Method: semantically classify calibrated keep/archive examples, seal archived fixtures, then modify, remove, and reorder sealed entries
-- Environment: repository review plus unit test
-- Required evidence: classification report, append-only manifest, and executed negative tests
-- Expected result: future-useful Records remain active; low-future-value Records may be sealed; every change or removal of a prior seal fails
-- Failure condition: age or length decides archival, useful guardrails disappear, or sealed content can change undetected
+- Contracts: `CTR-OPL-007`, `CTR-OPL-010`, `CTR-OPL-011`
+- Method: semantically classify calibrated keep/archive examples; seal eligible fixtures; attempt ordinary modification/removal; execute authorized and unauthorized redaction/tombstone fixtures
+- Environment: repository semantic review plus unit test
+- Required evidence: future-value classification report, append-only manifest, redaction ledger, tombstone hashes, actor/approver/time/reason, and executed negative tests
+- Expected result: future-useful Records remain active; eligible Records seal; ordinary tampering fails; exact authorized hazardous-content redaction succeeds without exposing unsafe bytes; a redaction used to revise meaning fails
+- Failure condition: age/length decides archive, useful guardrails disappear, ordinary sealed content changes, or the break-glass path becomes a general edit mechanism
 
 ### ACC-OPL-006 — Distribution/local ownership pilot
 
-- Contracts: `CTR-OPL-012`, `CTR-OPL-001`
-- Method: vendor a candidate distribution into a temporary consumer with pre-existing local Records, update the pin, and inspect both trees
+- Contracts: `CTR-OPL-012`, `CTR-OPL-001`, `CTR-OPL-015`
+- Method: vendor a candidate distribution into a temporary consumer with pre-existing local Records, redirects, seals, and a redaction ledger; update the pin and inspect both trees
 - Environment: temporary consumer repository
-- Required evidence: source commit, manifest, before/after local Record hashes, and governance diff
-- Expected result: reusable protocols and tooling update while local Records remain unchanged and locally owned
-- Failure condition: central vendoring overwrites, imports, or treats consumer Records as distributed authority
+- Required evidence: source commit, manifest, adoption commit, before/after local hashes, and governance diff
+- Expected result: reusable protocols/tooling update while local Records and archive state remain unchanged and locally owned
+- Failure condition: central vendoring overwrites, imports, or treats consumer records/ledgers as distributed authority
 
-### ACC-OPL-007 — Independent semantic boundary review
+### ACC-OPL-007 — Independent semantic review of Skill authority and delegation
 
-- Contracts: all `CTR-OPL-*`
-- Method: independent review of the exact Spec and implementation candidate commits
-- Environment: docs-only Spec PR, then later implementation PR
-- Required evidence: reviewed base/head, semantic findings, final-head recheck, and Contract-by-Contract recommendation
-- Expected result: no Skill or Record can create authority, all state dimensions remain separate, and the implementation stays within this Spec
-- Failure condition: the design reproduces DSH Note authority semantics, duplicates shared governance rules, or claims machine-verified semantics
+- Contracts: `CTR-OPL-001`, `CTR-OPL-002`, `CTR-OPL-003`, `CTR-OPL-004`, `CTR-OPL-011`, `CTR-OPL-013`
+- Method: independently review exact candidate Skill/protocol revisions and representative side-effecting Skills after deterministic validation
+- Environment: exact implementation candidate commit
+- Required evidence: reviewed base/head, reviewer identity, findings, final-head recheck, accepted authority/owner-action references, and target/write-scope analysis
+- Expected result: no prose copies or reinterprets owner semantics, grants hidden mutation permission, broadens credentials/targets, or disguises an unresolved write outcome
+- Failure condition: an independent semantic reviewer finds copied meaning, hidden authorization, scope broadening, or misleading validation claims
+
+### ACC-OPL-008 — Independent semantic review of Record type boundaries
+
+- Contracts: `CTR-OPL-005`, `CTR-OPL-008`, `CTR-OPL-011`, `CTR-OPL-014`
+- Method: independently review exact Record templates/protocol revisions and representative Records after deterministic validation
+- Environment: exact implementation candidate commit and pilot Records
+- Required evidence: reviewed coordinates, type-by-type findings, Contract references, and final-head recheck
+- Expected result: no Investigation grants implementation permission, no Implementation Rationale changes a Contract, no Review performs or falsely reports owner acceptance, and no Conformance overstates evidence or result
+- Failure condition: an independent semantic reviewer finds a prose-level authority or type coercion even though structure passed
+
+### ACC-OPL-009 — Side-effect coordinate drift and unknown-outcome recovery
+
+- Contracts: `CTR-OPL-002`, `CTR-OPL-013`
+- Method: run a controlled side-effect harness with target drift before mutation, expired owner action, overbroad credential, idempotent retry, ambiguous first response, and reconciliation probe
+- Environment: isolated local or test remote target
+- Required evidence: exact before/after coordinates, authorization references, credential scope, operation key, probe result, and final classification
+- Expected result: drift/expiry/scope mismatch stop before mutation; known idempotent retry is safe; ambiguous outcome is probed before retry; unresolved outcome blocks dependent work
+- Failure condition: mutation proceeds after drift or unresolved authority, credentials exceed scope, or ambiguous remote state is blindly retried
+
+### ACC-OPL-010 — Legacy applicability and migration fixtures
+
+- Contracts: `CTR-OPL-006`, `CTR-OPL-012`, `CTR-OPL-015`
+- Method: validate untouched legacy, semantic-delta-none legacy edit, migrated Investigation/Rationale, new Review/Conformance referencing legacy attestations, duplicate-ID, copied-body, missing-source-hash, and broken-redirect fixtures
+- Environment: temporary pre/post-adoption repository trees
+- Required evidence: adoption commit, source blob hashes, redirect map, aliases, canonical paths, and executed results
+- Expected result: untouched legacy remains valid and unmanaged; non-material repair remains legacy; material update migrates or creates a new V1 Record; every collision, duplicate, or broken redirect fails
+- Failure condition: adoption immediately invalidates untouched history, material legacy changes bypass V1, or migration creates duplicate identity/content
+
+### ACC-OPL-011 — Rollback and downgrade preserve archive verification
+
+- Contracts: `CTR-OPL-010`, `CTR-OPL-012`
+- Method: create sealed and redacted corpora, attempt downgrade below the minimum reader/verifier version, retain a compatibility verifier in one case, and perform an accepted export migration in another
+- Environment: temporary consumer repository
+- Required evidence: format/manifest/minimum-reader versions, before/after verification output, migration authority, and complete seal/redaction inventory
+- Expected result: unsafe downgrade is rejected; compatible retained verifier succeeds; accepted export migration proves every entry before old tooling is removed
+- Failure condition: a rollback leaves any sealed or redacted artifact unreadable or unverifiable
 
 ### Contract coverage
 
 | Contract | Acceptance | Evidence class | Covered |
 |---|---|---|---|
-| `CTR-OPL-001` | `ACC-OPL-001`, `ACC-OPL-002`, `ACC-OPL-006`, `ACC-OPL-007` | executed test / semantic review | YES |
-| `CTR-OPL-002` | `ACC-OPL-001`, `ACC-OPL-007` | executed test / semantic review | YES |
+| `CTR-OPL-001` | `ACC-OPL-001`, `ACC-OPL-006`, `ACC-OPL-007` | executed test / semantic review | YES |
+| `CTR-OPL-002` | `ACC-OPL-001`, `ACC-OPL-007`, `ACC-OPL-009` | executed test / semantic review | YES |
 | `CTR-OPL-003` | `ACC-OPL-001`, `ACC-OPL-007` | executed test / semantic review | YES |
 | `CTR-OPL-004` | `ACC-OPL-001`, `ACC-OPL-007` | executed test / semantic review | YES |
-| `CTR-OPL-005` | `ACC-OPL-002`, `ACC-OPL-007` | executed test / semantic review | YES |
-| `CTR-OPL-006` | `ACC-OPL-002`, `ACC-OPL-003`, `ACC-OPL-007` | executed test / semantic review | YES |
-| `CTR-OPL-007` | `ACC-OPL-002`, `ACC-OPL-003`, `ACC-OPL-007` | executed test / semantic review | YES |
-| `CTR-OPL-008` | `ACC-OPL-002`, `ACC-OPL-007` | executed test / semantic review | YES |
-| `CTR-OPL-009` | `ACC-OPL-004`, `ACC-OPL-007` | executed test / semantic review | YES |
-| `CTR-OPL-010` | `ACC-OPL-005`, `ACC-OPL-007` | executed test / semantic review | YES |
-| `CTR-OPL-011` | `ACC-OPL-001`, `ACC-OPL-002`, `ACC-OPL-004`, `ACC-OPL-005`, `ACC-OPL-007` | executed test / semantic review | YES |
-| `CTR-OPL-012` | `ACC-OPL-006`, `ACC-OPL-007` | integration test / semantic review | YES |
+| `CTR-OPL-005` | `ACC-OPL-002`, `ACC-OPL-008` | executed test / semantic review | YES |
+| `CTR-OPL-006` | `ACC-OPL-002`, `ACC-OPL-003`, `ACC-OPL-010` | executed test | YES |
+| `CTR-OPL-007` | `ACC-OPL-002`, `ACC-OPL-003`, `ACC-OPL-005` | executed test / semantic review | YES |
+| `CTR-OPL-008` | `ACC-OPL-002`, `ACC-OPL-008` | executed test / semantic review | YES |
+| `CTR-OPL-009` | `ACC-OPL-004` | executed test / inspection | YES |
+| `CTR-OPL-010` | `ACC-OPL-005`, `ACC-OPL-011` | executed test / semantic review | YES |
+| `CTR-OPL-011` | `ACC-OPL-001`, `ACC-OPL-002`, `ACC-OPL-004`, `ACC-OPL-005`, `ACC-OPL-007`, `ACC-OPL-008` | executed test / semantic review | YES |
+| `CTR-OPL-012` | `ACC-OPL-006`, `ACC-OPL-010`, `ACC-OPL-011` | integration test | YES |
+| `CTR-OPL-013` | `ACC-OPL-001`, `ACC-OPL-007`, `ACC-OPL-009` | executed test / semantic review | YES |
+| `CTR-OPL-014` | `ACC-OPL-002`, `ACC-OPL-003`, `ACC-OPL-008` | executed test / semantic review | YES |
+| `CTR-OPL-015` | `ACC-OPL-003`, `ACC-OPL-006`, `ACC-OPL-010` | executed test / integration test | YES |
 
 ## 11. Alternatives and disposition
 
 ### ALT-OPL-001 — Copy DeepSeek Harness `.agents` wholesale
 
 - Disposition: rejected
-- Reason: the repository solves a product-specific operational problem and permits non-normative Agent Note mutation semantics that cannot govern accepted authority here.
+- Reason: the repository solves a product-specific operational problem and permits non-normative Agent Note mutation semantics that cannot govern accepted authority or immutable attestations here.
 - Evidence/Claims considered: `OBS-OPL-004`, `OBS-OPL-005`, `OBS-OPL-006`, `CLM-OPL-003`
 - What would reopen: never as a wholesale copy; individual mechanisms remain eligible through explicit Contracts.
 
@@ -578,25 +837,46 @@ The central distribution MAY contain the Skill-package protocol, Record-corpus p
 - Disposition: rejected
 - Reason: the rule would create duplicates when an accepted authority or existing Record already owns the rationale.
 - Evidence/Claims considered: `DEC-OPL-008`
-- What would reopen: repeated pilot evidence that impact declarations fail to catch missing durable knowledge.
+- What would reopen: repeated pilot evidence that set-valued impact declarations fail to catch missing durable knowledge.
 
 ### ALT-OPL-006 — Treat all Skill and Record quality as semantic review only
 
 - Disposition: rejected
-- Reason: IDs, required fields, references, output schemas, closure, and archive seals are deterministic even though completeness and decision quality are not.
+- Reason: IDs, required fields, explicit authority-effect fields, exact coordinates, references, output schemas, closure, redirects, and archive seals are deterministic even though completeness and decision quality are not.
 - Evidence/Claims considered: `OBS-OPL-006`, `CTR-OPL-011`
-- What would reopen: not applicable; semantic review remains additive rather than a substitute.
+- What would reopen: not applicable; semantic review remains mandatory and additive rather than a substitute.
+
+### ALT-OPL-007 — Let each Skill authorize the side effects it describes
+
+- Disposition: rejected
+- Reason: a non-authoritative workflow artifact would become the source of its own write permission and could broaden targets or credentials without accepted authority or owner action.
+- Evidence/Claims considered: `OBS-OPL-007`, `DEC-OPL-010`
+- What would reopen: never under the accepted authority model.
+
+### ALT-OPL-008 — Permit Review and Conformance corrections in place because Git retains history
+
+- Disposition: rejected
+- Reason: the current durable artifact under one stable ID would present a different attestation, forcing readers to reconstruct which version was intended from Git history.
+- Evidence/Claims considered: `OBS-OPL-007`, `DEC-OPL-011`
+- What would reopen: a future immutable append-only storage model where each attestation version has an independently addressable stable identity.
+
+### ALT-OPL-009 — Make archives absolutely undeletable without a hazardous-content exception
+
+- Disposition: rejected
+- Reason: credentials, personal data, malicious payloads, and lawful removal obligations may require current-tree and history purge; ordinary edit immutability must coexist with an auditable break-glass path.
+- Evidence/Claims considered: `OBS-OPL-007`, `DEC-OPL-009`
+- What would reopen: not applicable; the exception remains narrow and owner-authorized.
 
 ## 12. Migration, compatibility, and rollback
 
 ```text
-MIGRATION = after acceptance, implement protocols/templates/validators in a separate PR, then pilot opt-in adoption in consumer repositories
-COMPATIBILITY = existing Investigation, Review, and Conformance records remain valid; migration to canonical metadata is forward-only and repository-owned
-ROLLBACK = revert the operational-layer distribution update and retain repository-local Records as non-authoritative files
-EMERGENCY_CONTAINMENT = disable an unsafe Skill entrypoint or validator integration; durable repair returns through normal Spec governance
+MIGRATION = after acceptance, implement protocols/templates/validators in a separate PR, then pilot opt-in adoption in consumer repositories at an exact local adoption commit
+COMPATIBILITY = untouched pre-adoption records remain legacy_unmanaged; V1 applies to new and explicitly migrated Records; exact redirect and collision rules preserve historical references
+ROLLBACK = a repository with no sealed/redacted corpus may revert the distribution update; a repository with such a corpus must retain a compatible reader/verifier or complete an accepted verifiable export migration first
+EMERGENCY_CONTAINMENT = disable an unsafe Skill entrypoint or validator integration; hazardous archived content uses the owner-authorized tombstone/redaction process; durable repair returns through normal Spec governance
 ```
 
-No consumer MUST bulk-migrate historical records. The first adopted implementation applies to newly created or materially updated Records. Existing stable links MUST be preserved when a repository elects to migrate an old record.
+No consumer MUST bulk-migrate untouched historical records. A material post-adoption update triggers the type-specific migration or new-Record rules in `CTR-OPL-015`. Review and Conformance attestations remain immutable; later evaluations or corrections receive new stable IDs. Consumer updates and rollbacks MUST preserve local Record, redirect, seal, and redaction state.
 
 ## 13. Open questions
 
@@ -605,6 +885,9 @@ OPEN_OWNER_DECISIONS = NONE
 NORMATIVE_TBD = NONE
 UNRESOLVED_AUTHORITY_CONFLICT = NONE
 PARTIAL_SUPERSESSION = NONE
+PRIOR_REVIEW_ID = 5020251145
+PRIOR_REVIEW_RESULT = REVISE
+PRIOR_REVIEW_BLOCKERS_ADDRESSED = 5
 INDEPENDENT_REVIEW_REQUIRED = YES
 READY_TO_MARK_ACCEPTED = YES
 IMPLEMENTATION_IN_THIS_PR = NO
