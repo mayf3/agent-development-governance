@@ -16,8 +16,9 @@ Implementation progress, verification coverage, runtime state, and conformance a
 
 | Spec ID | Status | Kind | Implementation authority | Purpose |
 |---|---|---|---|---|
-| `AGENT_DEVELOPMENT_GOVERNANCE_BOOTSTRAP_V0` | proposed | implementation | contracts | Bootstrap the initial reusable governance distribution and its integrity tooling |
+| `AGENT_DEVELOPMENT_GOVERNANCE_BOOTSTRAP_V0` | accepted | implementation | contracts | Bootstrap the initial reusable governance distribution and its integrity tooling |
+| `AGENT_OPERATIONAL_LAYER_V1` | proposed | implementation | contracts | Define bounded task Skills and a typed, non-normative repository-local Record corpus |
 
 ## Bootstrap note
 
-The initial repository necessarily begins before an accepted Spec exists in its base. The bootstrap Spec records that one-time exception. It must not be generalized into a permanent bypass.
+The one-time bootstrap exception is historical and ended when `AGENT_DEVELOPMENT_GOVERNANCE_BOOTSTRAP_V0` became accepted on `main`. It must not be reused for this or any later governance change.
