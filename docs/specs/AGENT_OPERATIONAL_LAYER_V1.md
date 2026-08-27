@@ -41,6 +41,7 @@ SUCCESS_OUTCOME = recurring work is executable and durable rationale is preserve
 - a typed, non-normative Record corpus for investigations, implementation rationale, reviews, and conformance;
 - stable Record identity, exact coordinates, type-specific mutability, lifecycle metadata, supersession links, and archive policy;
 - immutable Review and Conformance attestations with correction-by-supersession;
+- type-specific archive eligibility that keeps a current Review or Conformance attestation available for later correction;
 - deterministic validation of machine-declared Skill and Record structure without claiming semantic review;
 - an explicit semantic-review layer for prose-level authority and meaning;
 - a central-distribution versus repository-local ownership boundary;
@@ -56,6 +57,7 @@ SUCCESS_OUTCOME = recurring work is executable and durable rationale is preserve
 - letting a Skill create its own mutation permission;
 - treating `implemented`, `reviewed`, `accepted`, `verified`, `conforming`, or `archived` as interchangeable states;
 - allowing a mutable branch name to support a durable implementation claim;
+- allowing a current Review or Conformance attestation to be sealed before it has a successor;
 - requiring one new Record file for every non-trivial change when an existing durable owner already covers the knowledge;
 - copying DeepSeek Harness Agent Notes or Skills wholesale;
 - provider-specific runtime implementation;
@@ -76,6 +78,8 @@ EXTERNAL_PRIOR_ART = deepseek-ai/deepseek-harness@b150a551b8d465e31e418e1b2eaf5e
 AUTHORITY_CONFLICT = NONE
 AMENDMENT_REVIEW_ID = 5020251145
 AMENDMENT_REVIEWED_HEAD = 02be9c8521154d7808f3f3d4ba06728394f43659
+FOLLOWUP_REVIEW_ID = 5036091214
+FOLLOWUP_REVIEWED_HEAD = 28402fde238cd1c4bc1f8f0c7ab9def29e572ee6
 ```
 
 DeepSeek Harness is studied only as non-normative prior art. Its repository does not own, constrain, or supersede this repository's governance.
@@ -119,6 +123,15 @@ A Skill operational contract is subordinate to accepted authority and to an expl
 - Observed at: 2026-08-25
 - Projection: the direction and primitive boundaries passed, while mutation authority, Record immutability, archive/rollback closure, legacy applicability, and deterministic-versus-semantic Acceptance required revision.
 - Basis: `OBS-OPL-007`, `CLM-OPL-005`, `EVD-OPL-005`
+
+### STATE-OPL-005 — Follow-up review isolated one attestation-archive contradiction
+
+- Subject: Draft PR #3 amended Spec at `28402fde238cd1c4bc1f8f0c7ab9def29e572ee6`
+- As of artifact: GitHub review `5036091214`
+- Environment: independent semantic review
+- Observed at: 2026-08-27
+- Projection: the five earlier blocker areas passed, but allowing an active Review or Conformance Record to move directly to `archived` conflicted with the requirement that every later attestation correction supersede the erroneous Record.
+- Basis: `OBS-OPL-008`, `CLM-OPL-005`, `EVD-OPL-006`
 
 ## 5. Observations
 
@@ -199,6 +212,17 @@ A Skill operational contract is subordinate to accepted authority and to an expl
 - Result: `SPEC_REVIEW = REVISE` with blockers for Skill self-authorization, attestation mutability, archive/rollback closure, legacy applicability, and overclaimed deterministic Acceptance.
 - Provenance: PR #3 review `5020251145`
 
+### OBS-OPL-008 — Review 5036091214 found one contradiction in archived attestation correction
+
+- Subject: `AGENT_OPERATIONAL_LAYER_V1` amended Head
+- Repository/source: `mayf3/agent-development-governance` Draft PR #3
+- Commit/artifact: `28402fde238cd1c4bc1f8f0c7ab9def29e572ee6`, review `5036091214`
+- Environment: independent REVIEW mode
+- Observed at: 2026-08-27
+- Method: re-review the five prior blocker areas and test lifecycle, correction, and archive Contracts against one another
+- Result: the prior blocker areas passed, but `active -> archived` for Review and Conformance could seal the only legal correction target even though attestation correction was required to use `supersedes`.
+- Provenance: PR #3 review `5036091214`
+
 ## 6. Claims and assumptions
 
 ### CLM-OPL-001 — Thin task entrypoints improve discovery without requiring duplicated governance semantics
@@ -229,10 +253,10 @@ A Skill operational contract is subordinate to accepted authority and to an expl
 - Contradicted by evidence: none known
 - Uncertainty: a later machine-readable catalog may provide equally stable redirects for path moves.
 
-### CLM-OPL-005 — Operational safety requires explicit authority, immutability, lifecycle, compatibility, and review-layer closure
+### CLM-OPL-005 — Operational safety requires explicit authority, immutability, lifecycle, compatibility, review-layer, and attestation-lineage closure
 
 - Support state: SUPPORTED
-- Supported by evidence: `EVD-OPL-005`
+- Supported by evidence: `EVD-OPL-005`, `EVD-OPL-006`
 - Contradicted by evidence: none known
 - Uncertainty: exact schema field names and ledger encodings remain implementation choices constrained by the Contracts below.
 
@@ -284,9 +308,19 @@ A Skill operational contract is subordinate to accepted authority and to an expl
 - Target: `CLM-OPL-005`
 - Relation: SUPPORTS
 - Bound coordinates: Draft PR #3, reviewed Head `02be9c8521154d7808f3f3d4ba06728394f43659`, review `5020251145`
-- Strength/sufficiency: decisive for amendment scope
-- Limitations: the amended Head requires a new independent review
+- Strength/sufficiency: decisive for first amendment scope
+- Limitations: the first amended Head required a new independent review
 - Provenance: PR #3 review `5020251145`
+
+### EVD-OPL-006 — Follow-up review supports type-specific attestation archive eligibility
+
+- Source observations: `OBS-OPL-008`
+- Target: `CLM-OPL-005`
+- Relation: SUPPORTS
+- Bound coordinates: Draft PR #3, reviewed Head `28402fde238cd1c4bc1f8f0c7ab9def29e572ee6`, review `5036091214`
+- Strength/sufficiency: decisive for keeping a current Review or Conformance attestation unsealed until superseded
+- Limitations: this amended Head requires another independent review
+- Provenance: PR #3 review `5036091214`
 
 ## 8. Decisions
 
@@ -330,12 +364,12 @@ A Skill operational contract is subordinate to accepted authority and to an expl
 - Reason: type-specific Records preserve useful knowledge without collapsing the grammar.
 - Owner decision remaining: NONE
 
-### DEC-OPL-006 — Keep paths stable and make the Record lifecycle a closed state machine
+### DEC-OPL-006 — Keep paths stable and make lifecycle and archive eligibility type-specific
 
 - Decision owner: repository owner
-- Decision: V1-managed repository-file Records use stable type/ID paths and lifecycle metadata `active | superseded | archived`; only the transitions defined by this Spec are legal, and `archived` is terminal.
-- Rejected alternative: encode lifecycle by moving every active Record among directories or permit ad hoc transitions.
-- Reason: stable paths preserve references while a closed graph prevents supersession links from conflicting with sealed content.
+- Decision: V1-managed repository-file Records use stable type/ID paths and lifecycle metadata `active | superseded | archived`. Investigation and Implementation Rationale Records may move directly from `active` to `archived` after closure and future-value review. Review and Conformance Records may be archived only after they are superseded, so every current attestation remains available as a legal correction target. `archived` is terminal for every type.
+- Rejected alternative: permit ad hoc transitions or seal a current attestation and add a separate correction relation later.
+- Reason: stable paths preserve references, while type-specific archive eligibility prevents supersession rules from conflicting with sealed content.
 - Owner decision remaining: NONE
 
 ### DEC-OPL-007 — Add an Implementation Rationale Record
@@ -354,12 +388,12 @@ A Skill operational contract is subordinate to accepted authority and to an expl
 - Reason: set-valued accounting represents real changes and catches missing knowledge without producing duplicates.
 - Owner decision remaining: NONE
 
-### DEC-OPL-009 — Archive by future decision value, freeze ordinary history, and preserve a break-glass audit path
+### DEC-OPL-009 — Archive by future decision value, preserve current attestations, and retain a break-glass audit path
 
 - Decision owner: repository owner
-- Decision: eligible Records are archived only when they are no longer likely to guide a future decision. Ordinary sealed content is immutable. Unsafe content may be replaced only through an owner-authorized append-only redaction/tombstone ledger that preserves path and hash evidence without retaining dangerous bytes in the active tree.
-- Rejected alternative: archive automatically by age/size, forbid legally or operationally required removal, or permit ordinary edits under a redaction label.
-- Reason: future-useful rationale must survive while secrets, personal data, malware, and legally removable content need a narrow auditable escape hatch.
+- Decision: archive selection remains semantic and type-specific. Closed Investigation and Implementation Rationale Records may seal when they lose future decision value. A Review or Conformance attestation may seal only after a successor has superseded it and the correction lineage remains reachable. Ordinary sealed content is immutable. Unsafe content may be replaced only through an owner-authorized append-only redaction/tombstone ledger that preserves path and hash evidence without retaining dangerous bytes in the active tree.
+- Rejected alternative: archive automatically by age/size, seal a current attestation, forbid legally or operationally required removal, or permit ordinary edits under a redaction label.
+- Reason: future-useful rationale and current attestations must remain available while secrets, personal data, malware, and legally removable content need a narrow auditable escape hatch.
 - Owner decision remaining: NONE
 
 ### DEC-OPL-010 — Mutation authority originates outside the Skill
@@ -370,12 +404,12 @@ A Skill operational contract is subordinate to accepted authority and to an expl
 - Reason: a non-authoritative operational artifact cannot be the source of the permission that lets it mutate state.
 - Owner decision remaining: NONE
 
-### DEC-OPL-011 — Attestations are immutable and other Record updates are append-only or superseding
+### DEC-OPL-011 — Attestations are immutable and corrections target the current unsealed lineage head
 
 - Decision owner: repository owner
-- Decision: Review recommendation/findings/coordinates and Conformance evaluation tuple/result/evidence are immutable after creation except for atomic lifecycle/backlink metadata. Investigation and Implementation Rationale updates are limited to the append-only fields specified below; a changed conclusion, chosen implementation, governed Contract set, correction of an attestation, or other semantic replacement creates a new superseding Record.
-- Rejected alternative: rely on Git history while allowing the current durable artifact under one `RECORD_ID` to present a different review or conformance claim.
-- Reason: durable attestations must remain stable at their exact coordinates and corrections must be independently auditable.
+- Decision: Review recommendation/findings/coordinates and Conformance evaluation tuple/result/evidence are immutable after creation except for atomic lifecycle/backlink metadata. Investigation and Implementation Rationale updates are limited to the append-only fields specified below. A Review or Conformance correction creates a new Record that supersedes the current active, unsealed head of the same correction lineage; only superseded predecessors may later be archived.
+- Rejected alternative: rely on Git history, correct an archived predecessor directly, or allow the current durable artifact under one `RECORD_ID` to present a different review or conformance claim.
+- Reason: durable attestations must remain stable at exact coordinates, and every correction chain must retain one legal target and one visibly current head.
 - Owner decision remaining: NONE
 
 ### DEC-OPL-012 — Apply V1 forward from an exact local adoption boundary
@@ -473,18 +507,38 @@ The canonical V1 path form is:
 
 Durable implementation claims MUST bind a 40-hex implementation commit. A branch MAY be recorded only as informational discovery context and MUST NOT substitute for the commit. The lifecycle value is metadata and MUST NOT require a path move. Duplicate IDs across canonical Records, legacy aliases, redirect entries, or migrated sources MUST fail validation.
 
-### CTR-OPL-007 — Record lifecycle is a closed state machine and does not collapse other dimensions
+### CTR-OPL-007 — Record lifecycle is type-specific, closed, and separate from other dimensions
 
 The only legal lifecycle transitions are:
 
 ```text
-active -> superseded
-active -> archived
-superseded -> archived
-archived -> <none>
+investigation:
+  active -> superseded
+  active -> archived
+  superseded -> archived
+
+implementation_rationale:
+  active -> superseded
+  active -> archived
+  superseded -> archived
+
+review:
+  active -> superseded
+  superseded -> archived
+  active -> archived = FORBIDDEN
+
+conformance:
+  active -> superseded
+  superseded -> archived
+  active -> archived = FORBIDDEN
+
+all record types:
+  archived -> <none>
 ```
 
-`active -> archived` is allowed only after the type-specific work is closed and future-value review finds no active decision value. `superseded -> archived` is allowed only after the forward and backward supersession links were atomically established while both Records were unsealed. `archived` is terminal: an archived Record MUST NOT be edited, returned to active, or named as a target of `supersedes`. A later Record MAY cite it through `historical_sources` or `related_records`; that citation does not create a supersession backlink.
+For Investigation and Implementation Rationale, `active -> archived` is allowed only after the type-specific work is closed and future-value review finds no active decision value. For Review and Conformance, a current `active` attestation MUST remain unsealed so a later correction can supersede it. A Review or Conformance Record MAY enter `archived` only after it is `superseded`, its forward and backward supersession links were atomically established while both Records were unsealed, and its correction lineage reaches exactly one active, unarchived head without cycles or ambiguity.
+
+`archived` is terminal: an archived Record MUST NOT be edited, returned to active, or named as a target of `supersedes`. A later correction MUST target the active unarchived head of the lineage. It MAY cite an archived predecessor through `historical_sources` or `related_records`; that citation does not create a supersession backlink or make the archived predecessor current.
 
 Record lifecycle MUST remain separate from:
 
@@ -545,7 +599,7 @@ When a permitted emergency action has no pull request, the same structure MUST b
 
 ### CTR-OPL-010 — Archive selection is semantic, sealing is mechanical, and unsafe content has a narrow redaction path
 
-A Record MAY become `archived` only after a semantic future-value review. Records that preserve active rationale, alternatives, negative guarantees, ownership or security boundaries, durable or wire semantics, compatibility obligations, or reopening conditions MUST remain active or superseded as appropriate.
+A closed Investigation or Implementation Rationale Record MAY become `archived` after a semantic future-value review. An active Review or Conformance Record MUST NOT be archived, regardless of apparent age or future value. A Review or Conformance Record MAY be archived only after it is superseded and its lineage satisfies `CTR-OPL-007`. Records that preserve active rationale, alternatives, negative guarantees, ownership or security boundaries, durable or wire semantics, compatibility obligations, reopening conditions, or a current attestation MUST remain active or superseded as appropriate.
 
 Ordinary archive sealing MUST provide:
 
@@ -581,8 +635,8 @@ Deterministic tooling MAY validate only explicit machine-declared properties, in
 - `authority_effect: none` and forbidden machine-declared authority effects;
 - required side-effect authorization/runtime fields and coordinate formats;
 - exact commit formats, declared output schemas, and impact-declaration structure;
-- type-specific required sections and allowed lifecycle transitions;
-- duplicate IDs, stable references, redirects, and supersession closure;
+- type-specific required sections, archive eligibility, and allowed lifecycle transitions;
+- duplicate IDs, stable references, redirects, supersession closure, and attestation-lineage head uniqueness;
 - immutable-field fingerprints or equivalent attestation-change detection;
 - archive seals, redaction-ledger structure, and reader-version compatibility.
 
@@ -595,6 +649,7 @@ Independent semantic review MUST evaluate at least:
 - rationale that changes a Contract;
 - a Review that performs or falsely reports owner acceptance;
 - a Conformance Record that overstates evidence or result;
+- archive classification that hides a current or still-correctable attestation;
 - misleading claims that deterministic validation proves semantic correctness.
 
 A release or adoption candidate fails if either a machine-detectable violation passes deterministic validation or a semantic violation is found by the required independent review.
@@ -652,7 +707,11 @@ Type-specific rules are:
 | `review` | no substantive in-place change; only valid lifecycle/backlink metadata | any correction to reviewed base/head, reviewer identity, recommendation, finding, evidence, or conclusion |
 | `conformance` | no substantive in-place change; only valid lifecycle/backlink metadata | any correction to Spec revision, implementation commit, environment, evaluated time, Contract result, evidence, aggregate result, or conclusion |
 
-A correction of a Review or Conformance attestation MUST create a new Record whose `supersedes` points to the erroneous Record and whose reason explains the correction; the old Record receives the atomic backlink and retains its original attestation. A later Conformance evaluation at different coordinates does not automatically supersede the earlier valid evaluation; it uses `related_records` unless it corrects the same evaluation tuple.
+A correction of a Review or Conformance attestation MUST create a new Record whose `supersedes` points to the current active, unarchived head of the same correction lineage and whose reason explains the correction. The old active head receives the atomic backlink, becomes `superseded`, and retains its original attestation. It MAY be archived only afterward under `CTR-OPL-007` and `CTR-OPL-010`.
+
+If an error is discovered in an already archived predecessor, the correction MUST still supersede the current active head; the archived predecessor MAY be named in `historical_sources` to explain the origin of the correction. The archived predecessor remains sealed and visibly non-current through the reachable supersession chain. A correction is invalid if it directly targets an archived Record, creates multiple active heads, or leaves an archived erroneous attestation without a reachable active successor.
+
+A later Conformance evaluation at different coordinates does not automatically supersede the earlier valid evaluation; it uses `related_records` unless it corrects the same evaluation tuple.
 
 ### CTR-OPL-015 — V1 applicability and legacy migration are explicit and forward-only
 
@@ -692,23 +751,23 @@ Broken redirects, duplicate IDs, copied canonical bodies at both paths, missing 
 - Expected result: machine-valid packages pass and every explicit structural violation fails for the intended rule
 - Failure condition: a machine-detectable Skill violation passes; prose-level semantic safety is evaluated separately by `ACC-OPL-007`
 
-### ACC-OPL-002 — Deterministic Record corpus and mutability validation
+### ACC-OPL-002 — Deterministic Record corpus, mutability, and type-specific lifecycle validation
 
 - Contracts: `CTR-OPL-005`, `CTR-OPL-006`, `CTR-OPL-007`, `CTR-OPL-008`, `CTR-OPL-011`, `CTR-OPL-014`
 - Method: validate one complete fixture of each Record type, immutable-field fingerprints or equivalent before/after pairs, exact implementation commits, and legal/illegal lifecycle transitions
 - Environment: repository unit test
-- Required evidence: executed validator result and fixture inventory bound to implementation commit
-- Expected result: valid Records and permitted append-only updates pass; changed Review/Conformance attestations, mutable-branch-only claims, illegal transitions, and forbidden field changes fail
-- Failure condition: a machine-detectable Record or attestation mutation violation passes; hidden prose coercion is evaluated separately by `ACC-OPL-008`
+- Required evidence: executed validator result and fixture inventory bound to implementation commit, including `active Investigation -> archived`, `active Implementation Rationale -> archived`, `active Review -> archived`, `active Conformance -> archived`, and `active -> superseded -> archived` attestation cases
+- Expected result: valid Records and permitted append-only updates pass; closed Investigation/Rationale direct archive passes; active Review/Conformance direct archive fails; Review/Conformance supersession followed by archive passes; changed attestations, mutable-branch-only claims, and forbidden field changes fail
+- Failure condition: a machine-detectable Record, attestation mutation, or type-specific lifecycle violation passes; hidden prose coercion is evaluated separately by `ACC-OPL-008`
 
-### ACC-OPL-003 — Stable identity, supersession, and archived-reference closure
+### ACC-OPL-003 — Stable identity, supersession, and attestation-lineage closure
 
 - Contracts: `CTR-OPL-006`, `CTR-OPL-007`, `CTR-OPL-014`, `CTR-OPL-015`
-- Method: execute cross-record validation for stable IDs, duplicate IDs/aliases, backlinks, missing targets, path/ID consistency, archived terminal state, and historical-source references
+- Method: execute cross-record validation for stable IDs, duplicate IDs/aliases, backlinks, missing targets, path/ID consistency, archived terminal state, historical-source references, and Review/Conformance correction lineages
 - Environment: temporary repository tree
-- Required evidence: positive and negative executed cases
-- Expected result: stable complete graphs pass; duplicate, reused, dangling, one-way, post-archive supersession, or invalid historical-source relations fail
-- Failure condition: identity, transition, or closure defects pass deterministic validation
+- Required evidence: positive and negative executed cases, including a late correction targeting the active head after an older predecessor was archived
+- Expected result: stable complete graphs pass; every attestation lineage has exactly one active unarchived head; an archived Review/Conformance Record is already superseded and reaches that head; late correction of the active head passes; duplicate, reused, dangling, one-way, direct post-archive supersession, multiple-head, cycle, or invalid historical-source relations fail
+- Failure condition: identity, transition, or closure defects pass, or an archived erroneous attestation can appear current because no reachable active successor exists
 
 ### ACC-OPL-004 — Durable-record impact persistence and set semantics
 
@@ -719,14 +778,14 @@ Broken redirects, duplicate IDs, copied canonical bodies at both paths, missing 
 - Expected result: valid mixed sets and justified empty sets pass; missing coordinates, mutable/unresolved head, nonexistent Record paths, and empty explanations fail
 - Failure condition: a machine-detectable impact declaration violation passes or the declaration cannot represent both creation and update
 
-### ACC-OPL-005 — Archive future-value review, sealing, and break-glass redaction
+### ACC-OPL-005 — Archive future-value review, attestation eligibility, sealing, and break-glass redaction
 
 - Contracts: `CTR-OPL-007`, `CTR-OPL-010`, `CTR-OPL-011`
-- Method: semantically classify calibrated keep/archive examples; seal eligible fixtures; attempt ordinary modification/removal; execute authorized and unauthorized redaction/tombstone fixtures
+- Method: semantically classify calibrated keep/archive examples; attempt to archive active and superseded examples of every Record type; seal eligible fixtures; attempt ordinary modification/removal; execute authorized and unauthorized redaction/tombstone fixtures
 - Environment: repository semantic review plus unit test
-- Required evidence: future-value classification report, append-only manifest, redaction ledger, tombstone hashes, actor/approver/time/reason, and executed negative tests
-- Expected result: future-useful Records remain active; eligible Records seal; ordinary tampering fails; exact authorized hazardous-content redaction succeeds without exposing unsafe bytes; a redaction used to revise meaning fails
-- Failure condition: age/length decides archive, useful guardrails disappear, ordinary sealed content changes, or the break-glass path becomes a general edit mechanism
+- Required evidence: future-value classification report, type/lifecycle inventory, append-only manifest, redaction ledger, tombstone hashes, actor/approver/time/reason, and executed negative tests
+- Expected result: future-useful Records remain active; closed Investigation/Rationale may seal; active Review/Conformance archive fails; superseded Review/Conformance may seal while their lineages remain reachable; ordinary tampering fails; exact authorized hazardous-content redaction succeeds without exposing unsafe bytes; a redaction used to revise meaning fails
+- Failure condition: age/length alone decides archive, a current attestation seals, useful guardrails disappear, ordinary sealed content changes, an archived false attestation looks current, or the break-glass path becomes a general edit mechanism
 
 ### ACC-OPL-006 — Distribution/local ownership pilot
 
@@ -751,9 +810,9 @@ Broken redirects, duplicate IDs, copied canonical bodies at both paths, missing 
 - Contracts: `CTR-OPL-005`, `CTR-OPL-008`, `CTR-OPL-011`, `CTR-OPL-014`
 - Method: independently review exact Record templates/protocol revisions and representative Records after deterministic validation
 - Environment: exact implementation candidate commit and pilot Records
-- Required evidence: reviewed coordinates, type-by-type findings, Contract references, and final-head recheck
-- Expected result: no Investigation grants implementation permission, no Implementation Rationale changes a Contract, no Review performs or falsely reports owner acceptance, and no Conformance overstates evidence or result
-- Failure condition: an independent semantic reviewer finds a prose-level authority or type coercion even though structure passed
+- Required evidence: reviewed coordinates, type-by-type findings, Contract references, attestation-lineage/archive analysis, and final-head recheck
+- Expected result: no Investigation grants implementation permission, no Implementation Rationale changes a Contract, no Review performs or falsely reports owner acceptance, no Conformance overstates evidence or result, and no archive decision hides the current correctable attestation
+- Failure condition: an independent semantic reviewer finds a prose-level authority/type coercion or an archive classification that defeats correction semantics even though structure passed
 
 ### ACC-OPL-009 — Side-effect coordinate drift and unknown-outcome recovery
 
@@ -867,6 +926,13 @@ Broken redirects, duplicate IDs, copied canonical bodies at both paths, missing 
 - Evidence/Claims considered: `OBS-OPL-007`, `DEC-OPL-009`
 - What would reopen: not applicable; the exception remains narrow and owner-authorized.
 
+### ALT-OPL-010 — Allow current attestations to archive and add a separate archived-correction ledger
+
+- Disposition: rejected for V1
+- Reason: an external correction relation would introduce new precedence, query, atomicity, compatibility, and verifier semantics. Keeping the current Review or Conformance head unsealed until superseded closes the contradiction with a smaller state machine.
+- Evidence/Claims considered: `OBS-OPL-008`, `EVD-OPL-006`, `DEC-OPL-006`, `DEC-OPL-011`
+- What would reopen: evidence from pilots that retaining current attestations unsealed causes unacceptable corpus or operational cost that cannot be addressed by indexing.
+
 ## 12. Migration, compatibility, and rollback
 
 ```text
@@ -876,7 +942,7 @@ ROLLBACK = a repository with no sealed/redacted corpus may revert the distributi
 EMERGENCY_CONTAINMENT = disable an unsafe Skill entrypoint or validator integration; hazardous archived content uses the owner-authorized tombstone/redaction process; durable repair returns through normal Spec governance
 ```
 
-No consumer MUST bulk-migrate untouched historical records. A material post-adoption update triggers the type-specific migration or new-Record rules in `CTR-OPL-015`. Review and Conformance attestations remain immutable; later evaluations or corrections receive new stable IDs. Consumer updates and rollbacks MUST preserve local Record, redirect, seal, and redaction state.
+No consumer MUST bulk-migrate untouched historical records. A material post-adoption update triggers the type-specific migration or new-Record rules in `CTR-OPL-015`. Review and Conformance attestations remain immutable and active until superseded; only superseded attestations may be archived. Later evaluations or corrections receive new stable IDs and corrections target the current active lineage head. Consumer updates and rollbacks MUST preserve local Record, redirect, seal, redaction, and attestation-lineage state.
 
 ## 13. Open questions
 
@@ -885,9 +951,9 @@ OPEN_OWNER_DECISIONS = NONE
 NORMATIVE_TBD = NONE
 UNRESOLVED_AUTHORITY_CONFLICT = NONE
 PARTIAL_SUPERSESSION = NONE
-PRIOR_REVIEW_ID = 5020251145
-PRIOR_REVIEW_RESULT = REVISE
-PRIOR_REVIEW_BLOCKERS_ADDRESSED = 5
+PRIOR_REVIEW_IDS = 5020251145, 5036091214
+PRIOR_REVIEW_RESULTS = REVISE, REVISE
+PRIOR_REVIEW_BLOCKERS_ADDRESSED = 6
 INDEPENDENT_REVIEW_REQUIRED = YES
 AUTHORING_READY_FOR_REVIEW = YES
 READY_TO_MARK_ACCEPTED = NO
