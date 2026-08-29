@@ -9,7 +9,7 @@ This repository publishes governance rules that other repositories may vendor as
 3. Identify whether the work is `REUSE`, `AMEND`, `SUPERSEDE`, or `NEW`.
 4. Do not mix a normative governance change with unrelated tooling or product work.
 
-The bootstrap Spec is still `proposed`. Until it is independently reviewed and accepted, this repository is a candidate distribution rather than a stable authority release.
+The bootstrap Spec is `accepted` and present on `main`. This reconciles the current lifecycle truth without changing its historical Goal, Decisions, Contracts, Acceptance, or one-time bootstrap exception. The distribution remains a draft and is not a stable release until the separate release conditions are satisfied.
 
 ## Pull request boundaries
 

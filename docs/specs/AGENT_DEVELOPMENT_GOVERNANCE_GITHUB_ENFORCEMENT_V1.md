@@ -1,14 +1,14 @@
 ---
 spec_id: AGENT_DEVELOPMENT_GOVERNANCE_GITHUB_ENFORCEMENT_V1
 status: proposed
-spec_kind: implementation
+spec_kind: program
 authority_level: governing_spec
-implementation_authority: contracts
+implementation_authority: none
 scope:
-  - agent-development-governance-github-administration
-  - dsh-agent-core-main
-  - auth-service-main
-  - svc-workflow-main
+  - shared-github-enforcement-standard
+  - required-child-topology
+  - cross-repository-rollout-sequencing
+  - trust-and-validation-minimums
 governed_by:
   - AGENT_DEVELOPMENT_GOVERNANCE_BOOTSTRAP_V0
 external_authorities: []
@@ -22,569 +22,846 @@ owners:
 
 ## 1. Goal
 
-Establish the proposed, reviewable authority for deterministic GitHub merge enforcement on the `main` branches of `mayf3/dsh-agent-core`, `mayf3/auth-service`, and `mayf3/svc-workflow` without changing any GitHub setting in this authoring change.
+Define one central GitHub-enforcement standard and the mandatory local-activation program for `mayf3/agent-development-governance`, the future trusted producer repository, `mayf3/dsh-agent-core`, `mayf3/auth-service`, and `mayf3/svc-workflow` without directly authorizing any implementation or repository setting.
 
 ```text
-GOAL = replace critical manual-governance bypass exposure with PR-only, exact-head, check-enforced merges
-SUCCESS_OUTCOME = each named main branch rejects direct, destructive, stale, unreviewed, unaccepted, or governance-invalid updates while preserving bounded owner acceptance and emergency containment
-SPEC_GOVERNANCE_MODE = AUTHOR
-PREFLIGHT_CLASSIFICATION = NEW
+GOAL = shared enforcement invariants with repository-local activation authority
+SUCCESS_OUTCOME = independently accepted children can implement one trust model and rollout sequence without central authority crossing repository boundaries
+AMENDMENT_ROUND = 1
+AMENDMENT_CLASS = CENTRAL_STANDARD_PLUS_LOCAL_ACTIVATION
+PREFLIGHT_CLASSIFICATION = AMEND
 SPEC_STATUS = proposed
-IMPLEMENTATION_AUTHORITY = contracts
+SPEC_KIND = program
+IMPLEMENTATION_AUTHORITY = none
+CROSS_REPOSITORY_AUTHORITY_MODEL = CENTRAL_STANDARD_PLUS_LOCAL_ACTIVATION
+CONSUMER_LOCAL_ACCEPTANCE_REQUIRED = YES
 ```
 
-This Spec governs GitHub administrative enforcement for the three named repositories. It does not become product authority over their code. Its Contracts may authorize only a later, separately reviewed settings/check implementation after this exact authority is accepted and present in that implementation base.
+This amendment replaces the proposed PR Head `4087ddf137aaf73a921230bd55b41f903717e550` in place. Because the Spec remains proposed, its stable items may be reorganized before independent review. No second central Spec or PR is created.
 
 ## 2. Scope and non-goals
 
 ### In scope
 
-- the three repositories' `main` branch update path;
-- PR-only merge, draft exclusion, force-push denial, and deletion denial;
-- a frozen minimum required-check suite and exact check context names;
-- governance distribution integrity, Spec lifecycle, implementation-authority, implementation-base, and PR structure checks;
-- exact reviewed-Head semantic review records and Agent-independence evidence;
-- owner acceptance bound to the final Head and accepted-Head/merge-Head equality;
-- current-`main` compatibility verification immediately before merge;
-- staged rollout, canary, rollback, lockout prevention, drift detection, and emergency containment;
-- a persistent rollout record for settings changes made under an accepted revision of this Spec.
+The central Program owns only:
+
+- the shared GitHub enforcement standard;
+- required child topology and cross-repository authority edges;
+- rollout and bootstrap ordering;
+- minimum trust, lifecycle, merge, validation, evidence, rollback, and anti-lockout invariants;
+- blockers that must be closed by children before local activation.
 
 ### Out of scope
 
-- changing branch protection, creating or modifying a repository ruleset, or selecting required checks in this authoring PR;
-- merging, closing, accepting, or marking ready any PR;
-- consumer product code, schema, database, deployment, identity, Grant, credential, or runtime changes;
-- authorization of consumer product implementation;
-- treating a proposed Spec or an unmerged `status: accepted` value as active authority;
-- proving human or Agent independence from GitHub login identity alone;
-- eliminating the repository owner's ultimate GitHub platform-root ability to edit repository settings. That residual root capability is monitored and auditable, not falsely claimed to be cryptographically absent.
+```text
+CENTRAL_STANDARD_DIRECTLY_AUTHORIZES_CONSUMER_SETTINGS = NO
+CENTRAL_STANDARD_DIRECTLY_AUTHORIZES_CHECK_PRODUCER_CODE = NO
+CENTRAL_STANDARD_DIRECTLY_AUTHORIZES_GITHUB_APP_CREATION = NO
+CENTRAL_STANDARD_DIRECTLY_AUTHORIZES_RULESET_MUTATION = NO
+CENTRAL_STANDARD_DIRECTLY_AUTHORIZES_PRODUCT_CODE = NO
+```
+
+This Program does not:
+
+- create or accept any required child;
+- implement or deploy producer code;
+- create a repository, GitHub App, installation, identity, credential, Grant, ruleset, workflow, branch protection, database, or deployment;
+- authorize any consumer product implementation;
+- mark any PR Ready, accepted, or merged;
+- claim that current GitHub or DSH identity can automate Agent-independence proof;
+- treat the present unprotected state as a safe rollback target.
 
 ## 3. Authority and dependencies
 
 ```text
 PRIMARY_PARENT_AUTHORITY = AGENT_DEVELOPMENT_GOVERNANCE_BOOTSTRAP_V0
 PARENT_REVISION_IN_AUTHORING_BASE = d32b946cbbbc1baa99165d7656fc22e8823a651f
-AUTHORITY_ACTION = NEW
-SAME_SCOPE_AUTHORITY = NONE_FOUND
-IMPLEMENTATION_AUTHORITY = contracts
-IMPLEMENTATION_AUTHORITY_BOUNDARY = github enforcement settings, trusted checks, rollout records, and rollback only
-CONSUMER_PRODUCT_IMPLEMENTATION_AUTHORITY = NONE
-EXTERNAL_AUTHORITIES = NONE
+AUTHORITY_ACTION = AMEND
+SAME_SCOPE_CENTRAL_AUTHORITY = THIS_PROPOSED_SPEC_ONLY
+IMPLEMENTATION_AUTHORITY = none
+CONSUMER_LOCAL_ACCEPTANCE_REQUIRED = YES
 AUTHORITY_CONFLICT = NONE
 PARTIAL_SUPERSESSION = NONE
 ```
 
-The parent requires honest separation between manual policy and deterministic enforcement, exact-revision review, explicit implementation authority, and local consumer product authority. This Spec adds a new, bounded GitHub-administration Decision set. It neither changes an existing accepted Contract nor supersedes the parent.
+The accepted parent requires commit-pinned local adoption and forbids a central repository from automatically becoming consumer product authority. This Program refines that boundary: it standardizes the shape of enforcement, while each owning repository must accept its own implementation-authorizing child before local code, Apps, or settings change.
 
-The repository owner supplied explicit cross-repository GitHub-administration direction for the three named repositories. Consumer product Decisions remain local. A future implementation MUST cite the accepted revision of this Spec and MUST be based on a branch whose base already contains that accepted revision; the authoring PR that proposes this Spec cannot implement it.
+### Required child topology
 
-### Deduplication record
+No child file is authored by this amendment. The following topology is mandatory after this Program is independently reviewed, owner-accepted, and merged to governance `main`.
 
-At `2026-08-29T10:50:30Z`, the authoring Agent fetched all remotes, scanned local and remote branch names, searched every governance branch's `docs/**` and `.agents/**` content for GitHub-enforcement, branch-protection, ruleset, required-check, and force-push scope, listed all open PRs in the four repositories, and performed a focused open-PR search. No same-scope authority or PR was found. Existing `AGENT_DEVELOPMENT_GOVERNANCE_BOOTSTRAP_V0` is a parent whose Decision set does not define these enforcement settings. Classification is therefore `NEW`, not `REUSE`, `AMEND`, or `SUPERSEDE`.
+| Required child Spec | Owning repository | Required `governed_by` | Required external relation | Preconditions | Prohibited authority |
+|---|---|---|---|---|---|
+| `AGENT_DEVELOPMENT_GOVERNANCE_TRUSTED_CHECK_PRODUCER_V1` | `mayf3/agent-governance-check-producer` | local repository authority, if any | `mayf3/agent-development-governance` / this Program at its exact accepted commit / `constrained_by` | central Program accepted and exact commit pinned; producer repository exists under owner control | no consumer settings, product behavior, or acceptance of consumer children |
+| `AGENT_DEVELOPMENT_GOVERNANCE_SOURCE_BOOTSTRAP_PROTECTION_V1` | `mayf3/agent-development-governance` | this Program | none; local child of this Program | central Program accepted on governance `main`; current native settings inventoried | no producer implementation, App creation, or consumer settings |
+| `DSH_AGENT_CORE_GITHUB_ENFORCEMENT_ACTIVATION_V1` | `mayf3/dsh-agent-core` | accepted local governance authority | `mayf3/agent-development-governance` / this Program at its exact accepted commit / `constrained_by` | central pin accepted locally; producer and Apps proven; shadow complete; blockers closed | no authority over auth-service, svc-workflow, producer, or product code |
+| `AUTH_SERVICE_GITHUB_ENFORCEMENT_ACTIVATION_V1` | `mayf3/auth-service` | accepted local governance authority | `mayf3/agent-development-governance` / this Program at its exact accepted commit / `constrained_by` | central pin accepted locally; producer and Apps proven; prior canary GO; shadow complete | no authority over other repositories, credentials, Grants, database, deployment, or product code |
+| `SVC_WORKFLOW_GITHUB_ENFORCEMENT_ACTIVATION_V1` | `mayf3/svc-workflow` | accepted local governance authority | `mayf3/agent-development-governance` / this Program at its exact accepted commit / `constrained_by` | central pin accepted locally; producer and Apps proven; prior phases GO; workflow blockers closed | no authority over other repositories, workflow product behavior, database, or deployment |
+
+Each child must use its owning repository's accepted authority chain, explicitly set `implementation_authority`, and preserve the central Program as an exact-revision external constraint where the owning repository differs. Merely declaring a child ID in this Program creates no child authority.
+
+### Cross-repository authority sequence
+
+The only authorized sequence is:
+
+1. independently review the central Program, obtain Owner acceptance, and merge it to governance `main`;
+2. downstream repositories pin the exact accepted central commit through their local governance process;
+3. accept and merge `AGENT_DEVELOPMENT_GOVERNANCE_TRUSTED_CHECK_PRODUCER_V1` in its owning repository;
+4. accept and merge `AGENT_DEVELOPMENT_GOVERNANCE_SOURCE_BOOTSTRAP_PROTECTION_V1` in governance source;
+5. implement, reproducibly build, audit, and sign producer code under the accepted producer child;
+6. create and install the GitHub Apps and verify minimum permissions;
+7. run shadow mode;
+8. each consumer separately authors and accepts its local activation child;
+9. each consumer performs local implementation, shadow verification, and settings rollout under its child;
+10. activate `dsh-agent-core` as canary;
+11. activate `auth-service` after canary GO;
+12. activate `svc-workflow` after auth-service GO.
+
+No consumer may modify settings directly from this Program.
 
 ## 4. Current State
 
-### STATE-GHE-001 — All three target `main` branches lack GitHub enforcement
+### STATE-GHE-001 — The original proposed Head over-authorizes central implementation
 
-- Subject: `main` in `mayf3/dsh-agent-core`, `mayf3/auth-service`, and `mayf3/svc-workflow`
-- As of commits: `4bab9c902931164fb6f812e46891daf9ee7bf68f`, `7110463636693b3c2eced9d97ccb186adf46907d`, and `4dd521a5f7ef91e4b02b8a9204529db10f3ceed6`, respectively
-- Environment: GitHub REST API, repository default branches
+- Subject: PR `mayf3/agent-development-governance#4`
+- As of commit: `4087ddf137aaf73a921230bd55b41f903717e550`
+- Environment: open Draft PR
+- Observed at: amendment preflight
+- Projection: the proposed Spec uses `spec_kind: implementation` and `implementation_authority: contracts`, allowing central Contracts to appear to authorize producer and consumer settings work across repository boundaries.
+- Basis: `OBS-GHE-001`, `CLM-GHE-001`, `EVD-GHE-001`
+
+### STATE-GHE-002 — Three consumer `main` branches had no protection or required checks at investigation time
+
+- Subject: `mayf3/dsh-agent-core`, `mayf3/auth-service`, and `mayf3/svc-workflow`
+- As of commits: `4bab9c902931164fb6f812e46891daf9ee7bf68f`, `7110463636693b3c2eced9d97ccb186adf46907d`, and `4dd521a5f7ef91e4b02b8a9204529db10f3ceed6`
+- Environment: GitHub REST observations recorded by the original authoring task
 - Observed at: `2026-08-29T10:50:30Z`
-- Projection: branch protection is absent, repository ruleset count is zero, no required status checks are configured, and manual governance bypass risk is critical.
-- Basis: `OBS-GHE-001`, `OBS-GHE-002`, `OBS-GHE-003`, `EVD-GHE-001`, `CLM-GHE-001`
+- Projection: protection was off, ruleset count was zero, required checks were absent, and no current workflow producer could safely be required.
+- Basis: `OBS-GHE-002`, `EVD-GHE-002`, `CLM-GHE-002`
 
-### STATE-GHE-002 — No existing workflow can satisfy a minimum required-check set
+### STATE-GHE-003 — Bootstrap status descriptions drifted from accepted frontmatter
 
-- Subject: GitHub Actions and Check Runs in the three consumer repositories
-- As of commits: the three commits in `STATE-GHE-001`
-- Environment: GitHub REST API
-- Observed at: `2026-08-29T10:50:30Z`
-- Projection: `.github/workflows` is absent on each `main`, and the latest `main` commit in each repository has zero Check Runs. Enabling required contexts before installing and proving their producers would lock merges.
-- Basis: `OBS-GHE-004`, `EVD-GHE-002`, `CLM-GHE-002`
+- Subject: governance-source entry documents
+- As of commit: `4087ddf137aaf73a921230bd55b41f903717e550`
+- Environment: amendment worktree
+- Observed at: amendment preflight
+- Projection: `AGENT_DEVELOPMENT_GOVERNANCE_BOOTSTRAP_V0` frontmatter is `accepted`, while `AGENTS.md`, `CONTRIBUTING.md`, `.agents/local/README.md`, and the Spec index still described it as proposed or a candidate. This amendment reconciles those status descriptions only and does not change the bootstrap normative body or invent acceptance.
+- Basis: `OBS-GHE-003`, `EVD-GHE-003`, `CLM-GHE-003`
 
-### STATE-GHE-003 — The governance source has integrity checks but no same-scope enforcement authority
+### STATE-GHE-004 — Producer and automated Agent identity do not yet exist
 
-- Subject: `mayf3/agent-development-governance`
-- As of commit: `d32b946cbbbc1baa99165d7656fc22e8823a651f`
-- Environment: clean local checkout after `git fetch --all --prune`
-- Observed at: `2026-08-29T10:50:30Z`
-- Projection: distribution unit tests and manifest check pass; the source repository intentionally has no consumer lock file; existing Specs are the bootstrap authority plus an unrelated proposed operational-layer authority on an open Draft PR; no branch, open PR, or governing Spec owns this scope.
-- Basis: `OBS-GHE-005`, `OBS-GHE-006`, `EVD-GHE-003`, `CLM-GHE-003`
+- Subject: future trusted check control plane
+- As of artifact: read-only investigation record on PR #4
+- Environment: pre-implementation design state
+- Observed at: amendment preflight
+- Projection: no trusted producer child, producer artifact digest, App IDs, installation IDs, or signed DSH Agent-attestation authority exists.
+- Basis: `OBS-GHE-004`, `EVD-GHE-004`, `CLM-GHE-004`
 
 ## 5. Observations
 
-### OBS-GHE-001 — `dsh-agent-core/main` is unprotected
+### OBS-GHE-001 — Original authority form is implementation-authorizing
 
-- Subject: `mayf3/dsh-agent-core`, branch `main`
-- Repository/source: GitHub REST API
-- Commit/artifact: `4bab9c902931164fb6f812e46891daf9ee7bf68f`
+- Subject: original proposed central Spec
+- Repository/source: `mayf3/agent-development-governance`
+- Commit/artifact: `4087ddf137aaf73a921230bd55b41f903717e550`
+- Environment: PR #4 Draft Head
+- Observed at: amendment preflight
+- Method: inspect frontmatter, scope, Contracts, and Acceptance
+- Result: `spec_kind: implementation`, `implementation_authority: contracts`, and central Contracts directly describe future producer and consumer rollout.
+- Provenance: PR #4 original Head
+
+### OBS-GHE-002 — Enforcement remained absent in the consumer snapshot
+
+- Subject: three named consumer `main` branches
+- Repository/source: GitHub REST API results persisted by original authoring
+- Commit/artifact: exact commits in `STATE-GHE-002`
 - Environment: GitHub repository settings
 - Observed at: `2026-08-29T10:50:30Z`
-- Method: query `repos/mayf3/dsh-agent-core/branches/main/protection`, `repos/mayf3/dsh-agent-core/rulesets`, workflow contents, and commit Check Runs
-- Result: protection endpoint returned `404 Branch not protected`; ruleset count was `0`; workflow path was absent; Check Runs were `[]`.
-- Provenance: authoring-session command output bound to this Spec's authoring branch
+- Method: branch-protection, ruleset, workflow-content, and Check Runs queries
+- Result: branch protection off, zero rulesets, no workflow path, and no Check Runs on the observed Heads.
+- Provenance: original authoring evidence in PR #4 Spec history
 
-### OBS-GHE-002 — `auth-service/main` is unprotected
+### OBS-GHE-003 — Bootstrap lifecycle truth and entry text disagree
 
-- Subject: `mayf3/auth-service`, branch `main`
-- Repository/source: GitHub REST API
-- Commit/artifact: `7110463636693b3c2eced9d97ccb186adf46907d`
-- Environment: GitHub repository settings
-- Observed at: `2026-08-29T10:50:30Z`
-- Method: query the same protection, ruleset, workflow, and Check Run endpoints as `OBS-GHE-001`
-- Result: protection endpoint returned `404 Branch not protected`; ruleset count was `0`; workflow path was absent; Check Runs were `[]`.
-- Provenance: authoring-session command output bound to this Spec's authoring branch
+- Subject: bootstrap authority status
+- Repository/source: governance source tree
+- Commit/artifact: `4087ddf137aaf73a921230bd55b41f903717e550`
+- Environment: clean amendment base
+- Observed at: amendment preflight
+- Method: compare bootstrap frontmatter with `AGENTS.md`, `CONTRIBUTING.md`, `.agents/local/README.md`, and `docs/specs/README.md`
+- Result: frontmatter says `accepted`; named entry surfaces say proposed/candidate.
+- Provenance: repository files at the exact amendment base
 
-### OBS-GHE-003 — `svc-workflow/main` is unprotected
+### OBS-GHE-004 — Investigation fixed ten blocker clusters
 
-- Subject: `mayf3/svc-workflow`, branch `main`
-- Repository/source: GitHub REST API
-- Commit/artifact: `4dd521a5f7ef91e4b02b8a9204529db10f3ceed6`
-- Environment: GitHub repository settings
-- Observed at: `2026-08-29T10:50:30Z`
-- Method: query the same protection, ruleset, workflow, and Check Run endpoints as `OBS-GHE-001`
-- Result: protection endpoint returned `404 Branch not protected`; ruleset count was `0`; workflow path was absent; Check Runs were `[]`.
-- Provenance: authoring-session command output bound to this Spec's authoring branch
-
-### OBS-GHE-004 — No target currently emits required checks
-
-- Subject: current default-branch automation in all three consumer repositories
-- Repository/source: repositories and GitHub Check Runs API
-- Commit/artifact: commits in `STATE-GHE-001`
-- Environment: GitHub-hosted repository metadata
-- Observed at: `2026-08-29T10:50:30Z`
-- Method: request `.github/workflows?ref=main` and Check Runs for each exact Head
-- Result: every workflow request returned not found and every Check Runs collection was empty.
-- Provenance: authoring-session command output
-
-### OBS-GHE-005 — Governance source verification passes its source-repository checks
-
-- Subject: `mayf3/agent-development-governance`
-- Repository/source: local clean worktree
-- Commit/artifact: `d32b946cbbbc1baa99165d7656fc22e8823a651f`
-- Environment: Python standard-library test environment
-- Observed at: `2026-08-29T10:50:30Z`
-- Method: `python3 -m unittest discover -s tests -v` and `python3 tools/build_manifest.py --check`
-- Result: 34 tests passed and the distribution manifest was current. Running the consumer verifier against the source repository correctly failed because the source repository has no consumer `.agents/governance.lock.json`.
-- Provenance: authoring-session command output
-
-### OBS-GHE-006 — Authority and open-work scan found no duplicate
-
-- Subject: governance branches, Specs, and open PRs across the governing and consumer repositories
-- Repository/source: fetched Git refs and GitHub PR API/search
-- Commit/artifact: governance `d32b946cbbbc1baa99165d7656fc22e8823a651f` plus fetched remote refs and open PR snapshots
-- Environment: local Git plus GitHub
-- Observed at: `2026-08-29T10:50:30Z`
-- Method: scan branch names and all referenced governance files; list up to 100 open PRs per repository; search open PRs for enforcement scope
-- Result: no matching branch, governing Spec, or open PR existed. The governance repository had one unrelated open Draft PR, `#3`, for Agent operational-layer authority.
-- Provenance: authoring-session command output
+- Subject: central-standard design
+- Repository/source: PR #4 ordinary comment `issuecomment-5462537976`
+- Commit/artifact: investigation bound to original Head `4087ddf137aaf73a921230bd55b41f903717e550`
+- Environment: read-only investigation
+- Observed at: before amendment file changes
+- Method: persist fixed investigation conclusions and ten blocker clusters
+- Result: amendment mode, authority split, bootstrap, producer, identity, lifecycle, merge, required-check, validation, and rollback/evidence models are fixed with no owner Decision or normative TBD remaining.
+- Provenance: `https://github.com/mayf3/agent-development-governance/pull/4#issuecomment-5462537976`
 
 ## 6. Claims and assumptions
 
-### CLM-GHE-001 — Current enforcement permits critical manual bypass
+### CLM-GHE-001 — Central implementation authority violates the local-acceptance boundary
 
 - Support state: SUPPORTED
 - Supported by evidence: `EVD-GHE-001`
 - Contradicted by evidence: none known
-- Uncertainty: an owner may follow manual discipline, but GitHub does not enforce that discipline.
+- Uncertainty: none material after owner-supplied investigation conclusion.
 
-### CLM-GHE-002 — Checks must be installed and proven before active rules
+### CLM-GHE-002 — Settings-first or custom-check-first activation can lock governance source
 
 - Support state: SUPPORTED
 - Supported by evidence: `EVD-GHE-002`
 - Contradicted by evidence: none known
-- Uncertainty: none material; requiring nonexistent contexts deterministically blocks ordinary merge.
+- Uncertainty: exact future settings IDs do not yet exist and are intentionally not invented.
 
-### CLM-GHE-003 — A new authority is required
+### CLM-GHE-003 — Bootstrap text repair is lifecycle truth reconciliation
 
 - Support state: SUPPORTED
 - Supported by evidence: `EVD-GHE-003`
 - Contradicted by evidence: none known
-- Uncertainty: none material within fetched branches and the recorded open-PR snapshot.
+- Uncertainty: none; bootstrap normative content is unchanged.
 
-### CLM-GHE-004 — GitHub review identity cannot by itself prove Agent independence
+### CLM-GHE-004 — Automated Agent independence is unavailable in V1
 
-- Support state: INFERRED
+- Support state: SUPPORTED
 - Supported by evidence: `EVD-GHE-004`
 - Contradicted by evidence: none known
-- Uncertainty: GitHub can prove account and event identity, but multiple local Agents may legitimately act through one owner's GitHub account.
+- Uncertainty: future signed DSH attestation can replace the human ceremony only under a separately accepted authority.
 
 ## 7. Evidence relations
 
-### EVD-GHE-001 — Settings observations support the bypass-risk Claim
+### EVD-GHE-001 — Original Head supports the over-authorization Claim
 
-- Source observations: `OBS-GHE-001`, `OBS-GHE-002`, `OBS-GHE-003`
+- Source observations: `OBS-GHE-001`
 - Target: `CLM-GHE-001`
 - Relation: SUPPORTS
-- Bound coordinates: the three exact `main` commits and GitHub settings observed at `2026-08-29T10:50:30Z`
-- Strength/sufficiency: strong for the observed repository settings
-- Limitations: does not establish whether voluntary manual practice was followed in every historical merge
-- Provenance: GitHub REST responses recorded by the authoring session
+- Bound coordinates: PR #4 at `4087ddf137aaf73a921230bd55b41f903717e550`
+- Strength/sufficiency: decisive for the proposed authority form
+- Limitations: proposed text may be amended in place
+- Provenance: original Spec frontmatter and Contracts
 
-### EVD-GHE-002 — Workflow inventory supports install-before-enforce ordering
+### EVD-GHE-002 — Absent producers support two-stage bootstrap
 
-- Source observations: `OBS-GHE-004`
+- Source observations: `OBS-GHE-002`, `OBS-GHE-004`
 - Target: `CLM-GHE-002`
 - Relation: SUPPORTS
-- Bound coordinates: the three exact `main` commits at the observation time
-- Strength/sufficiency: decisive for the current state
-- Limitations: workflows may be added after this observation and must then be re-inventoried
-- Provenance: repository contents and Check Runs API responses
+- Bound coordinates: consumer snapshot and pre-implementation investigation
+- Strength/sufficiency: sufficient to forbid requiring undeployed custom contexts
+- Limitations: later child evidence must re-observe live settings
+- Provenance: GitHub observations and persisted investigation
 
-### EVD-GHE-003 — Authority scans support `NEW` classification
+### EVD-GHE-003 — File comparison supports bounded status reconciliation
 
-- Source observations: `OBS-GHE-005`, `OBS-GHE-006`
+- Source observations: `OBS-GHE-003`
 - Target: `CLM-GHE-003`
 - Relation: SUPPORTS
-- Bound coordinates: governance base `d32b946cbbbc1baa99165d7656fc22e8823a651f` and open-PR snapshot at the observation time
-- Strength/sufficiency: sufficient for authoring preflight
-- Limitations: a later concurrent proposal requires deduplication before review or acceptance
-- Provenance: fetched refs, Git content search, and GitHub PR API/search
+- Bound coordinates: amendment base `4087ddf137aaf73a921230bd55b41f903717e550`
+- Strength/sufficiency: direct file evidence
+- Limitations: does not change stable-release state or historical acceptance events
+- Provenance: bootstrap frontmatter and entry surfaces
 
-### EVD-GHE-004 — Shared-account operation supports an explicit Agent-attestation layer
+### EVD-GHE-004 — Missing identity authority supports human V1 gate
 
-- Source observations: `OBS-GHE-006`
+- Source observations: `OBS-GHE-004`
 - Target: `CLM-GHE-004`
 - Relation: SUPPORTS
-- Bound coordinates: repository governance model and owner-directed local-Agent execution context at authoring time
-- Strength/sufficiency: sufficient to reject GitHub account inequality as the only independence proof
-- Limitations: the trusted attestation producer remains implementation work and is not created by this Spec
-- Provenance: parent governance identity rules plus this task's execution model
+- Bound coordinates: read-only investigation record and current design state
+- Strength/sufficiency: decisive for V1 fail-closed behavior
+- Limitations: future signed DSH authority may supersede this manual gate
+- Provenance: PR #4 investigation record
 
 ## 8. Decisions
 
-### DEC-GHE-001 — Use active rulesets with no merge bypass actor
+### DEC-GHE-001 — Central standard plus local activation
 
 - Decision owner: repository owner `mayf3`
-- Decision: each named `main` branch will be protected by an active repository ruleset that applies to administrators, has an empty bypass-actor list, requires PR merges, blocks force-push and deletion, and requires all frozen checks.
-- Rejected alternatives: voluntary policy only; administrator bypass; one broad bypass team.
-- Reason: the owner must retain acceptance authority without possessing a merge-time button that ignores all checks.
+- Decision: this authority is a Program with `implementation_authority:none`; implementation belongs only to accepted children in their owning repositories.
+- Rejected alternatives: central implementation authority; direct consumer settings authority; duplicate central Specs.
+- Reason: preserve repository-local product and settings authority while sharing invariants.
 - Owner decision remaining: NONE
 
-### DEC-GHE-002 — Separate semantic review from owner acceptance
+### DEC-GHE-002 — Two-stage governance-source bootstrap
 
 - Decision owner: repository owner `mayf3`
-- Decision: a trusted semantic-review check validates independent Agent execution identity and an exact reviewed Head; a distinct acceptance check validates an owner's explicit acceptance of the exact final Head.
-- Rejected alternatives: GitHub approval alone; owner self-review; one combined reviewer/acceptor attestation.
-- Reason: GitHub account identity cannot prove local Agent independence, while review recommendation is not owner acceptance.
+- Decision: merge Program and source-bootstrap child under current manual governance, immediately establish native baseline `B0`, protect producer source, and only then enable App-pinned checks.
+- Rejected alternatives: use current unprotected `S0` as rollback; require custom checks before deployment; activate all controls together.
+- Reason: avoid self-hosting recursion and lockout.
 - Owner decision remaining: NONE
 
-### DEC-GHE-003 — Freeze seven required contexts
+### DEC-GHE-003 — External digest-pinned producer control plane
 
 - Decision owner: repository owner `mayf3`
-- Decision: all three repositories use the exact required contexts in `CTR-GHE-005`; repositories may add stricter checks but may not omit or rename the minimum set during V1 rollout.
-- Rejected alternatives: repo-specific ad hoc names; one monolithic opaque check; requiring contexts before producers are proven.
-- Reason: stable contexts make settings auditable and prevent silent coverage loss.
+- Decision: a separately governed producer repository builds immutable signed artifacts; two privilege-separated GitHub Apps produce verification and acceptance/merge outcomes.
+- Rejected alternatives: PR-controlled workflow as its own verifier; context-name-only trust; one all-powerful App.
+- Reason: separate untrusted PR code from enforcement and acceptance privileges.
 - Owner decision remaining: NONE
 
-### DEC-GHE-004 — Roll out in three consumer phases after shadow validation
+### DEC-GHE-004 — Human WebAuthn semantic gate for V1
 
 - Decision owner: repository owner `mayf3`
-- Decision: run all checks in non-required shadow mode across all targets, then enable active enforcement in order `dsh-agent-core`, `auth-service`, `svc-workflow`, with a successful canary window and explicit go/no-go record between phases.
-- Rejected alternatives: simultaneous activation; security-critical `auth-service` as first canary; settings-first activation.
-- Reason: `dsh-agent-core` offers broader PR activity for canary signal without making the authentication authority the first lockout experiment.
+- Decision: independent Human Owner/maintainer WebAuthn ceremony is the V1 semantic gate; Agent execution IDs are informational until signed DSH attestation authority exists.
+- Rejected alternatives: infer Agent identity from GitHub account; trust self-declared session IDs; claim current automation.
+- Reason: no current authority covers key enrollment, signing, rotation, revocation, canonicalization, replay resistance, and verifier integration.
 - Owner decision remaining: NONE
 
-### DEC-GHE-005 — Emergency action is narrow, logged containment
+### DEC-GHE-005 — Two-head lifecycle
 
 - Decision owner: repository owner `mayf3`
-- Decision: emergency action may suspend one malfunctioning required context or revert the latest settings rollout, but may not permit direct push, force-push, branch deletion, Draft merge, stale acceptance, or a blanket bypass actor.
-- Rejected alternatives: disable all protections; permanent owner bypass; undocumented UI repair.
-- Reason: recover from enforcement defects without turning containment into durable bypass.
+- Decision: semantic review binds `S`; owner acceptance binds `S`, a lifecycle-finalization recipe, and one-use nonce; deterministic finalization produces `F`; final-head verification allows only lifecycle changes.
+- Rejected alternatives: require `S = F`; ask owner to sign unknown `F`; permit arbitrary post-review edits.
+- Reason: acceptance necessarily finalizes lifecycle while preserving exact semantic review.
+- Owner decision remaining: NONE
+
+### DEC-GHE-006 — Merge-commit-only external broker
+
+- Decision owner: repository owner `mayf3`
+- Decision: only merge commits are allowed; an external broker rereads all coordinates, uses merge API `sha=F`, and verifies ancestry after merge.
+- Rejected alternatives: squash, rebase merge, unavailable merge queue, old synthetic-compatibility result as final authority.
+- Reason: preserve accepted Head identity and close current-main races.
+- Owner decision remaining: NONE
+
+### DEC-GHE-007 — Strict positive-only producer conclusions
+
+- Decision owner: repository owner `mayf3`
+- Decision: required contexts bind name plus integration ID and return `success` only for complete positive proof; neutral/skipped are never emitted for incomplete or unavailable evidence.
+- Rejected alternatives: context name alone; N/A as neutral; infrastructure outage as skipped.
+- Reason: GitHub may treat success, neutral, or skipped as satisfying a required context.
+- Owner decision remaining: NONE
+
+### DEC-GHE-008 — Repository-specific validation profiles
+
+- Decision owner: repository owner `mayf3`
+- Decision: central minimums include complete DSH, auth-service, and svc-workflow profiles plus fail-closed common behavior; local children may strengthen but not weaken them.
+- Rejected alternatives: “run existing tests”; PR-owned verifier changes; rerun-to-green.
+- Reason: generic test labels do not freeze security-relevant coverage.
+- Owner decision remaining: NONE
+
+### DEC-GHE-009 — Cutoff, LOCKDOWN, and safe rollback
+
+- Decision owner: repository owner `mayf3`
+- Decision: snapshot all open PRs, enter LOCKDOWN before changing required contexts, freeze pre-cutoff PRs, and roll back only to `B0` or the last safe baseline.
+- Rejected alternatives: grandfather old checks/reviews; remove failed context while ordinary merge remains open; return to `S0`.
+- Reason: prevent transition races and emergency bypass.
+- Owner decision remaining: NONE
+
+### DEC-GHE-010 — External WORM rollout evidence
+
+- Decision owner: repository owner `mayf3`
+- Decision: settings records use a canonical JSON schema in external Object Lock/WORM storage and strictly exclude secrets and raw sensitive responses.
+- Rejected alternatives: mutable PR comment only; repository branch as sole ledger; full environment or API dumps.
+- Reason: settings evidence must survive repository compromise without becoming a credential leak.
 - Owner decision remaining: NONE
 
 ## 9. Contracts
 
-### CTR-GHE-001 — `main` is PR-only
+### CTR-GHE-001 — Central Program has no direct implementation authority
 
-For each target repository, updates to `refs/heads/main` MUST be created only by merging a pull request. Direct pushes, including administrator direct pushes, MUST be rejected. The ruleset MUST apply to repository administrators and MUST configure no bypass actor.
+This Program MUST remain `spec_kind: program` and `implementation_authority: none`. It MUST NOT directly authorize consumer settings, producer code, GitHub App creation, ruleset mutation, workflow installation, or product implementation. Acceptance of this Program authorizes only the requirement to author and evaluate the named children.
 
-### CTR-GHE-002 — Destructive branch updates are forbidden
+### CTR-GHE-002 — Local children and acceptance are mandatory
 
-Force-pushes to and deletion of `refs/heads/main` MUST be rejected for every actor during normal operation and emergency containment.
+Every implementation or settings action MUST be authorized by an accepted, implementation-authorizing child in the owning repository and present in that implementation base. Consumer children MUST pin the exact accepted central commit as `constrained_by`, MUST be accepted locally, and MUST NOT inherit implementation authority from this Program.
 
-### CTR-GHE-003 — Draft and unresolved PRs cannot merge
+### CTR-GHE-003 — Required child topology and sequence are closed
 
-A Draft PR MUST NOT merge. A PR MUST be non-Draft, open, targeted to `main`, free of unresolved required review conversations when that GitHub feature is available, and satisfy every required context on its exact current Head before merge.
+All five children in §3 MUST exist in their named repositories and satisfy the twelve-step authority sequence before the related activation. A declaration in the topology table is not child acceptance. Skipping, reordering, or combining producer, source-bootstrap, or consumer authority steps MUST block rollout.
 
-### CTR-GHE-004 — Required checks are strict and exact-Head bound
+### CTR-GHE-004 — Governance source uses `S0`, `B0`, and LOCKDOWN correctly
 
-Required checks MUST be configured as strict/up-to-date checks. A success attached to any commit other than the PR's current 40-hex Head MUST NOT satisfy merge eligibility. A skipped, neutral, cancelled, timed-out, stale, missing, or pending result MUST NOT count as success.
-
-### CTR-GHE-005 — Minimum required-check contexts are frozen
-
-Every target `main` ruleset MUST require these exact contexts:
+The source-bootstrap child MUST define:
 
 ```text
-governance/distribution-integrity
-governance/spec-lifecycle
-governance/structure
-governance/semantic-review
-governance/acceptance-final-head
-governance/current-main-compatibility
-repository/validation
+S0 = current unprotected historical snapshot; never a safe rollback target
+B0 = native GitHub PR-only, non-Draft, no-force, no-delete, empty-bypass, merge-commit-only baseline
+LOCKDOWN = all main updates forbidden during required-context migration
+GOVERNANCE_SOURCE_BOOTSTRAP_MODEL = TWO_STAGE_NO_CUSTOM_CHECK_BOOTSTRAP
 ```
 
-`repository/validation` MUST execute the repository's accepted build, test, lint, and deterministic generation obligations. Where no such local authority exists, its V1 minimum MUST at least parse/compile supported source and run the repository's existing deterministic tests; it MUST fail rather than report success when no repository validation plan is installed.
+The Program and source-bootstrap child MUST first merge under existing manual governance. `B0` MUST then be established immediately. Initial bootstrap MUST NOT depend on an undeployed custom check.
 
-### CTR-GHE-006 — Distribution integrity is deterministic
+### CTR-GHE-005 — Producer source is protected before App-pinned enforcement
 
-`governance/distribution-integrity` MUST verify the consumer's `.agents/governance.lock.json`, the exact pinned source commit and manifest digest, every vendored file digest, adoption status, acceptance metadata, and local-governance declaration. It MUST fail on missing, proposed, malformed, tampered, floating, or mismatched governance. In the governance source repository's own authoring PRs, the equivalent producer MUST instead run the source manifest check and distribution tests; absence of a consumer lock in the source repository MUST NOT be mislabeled as consumer drift.
+After governance-source `B0`, the producer source repository MUST receive an equivalent native safe baseline before producer code is relied upon. Producer source, reproducible build definition, signing policy, and release metadata MUST be protected before any App-pinned required context becomes active. `LOCKDOWN` MUST cover migration gaps.
 
-### CTR-GHE-007 — Lifecycle, implementation authority, and implementation base are enforced
+### CTR-GHE-006 — Producer artifacts are immutable and provenance-bound
 
-`governance/spec-lifecycle` MUST evaluate the PR against its exact base and Head and MUST fail when:
-
-1. a proposed or superseded Spec is used as implementation authority;
-2. an unmerged `status: accepted` value is treated as active authority;
-3. non-mechanical product, configuration, schema, generated-behavior, or operational implementation lacks one primary accepted Spec already present in the PR base;
-4. the primary Spec has `implementation_authority: none`;
-5. implementation scope exceeds accepted Contracts;
-6. a PR combines changed normative meaning with implementation of that changed meaning;
-7. accepted stable IDs change meaning, supersession backlinks are incomplete, or partial supersession is attempted.
-
-A proposed Spec, including this Spec while proposed, MUST NOT authorize product implementation or GitHub-settings rollout.
-
-### CTR-GHE-008 — Structure compares the GitHub PR base and Head correctly
-
-`governance/structure` MUST obtain `BASE_SHA` and `HEAD_SHA` from the trusted `pull_request` event payload or GitHub API, verify both are full commits belonging to the PR, fetch those exact objects, compute `MERGE_BASE=$(git merge-base "$BASE_SHA" "$HEAD_SHA")`, and evaluate the PR change set with:
+The future producer child MUST govern repository `mayf3/agent-governance-check-producer` and require each release to bind:
 
 ```text
-git diff --name-status "$MERGE_BASE" "$HEAD_SHA"
+immutable OCI digest
+SBOM digest
+builder identity
+signature public-key fingerprint
+source commit
+reproducible build result
+security audit result
 ```
 
-It MUST NOT use the runner checkout's implicit `HEAD`, a locally stale `main`, `HEAD^`, or `git diff "$BASE_SHA" "$HEAD_SHA"` as a substitute for GitHub PR diff semantics. It MUST record all three SHAs. The check MUST fail if the event/API coordinates cannot be proven, if a docs-only authority PR contains non-documentation/product implementation, or if a claimed implementation-only PR mutates governing authority. Compatibility with the latest `main`, which may advance after the event base, belongs to `governance/current-main-compatibility`, not to structure.
+Runtime deployment MUST select the immutable OCI digest, not a tag. The producer MUST be external to PR-controlled code and MUST reject artifact, SBOM, builder, signature, or source mismatches.
 
-### CTR-GHE-009 — Semantic review is bound to the exact reviewed Head
+### CTR-GHE-007 — App privileges and context identity are separated
 
-`governance/semantic-review` MUST require a successful Semantic Review Record whose `reviewed_head_sha` equals the PR's exact current Head and whose `reviewed_base_sha` and `merge_base_sha` match the structure record. The record MUST include repository, PR number, Spec IDs, reviewer GitHub actor, reviewer Agent execution identity, author Agent execution identity, review producer GitHub App identity/version, review time, recommendation, findings, and stable record locator. Any semantic change or Head movement invalidates the prior result.
-
-GitHub account inequality or a native GitHub approval alone MUST NOT prove Agent independence. The required check MUST verify that reviewer and author Agent execution identities are distinct and that the review attestation was emitted by the dedicated trusted governance-verifier GitHub App, not by PR-controlled code or a general repository workflow token. The persistent record MUST be the completed GitHub Check Run attached to `reviewed_head_sha`: its output MUST contain the complete canonical Semantic Review Record, its `external_id` MUST contain that record's SHA-256 digest, and its App, Check Run ID, URL, creation time, completion time, and Head SHA form the stable locator. Rerequesting review MUST create a new Check Run rather than overwrite an earlier completed record. A mutable PR comment MAY mirror the result but MUST NOT be the sole record.
-
-### CTR-GHE-010 — Acceptance is an owner action on the final Head only
-
-`governance/acceptance-final-head` MUST require an explicit owner acceptance attestation containing repository, PR number, exact 40-hex `accepted_head_sha`, accepting GitHub actor, acceptance time, semantic-review record locator/digest, and acceptance producer identity/version. The accepted Head MUST equal the PR's current Head and the successful semantic review's `reviewed_head_sha`. Any later commit invalidates acceptance.
-
-An authorized owner MAY issue the exact-Head acceptance action even in a single-owner repository, but that action controls only this required context. It MUST NOT waive, override, synthesize success for, or bypass any other check. The active ruleset MUST have no owner/admin bypass actor.
-
-### CTR-GHE-011 — Accepted Head equals merge Head
-
-Immediately before completing a merge, the enforcement producer MUST read the PR Head from GitHub, require equality with `accepted_head_sha`, and bind the merge request to that expected Head using the GitHub merge API's expected-Head field or equivalent compare-and-swap behavior. If the Head changed, the merge MUST fail closed and require new structure, review, acceptance, validation, and compatibility results.
-
-### CTR-GHE-012 — Current-`main` compatibility is separately rechecked
-
-`governance/current-main-compatibility` MUST fetch the current remote `refs/heads/main` after all earlier review/acceptance events, record `CURRENT_MAIN_SHA` and `HEAD_SHA`, and test the exact candidate against that current base using a clean synthetic merge or equivalent GitHub mergeability calculation. It MUST rerun the repository validation and governance checks whose outcome can change under the synthetic merge. It MUST fail on conflicts, stale current-main coordinates, validation failure, or any material difference between tested candidate and the merge candidate. A successful check becomes stale when `main` advances and MUST be rerun before merge.
-
-### CTR-GHE-013 — Settings rollout is settings-last and fail-safe
-
-No required context may be activated until its producer has run successfully in shadow mode on at least one representative open PR and on a synthetic negative fixture in the same repository. Before each activation, the rollout actor MUST capture the complete pre-change settings snapshot and a proposed post-change snapshot, verify API access, verify a recovery path, and confirm no required context is missing. Check producers and persistent evidence storage MUST be installed before settings are made active.
-
-### CTR-GHE-014 — Consumer activation order and canary gates are fixed
-
-Activation MUST proceed in this order:
+The future control plane MUST use:
 
 ```text
-0. shadow mode on dsh-agent-core, auth-service, and svc-workflow
-1. active canary on dsh-agent-core
-2. active rollout on auth-service
-3. active rollout on svc-workflow
+governance-verifier
+  -> governance/distribution-integrity
+  -> governance/spec-lifecycle
+  -> governance/structure
+  -> governance/semantic-review
+  -> governance/current-main-compatibility
+  -> repository/validation
+
+governance-acceptance-broker
+  -> governance/acceptance-final-head
+  -> expected-Head merge coordination
 ```
 
-Each active phase MUST observe at least one successful eligible PR dry-run or merge simulation, one rejected stale/invalid fixture, settings drift status `CLEAN`, and no unresolved lockout incident before the owner records `GO`. A failed phase blocks later phases.
+Every required context MUST bind both exact context name and trusted GitHub `integration_id`; name alone is insufficient. App permissions MUST be least privilege and separated so the verifier cannot accept/merge and the acceptance broker cannot synthesize verification success.
 
-### CTR-GHE-015 — Rollback and emergency containment are bounded
+Current unresolved implementation identifiers MUST be represented honestly:
 
-A rollout failure MUST first revert to the exact pre-change settings snapshot. Emergency containment requires owner authorization and an incident ID, must identify the single failing context or settings delta, and may only suspend that context or revert the latest rollout. It MUST preserve PR-only updates, Draft exclusion, force-push denial, deletion denial, exact-Head acceptance, and the no-bypass-actor rule. It MUST record actor, time, before/after snapshots, reason, affected PRs, and restoration deadline. Durable repair requires normal Spec and review flow.
+```text
+APP_IDS = NOT_YET_AVAILABLE
+INSTALLATION_IDS = NOT_YET_AVAILABLE
+OCI_DIGEST = NOT_YET_AVAILABLE
+TRUSTED_PRODUCER_IDENTITY = UNRESOLVED_PENDING_CHILD
+```
 
-### CTR-GHE-016 — Lockout prevention is tested before activation
+No child may invent these values before the corresponding resources and evidence exist.
 
-Before each active phase, a non-merge dry run MUST prove that the owner can: open/update a PR, obtain every context, issue exact-Head acceptance, observe current-main compatibility, and submit a compare-and-swap merge request without bypass. A separate rollback dry run MUST prove that the exact pre-change settings snapshot can be restored through the documented API path. Any missing permission, unavailable producer, recursive dependency, or ambiguous recovery result blocks activation.
+### CTR-GHE-008 — V1 Agent independence uses Human WebAuthn ceremony
 
-### CTR-GHE-017 — Settings state and drift are persistent and auditable
+The V1 semantic gate MUST be an independent Human Owner/maintainer WebAuthn ceremony bound to repository, PR, semantic Head `S`, base, review decision, and nonce. `AUTHOR_AGENT_EXECUTION_ID` and `REVIEWER_AGENT_EXECUTION_ID` are informational only and MUST NOT prove independence.
 
-Every rollout or rollback MUST create a persistent Settings Rollout Record containing the accepted Spec revision, implementation base, repository, branch, actor, timestamps, pre/post canonical settings JSON and digests, required-context list, bypass actors, canary evidence, API responses, and result. A scheduled or event-driven external monitor MUST compare live settings with the accepted snapshot. Unapproved drift, including addition of a bypass actor or removal of a check, MUST raise an incident and block a `CLEAN` rollout gate. The platform-root owner's ability to edit settings is a declared residual risk, not a merge bypass granted by this Spec.
+```text
+SEMANTIC_REVIEW_GATE = independent Human Owner/maintainer WebAuthn ceremony
+AGENT_INDEPENDENCE_AUTOMATION = DEFERRED_PENDING_SIGNED_DSH_ATTESTATION_AUTHORITY
+```
 
-### CTR-GHE-018 — This authority cannot authorize product behavior
+Any future automated Agent-independence model requires a separate accepted authority covering host-key enrollment, signatures, rotation, revocation, canonical attestation, replay resistance, and verifier integration.
 
-While this Spec is `proposed`, it authorizes no implementation. After acceptance, `implementation_authority: contracts` authorizes only the bounded enforcement producers, evidence records, settings rollout, monitoring, and rollback defined here. It MUST NOT authorize consumer product code, deployment, database, identity, Grant, credential, or unrelated workflow behavior. Those changes require their own accepted, implementation-authorizing local authority present in their implementation base.
+### CTR-GHE-009 — Lifecycle uses semantic Head `S` and final Head `F`
+
+Owner semantic review MUST bind `S = SEMANTIC_HEAD_SHA`. Owner acceptance MUST bind `S`, the exact allowlisted lifecycle-finalization recipe, and a one-use nonce. A deterministic broker applies that recipe to produce `F = FINAL_ACCEPTED_HEAD_SHA`. Final-head verification MUST prove `diff(S,F)` contains only the accepted lifecycle allowlist, including exact status/acceptance-record finalization and no Goal, scope, authority, Decision, Contract, Acceptance, validation, migration, trust, or security meaning change.
+
+The model MUST NOT require `S = F` and MUST NOT require the Owner to sign `F` before it exists. `governance/acceptance-final-head` binds `F`; any Head movement after `F` invalidates semantic review, acceptance, and every required result.
+
+### CTR-GHE-010 — Merge is merge-commit-only and race-closed
+
+```text
+ALLOWED_MERGE_METHODS = MERGE_COMMIT_ONLY
+FINAL_ACCEPTED_HEAD_ANCESTOR_REQUIRED = YES
+SQUASH = FORBIDDEN
+REBASE_MERGE = FORBIDDEN
+MERGE_QUEUE = NOT_AVAILABLE_FOR_CURRENT_PERSONAL_REPOSITORIES
+EXPECTED_BASE_CAS = UNSUPPORTED
+RECOMMENDED_MERGE_COORDINATION = EXTERNAL_MERGE_BROKER
+```
+
+Immediately before merge, the external broker MUST reread PR Head, current `main`, Draft state, exact App-bound contexts, and lifecycle records; require Head `= F`; require current `main` to be an ancestor of `F`; require every context successful for `F`; and call the GitHub merge API with `sha=F`. After merge, it MUST verify `F` is an ancestor of `main` and the resulting method is a merge commit.
+
+If `main` advances after review, the candidate MUST merge current `main` into the PR branch to produce a new Head. All prior semantic review, acceptance, compatibility, validation, and required-check records then become invalid and the lifecycle restarts. An old synthetic compatibility result MUST NOT authorize merge.
+
+### CTR-GHE-011 — Required-check conclusions fail closed
+
+Because GitHub may count `success`, `neutral`, or `skipped` as satisfying a required context, a trusted App producer MUST emit `success` only after complete positive proof. It MUST NOT emit `neutral` or `skipped` for not-applicable, missing dependency, infrastructure unavailable, timeout, unsupported path, cancellation, partial evidence, or missing evidence. Such conditions MUST emit a failing conclusion or remain incomplete until a bounded deadline and then fail. Required contexts MUST be App-bound as in `CTR-GHE-007`.
+
+### CTR-GHE-012 — DSH validation profile is frozen
+
+The `dsh-agent-core` activation child MUST require, at minimum:
+
+1. accepted governance verification against exact base and Head;
+2. structure comparison using trusted PR `BASE_SHA`, `HEAD_SHA`, and `MERGE_BASE`, with `git diff --name-status "$MERGE_BASE" "$HEAD_SHA"`;
+3. Node.js `20.x` and npm `10.x`, pinned in evidence;
+4. deterministic root dependency resolution and immutable lock digest;
+5. clean install from the frozen lock without dependency mutation;
+6. `npm test` and all repository-required build/type/lint gates at the accepted baseline;
+7. generated-file and working-tree cleanliness checks.
+
+Current activation blockers MUST remain explicit until child evidence closes them:
+
+```text
+DSH_BLOCKER_DETERMINISTIC_ROOT_LOCK = MISSING
+DSH_BLOCKER_STRUCTURE = DRIFT_PRESENT
+```
+
+No DSH settings rollout may begin while either blocker remains open.
+
+### CTR-GHE-013 — Auth validation profile is frozen
+
+The `auth-service` activation child MUST require, at minimum:
+
+1. deterministic `npm ci` from the accepted lock and pinned Node/npm toolchain;
+2. contract validate, prepare, and candidate-generation stages;
+3. contract test suite;
+4. OAuth test suite;
+5. TypeScript `tsc` verification;
+6. production build;
+7. migration tests against a disposable PostgreSQL instance initialized from the accepted migration baseline;
+8. install, build, and test for every nested provider package included by the PR;
+9. generated-contract and working-tree drift checks.
+
+No production database may be used for validation.
+
+### CTR-GHE-014 — Workflow validation profile is frozen
+
+The `svc-workflow` activation child MUST require, at minimum:
+
+1. accepted governance verification against exact base and Head;
+2. deterministic contract digest verification;
+3. `cargo fmt --check`;
+4. `cargo check`;
+5. `cargo clippy` with warnings denied;
+6. `cargo test`;
+7. SDK deterministic install/build/test;
+8. real-process RS256/JWKS integration using the accepted identity path;
+9. migration and integration tests against disposable PostgreSQL `16`;
+10. generated-contract and working-tree drift checks.
+
+Current activation blocker MUST remain explicit until child evidence closes it:
+
+```text
+WORKFLOW_BLOCKER_AUTH_INTEGRATION = HS256_RS256_CONTRADICTION
+```
+
+No Workflow settings rollout may begin while the blocker remains open.
+
+### CTR-GHE-015 — Validation profiles share fail-closed behavior
+
+For every profile: missing dependency fails; database unavailability blocks/fails without production fallback; the first flaky failure is retained as evidence and rerun MUST NOT replace it with green; timeout, cancellation, skipped, neutral, unsupported, or partial results fail; generated drift fails; and a PR MUST NOT establish its own trust by modifying the verifier or required profile in the same candidate. Trusted verification executes from the externally hosted digest-pinned producer.
+
+### CTR-GHE-016 — Existing PRs are frozen at rollout cutoff
+
+Before any required-context rollout, the rollout actor MUST record every open PR, exact Head, base, Draft state, and existing checks/reviews. The repository MUST enter `LOCKDOWN` before required contexts change. Pre-cutoff PRs are frozen by default and historical checks/reviews are not grandfathered. A frozen PR may resume only after it incorporates the then-current `main`, produces a new Head, and receives a persisted owner-authorized thaw record; all governance, review, acceptance, and validation then restart.
+
+### CTR-GHE-017 — Emergency producer failure preserves LOCKDOWN and `B0`
+
+On producer failure, the operator MUST first enter and verify `LOCKDOWN`, then may temporarily remove only the single failed context while ordinary merge remains forbidden by update restriction. The operator MUST restore producer health and the exact context plus `integration_id`, verify them in shadow, and only then lift `LOCKDOWN`. Rollback MUST target `B0` or the last proven safe baseline and MUST NOT restore unprotected `S0`.
+
+### CTR-GHE-018 — Settings Rollout Records use external WORM canonical JSON
+
+Every settings change, attempted change, rollback, LOCKDOWN transition, thaw, and baseline declaration MUST create an immutable object at:
+
+```text
+settings-rollout/v1/<repository-id>/<record-id>.json
+```
+
+The object MUST be stored in external Object Lock/WORM storage and canonicalized with RFC 8785 JSON Canonicalization Scheme (JCS). It MAY contain only the allowlisted record fields:
+
+```text
+schema and version
+record IDs and timestamps
+accepted Spec IDs and exact revisions
+implementation base
+producer OCI and SBOM digests
+repository, branch, and ruleset IDs
+actor, App, and installation IDs
+allowlisted before/after settings and digests
+required contexts plus integration IDs
+bypass list and allowed merge methods
+sanitized API status and error code
+evidence locators and rollback reference
+```
+
+The record digest, WORM object version/retention identity, and evidence locators MUST be included in the rollout decision.
+
+### CTR-GHE-019 — Secrets and sensitive responses are excluded
+
+Settings records, Check Run output, logs, PR comments, and evidence MUST NOT contain App private keys; installation, OAuth, PAT, access, or refresh tokens; `Authorization`, `Cookie`, or `Set-Cookie`; webhook secrets or signatures; KMS plaintext or data keys; runner credentials; environment dumps; or raw sensitive API responses. Producers MUST sanitize to allowlisted status/error codes and reject record publication when forbidden material is detected.
+
+### CTR-GHE-020 — Central Program never authorizes product behavior
+
+Neither proposed nor accepted state of this Program authorizes consumer product code, schema, database, migration, deployment, identity, Grant, credential, runtime behavior, or unrelated workflow changes. Such work requires its own accepted local implementation authority present in its implementation base. The enforcement children themselves MUST remain bounded to producer, bootstrap, checks, settings, evidence, and rollback concerns.
 
 ## 10. Acceptance
 
-### ACC-GHE-001 — Ruleset invariant inspection
+### ACC-GHE-001 — Central/local authority negative matrix
 
-- Contracts: `CTR-GHE-001`, `CTR-GHE-002`, `CTR-GHE-003`, `CTR-GHE-004`, `CTR-GHE-005`
-- Method: compare canonical live ruleset JSON for each repository to the accepted settings snapshot and exercise rejected direct-push, force-push, deletion, Draft, missing-check, and stale-check fixtures
-- Environment: staged repository settings and non-destructive test branches/PRs
-- Required evidence: exact repository, ruleset ID/version, canonical JSON digest, fixture Heads, API responses, Check Runs, and evaluation time
-- Expected result: only non-Draft PR merge with all seven exact contexts successful on the current Head is eligible; bypass actors are empty
-- Failure condition: any prohibited update is accepted, any minimum context is absent/renamed, or owner/admin bypass exists
+- Contracts: `CTR-GHE-001`, `CTR-GHE-002`, `CTR-GHE-020`
+- Method: evaluate proposed/accepted central Program, missing child, proposed child, accepted child in wrong repository, child absent from base, and product change citing this Program.
+- Environment: exact candidate and owning-repository authority graphs.
+- Required evidence: Spec revisions, repository/base/Head coordinates, authority resolution, and verdict.
+- Expected result: only an accepted in-base local child can authorize its bounded local enforcement implementation; central or product authorization attempts fail.
+- Negative cases: central Program cited for ruleset mutation; consumer child accepted only upstream; product code cites an enforcement child.
+- Failure condition: any central, cross-owner, proposed, absent-base, or product authorization passes.
 
-### ACC-GHE-002 — Distribution and lifecycle negative matrix
+### ACC-GHE-002 — Child topology and sequence closure
 
-- Contracts: `CTR-GHE-006`, `CTR-GHE-007`, `CTR-GHE-018`
-- Method: run positive and negative fixtures for valid adoption, tamper, missing/proposed lock, proposed Spec implementation, `implementation_authority:none`, Spec absent from base, combined Spec/implementation, and product work citing this enforcement Spec
-- Environment: trusted check producer at an exact implementation commit
-- Required evidence: fixture repository/base/Head SHAs, inputs, outputs, and Check Run conclusions
-- Expected result: only valid adopted governance and accepted in-base implementation authority pass; this Spec never authorizes product work
-- Failure condition: any forbidden fixture succeeds or the governance source is falsely required to carry a consumer lock
+- Contracts: `CTR-GHE-003`
+- Method: validate all five child IDs, owning repositories, `governed_by`/`constrained_by` edges, exact central pin, prerequisites, prohibitions, and twelve ordered stages.
+- Environment: authority graph fixture and rollout-plan record.
+- Required evidence: machine-readable edge list, exact revisions, stage state, and ordering result.
+- Expected result: every required child and edge exists before its stage and no declaration is mistaken for acceptance.
+- Negative cases: missing producer child; consumer settings before local child; auth-service before DSH canary GO; reordered source bootstrap.
+- Failure condition: a missing, declaration-only, wrong-owner, unaccepted, or out-of-order edge passes.
 
-### ACC-GHE-003 — Structure coordinate matrix
+### ACC-GHE-003 — Governance-source two-stage bootstrap
+
+- Contracts: `CTR-GHE-004`, `CTR-GHE-005`
+- Method: simulate Program/source-child manual merge, establish `B0`, protect producer source, enter/exit LOCKDOWN, and then introduce custom contexts.
+- Environment: reversible settings fixture with no custom check initially deployed.
+- Required evidence: S0 snapshot, B0 canonical settings, LOCKDOWN proof, producer-source baseline, event order, and API outcomes.
+- Expected result: B0 precedes producer reliance and App-pinned contexts; S0 is never selected for rollback.
+- Negative cases: undeployed check required before B0; custom checks activated before producer-source protection; rollback to S0.
+- Failure condition: bootstrap depends on custom checks, leaves an update gap, or treats S0 as safe.
+
+### ACC-GHE-004 — Producer provenance and immutable runtime
+
+- Contracts: `CTR-GHE-006`
+- Method: reproduce build and verify source, OCI, SBOM, builder, signature fingerprint, audit, and deployed digest; tamper each coordinate independently.
+- Environment: producer child implementation and isolated build/deploy verification.
+- Required evidence: accepted child, source commit, build logs, signed OCI digest, SBOM digest, builder identity, fingerprint, audit result, and runtime digest.
+- Expected result: exact reproducible signed artifact is deployed by digest.
+- Negative cases: mutable tag; mismatched SBOM; unknown builder; bad signature; source mismatch.
+- Failure condition: any missing or mismatched provenance coordinate passes.
+
+### ACC-GHE-005 — App privilege and integration binding
+
+- Contracts: `CTR-GHE-007`
+- Method: inspect App IDs/installations/permissions and required-context configuration; attempt name spoofing, cross-App conclusion, verifier acceptance, and broker verification synthesis.
+- Environment: installed future Apps and settings fixture.
+- Required evidence: App/installation IDs, permissions, context names, integration IDs, Check Runs, and denied API calls.
+- Expected result: six contexts bind to verifier App; acceptance/merge binds to broker App; privileges cannot cross.
+- Negative cases: same name from Actions; wrong integration ID; one App has both privilege sets; unavailable IDs represented as real.
+- Failure condition: name-only trust, privilege overlap, spoofed success, or invented identity passes.
+
+### ACC-GHE-006 — Human WebAuthn semantic gate
 
 - Contracts: `CTR-GHE-008`
-- Method: execute the structure check against PRs with advanced base, merge commit checkout, rebased Head, docs-only violation, and authority mutation
-- Environment: trusted pull-request metadata with exact fetched commits
-- Required evidence: `BASE_SHA`, `HEAD_SHA`, `MERGE_BASE`, command, diff, and decision
-- Expected result: diff matches GitHub PR semantics and structural violations fail
-- Failure condition: result depends on implicit runner `HEAD`, stale local `main`, `HEAD^`, or two-dot base comparison
+- Method: verify independent human WebAuthn records and test self-declared Agent IDs, same ceremony replay, wrong Head/base, revoked authenticator, and automated Agent-independence claim.
+- Environment: V1 semantic-review gate.
+- Required evidence: WebAuthn verifier result, human actor/role, repository/PR/base/S binding, challenge, nonce, timestamp, and replay state.
+- Expected result: only a fresh independent authorized human ceremony passes; Agent IDs remain informational.
+- Negative cases: GitHub account alone; Agent session string; replayed ceremony; wrong S; unsigned DSH attestation.
+- Failure condition: current automation or informational Agent identity is accepted as independence proof.
 
-### ACC-GHE-004 — Independent semantic review binding
+### ACC-GHE-007 — Two-head lifecycle matrix
 
 - Contracts: `CTR-GHE-009`
-- Method: validate a good record, same-Agent reviewer record, GitHub-only approval, wrong-Head record, altered-Head record, untrusted producer, and missing-ledger record
-- Environment: dedicated trusted governance-verifier GitHub App
-- Required evidence: completed Check Run ID/URL/external ID, canonical record/digest, author and reviewer execution identities, exact SHAs, App identity, and producer version
-- Expected result: only a trusted, distinct-Agent, exact-Head record passes; every rerequest creates a new completed Check Run record
-- Failure condition: account approval alone, same execution identity, mutable comment alone, wrong Head, overwritten prior Check Run, or missing persistent record passes
+- Method: review S, sign S+recipe+nonce, deterministically produce F, and compare semantic/lifecycle diffs; then add a post-F commit.
+- Environment: lifecycle fixture controlled by acceptance broker.
+- Required evidence: S, recipe digest, one-use nonce, owner acceptance, F, diff classification, Check Run, and post-F invalidation record.
+- Expected result: allowlisted lifecycle-only S→F passes; F binds acceptance; post-F movement invalidates all records.
+- Negative cases: require S=F; owner asked to pre-sign unknown F; semantic S→F edit; nonce reuse; post-F commit.
+- Failure condition: semantic change, replay, unknown recipe, pre-signing, or stale F passes.
 
-### ACC-GHE-005 — Owner acceptance without bypass
+### ACC-GHE-008 — Merge method and current-main race
 
-- Contracts: `CTR-GHE-010`, `CTR-GHE-011`
-- Method: issue owner acceptance for an exact Head, then test unchanged Head, changed Head, non-owner actor, missing semantic review, and failed unrelated check
-- Environment: single-owner repository simulation with active no-bypass ruleset
-- Required evidence: acceptance attestation, Check Runs, expected-Head merge request, and API outcomes
-- Expected result: owner acceptance passes only its own context; merge succeeds only for the same Head after every other context succeeds
-- Failure condition: acceptance waives another check, stale Head merges, or owner/admin can select a blanket bypass
+- Contracts: `CTR-GHE-010`
+- Method: exercise merge commit, squash, rebase, current-main advance, stale synthetic result, wrong API SHA, ancestry failure, and post-merge verification.
+- Environment: external broker against disposable PR branches.
+- Required evidence: F, reread Head/main, ancestry command, App-bound contexts, Draft state, merge API request/result, merge commit, and post-merge ancestry.
+- Expected result: only merge API `sha=F` succeeds when current main is F ancestor; F is main ancestor afterward.
+- Negative cases: main advances after review; squash; rebase; stale compatibility green; wrong expected Head.
+- Failure condition: any non-merge method, stale main, non-ancestor base, wrong SHA, or failed post-merge ancestry passes.
 
-### ACC-GHE-006 — Current-main compatibility race matrix
+### ACC-GHE-009 — Required conclusion and spoof matrix
 
-- Contracts: `CTR-GHE-012`
-- Method: advance `main` after review, rerun synthetic merge validation, and attempt merge with both compatible and incompatible advances
-- Environment: clean clones and exact remote refs
-- Required evidence: prior/current `main` SHA, Head SHA, synthetic merge tree/commit, rerun outputs, and merge API outcome
-- Expected result: compatible changes receive a fresh exact result; conflicts or failures block; another `main` advance stales the result
-- Failure condition: a result against old `main` remains sufficient after `main` advances
+- Contracts: `CTR-GHE-007`, `CTR-GHE-011`
+- Method: produce complete success and fixtures for N/A, missing dependency, outage, timeout, unsupported, cancelled, partial, missing evidence, neutral, skipped, and wrong integration.
+- Environment: trusted App producer and required-context fixture.
+- Required evidence: context, integration ID, inputs, conclusion, timing, and GitHub eligibility result.
+- Expected result: only complete App-bound proof emits success; every incomplete condition blocks.
+- Negative cases: neutral N/A; skipped outage; name spoof; timeout converted to green.
+- Failure condition: any neutral/skipped/incomplete/spoofed result satisfies merge.
 
-### ACC-GHE-007 — Shadow, canary, and phased rollout
+### ACC-GHE-010 — DSH profile and blockers
 
-- Contracts: `CTR-GHE-013`, `CTR-GHE-014`, `CTR-GHE-016`
-- Method: execute the frozen phase plan without changing order and record each go/no-go gate
-- Environment: all three repositories, shadow producers first, active settings later
-- Required evidence: successful and negative fixtures, permission probe, lockout and rollback dry runs, phase records, and owner `GO`
-- Expected result: producers precede settings; `dsh-agent-core` completes canary before `auth-service`, which completes before `svc-workflow`
-- Failure condition: simultaneous/settings-first activation, skipped phase, failed canary, or unproven recovery
+- Contracts: `CTR-GHE-012`, `CTR-GHE-015`
+- Method: execute the frozen DSH profile on exact base/Head and negative fixtures for absent root lock, dependency mutation, structure drift, generated drift, toolchain mismatch, and verifier modification.
+- Environment: Node 20/npm 10 clean runner from trusted producer.
+- Required evidence: governance result, SHAs/merge-base/diff, tool versions, lock digest, install/test/build outputs, blocker states, and clean tree.
+- Expected result: all profile stages pass deterministically and both current blockers are explicitly closed before activation.
+- Negative cases: missing lock; structure drift; npm mutation; wrong Node/npm; PR changes verifier to self-pass.
+- Failure condition: activation passes with an open blocker or incomplete/non-deterministic profile.
 
-### ACC-GHE-008 — Emergency rollback preserves hard invariants
+### ACC-GHE-011 — Auth profile and disposable database
+
+- Contracts: `CTR-GHE-013`, `CTR-GHE-015`
+- Method: run install, contract validate/prepare/candidate, contract tests, OAuth tests, tsc, build, PostgreSQL migration, nested-provider, and drift stages plus failure fixtures.
+- Environment: clean trusted runner and disposable PostgreSQL initialized solely for the candidate.
+- Required evidence: tool/lock versions, stage outputs, disposable DB identity/lifecycle, provider matrix, generated diff, and clean tree.
+- Expected result: every stage and nested package passes without production dependency.
+- Negative cases: DB unavailable; production DB URL; skipped provider; contract drift; first flaky failure hidden by rerun.
+- Failure condition: incomplete stages, production DB use, drift, or rerun-to-green passes.
+
+### ACC-GHE-012 — Workflow profile and identity blocker
+
+- Contracts: `CTR-GHE-014`, `CTR-GHE-015`
+- Method: run governance, contract digest, Rust fmt/check/clippy/test, SDK build/test, real-process RS256/JWKS, PostgreSQL 16 migration/integration, and drift stages.
+- Environment: clean trusted runner, real child processes, and disposable PostgreSQL 16.
+- Required evidence: exact SHAs, digests, Rust/tool versions, command outputs, process/JWKS transcript, DB identity/lifecycle, blocker closure, and clean tree.
+- Expected result: all stages pass and HS256/RS256 contradiction is resolved by accepted local authority before activation.
+- Negative cases: HS256-only fixture; mocked instead of real process; wrong PostgreSQL version; digest drift; blocker still open.
+- Failure condition: incomplete identity path, open blocker, skipped integration, DB fallback, or drift passes.
+
+### ACC-GHE-013 — Common validation fail-closed behavior
 
 - Contracts: `CTR-GHE-015`
-- Method: simulate one malfunctioning context and restore the exact pre-change snapshot; separately exercise bounded single-context suspension
-- Environment: non-production settings fixture or reversible canary
-- Required evidence: owner authorization, incident ID, before/after canonical JSON, actor/time, affected context, and restoration deadline
-- Expected result: recovery removes only the failing delta while hard invariants and empty bypass list remain
-- Failure condition: all protection is disabled, direct/force/delete becomes possible, bypass actor is added, or action is unrecorded
+- Method: inject missing dependency, DB outage, first flaky failure, timeout, cancellation, skipped/neutral/unsupported/partial outcome, generated drift, and candidate verifier edit across all profiles.
+- Environment: trusted producer profile harness.
+- Required evidence: first-run result, retained failure, producer decision, Check Run conclusion, and provenance.
+- Expected result: every negative fixture blocks and the first failure remains visible.
+- Negative cases: rerun replaces failure; production DB fallback; PR-owned verifier self-certifies; neutral/skip reports green.
+- Failure condition: any incomplete, mutable, rerun-masked, or self-certified evidence passes.
 
-### ACC-GHE-009 — Settings drift detection
+### ACC-GHE-014 — Existing-PR cutoff and thaw
+
+- Contracts: `CTR-GHE-016`
+- Method: snapshot mixed open PRs, enter LOCKDOWN, change contexts, attempt old PR merge, then update one PR to current main with a thaw record.
+- Environment: rollout simulation with multiple PR Heads.
+- Required evidence: cutoff inventory, Head/base/check/review records, LOCKDOWN proof, thaw record, new Head, and restarted checks.
+- Expected result: every pre-cutoff PR is frozen; only owner-authorized refreshed Head restarts from zero.
+- Negative cases: grandfather old review/check; missing PR from inventory; thaw without current main; reuse old acceptance.
+- Failure condition: any pre-cutoff evidence remains merge-authorizing without valid thaw and full restart.
+
+### ACC-GHE-015 — Emergency LOCKDOWN and safe baseline
 
 - Contracts: `CTR-GHE-017`
-- Method: compare live settings to the accepted snapshot, then inject fixture drift by removing one check and adding one bypass actor
-- Environment: settings monitor fixture and canary repository
-- Required evidence: rollout record, canonical digests, drift events, incident links, and monitor identity
-- Expected result: clean state is reported only on exact match; both drift forms alert and block later rollout gates
-- Failure condition: drift remains `CLEAN` or platform-root mutability is represented as impossible
+- Method: fail one producer context, verify LOCKDOWN, remove only that context, attempt ordinary merge, repair/rebind integration, shadow, and restore; test S0 rollback request.
+- Environment: reversible canary settings fixture.
+- Required evidence: incident/owner authorization, LOCKDOWN API proof, before/after settings, context/integration ID, denied merge, repair/shadow result, and restored baseline.
+- Expected result: ordinary merge remains impossible throughout; recovery returns to B0 or later safe baseline.
+- Negative cases: context removed before LOCKDOWN; multiple controls removed; bypass actor added; S0 selected; LOCKDOWN lifted before repair.
+- Failure condition: emergency creates an update window or restores unprotected state.
 
-### ACC-GHE-010 — Acceptance-only final-Head recheck
+### ACC-GHE-016 — WORM record schema and canonicalization
 
-- Contracts: `CTR-GHE-003`, `CTR-GHE-004`, `CTR-GHE-009`, `CTR-GHE-010`, `CTR-GHE-011`, `CTR-GHE-012`
-- Method: after all records exist, execute a final acceptance-only verifier that reads GitHub's current PR state, Head, base, Draft state, every other required Check Run, review record, acceptance record, and current `main`
-- Environment: exact merge candidate immediately before compare-and-swap merge
-- Required evidence: one final eligibility record naming every SHA and Check Run ID
-- Expected result: every record agrees on one final Head and current `main`; merge request uses that expected Head
-- Failure condition: any Head/base/main/check identity differs, any record is stale, or Draft state is true
+- Contracts: `CTR-GHE-018`
+- Method: create canonical settings, rollback, LOCKDOWN, and thaw records; verify RFC 8785 digest, Object Lock retention, path, IDs, allowlist, and immutable replay.
+- Environment: external WORM/Object Lock test bucket separated from repositories and producer runtime credentials.
+- Required evidence: object path/version, retention identity, canonical bytes/digest, accepted Spec/base, settings digests, contexts/integration IDs, and rollback link.
+- Expected result: records are immutable, canonical, complete, and resolvable by the decision digest.
+- Negative cases: mutable object; noncanonical key/number encoding; wrong path; omitted integration ID; overwritten record.
+- Failure condition: record can mutate, digest is unstable, or required allowlisted evidence is absent.
+
+### ACC-GHE-017 — Secret exclusion and central product boundary
+
+- Contracts: `CTR-GHE-019`, `CTR-GHE-020`
+- Method: scan canonical records, Check Runs, logs, and comments with fixtures for every forbidden secret class; separately evaluate product changes citing this Program.
+- Environment: producer publication gate and authority resolver.
+- Required evidence: allowlist scan result, rejection records, sanitized status/error sample, and authority verdict.
+- Expected result: forbidden material is rejected before publication and product changes lack authority.
+- Negative cases: PAT, Cookie, webhook signature, KMS plaintext, environment dump, raw API body, product migration citing central Program.
+- Failure condition: any forbidden value is persisted or any product implementation is authorized.
 
 ### Contract coverage
 
 | Contract | Acceptance | Evidence class | Covered |
 |---|---|---|---|
-| `CTR-GHE-001` | `ACC-GHE-001` | settings/API fixture | YES |
-| `CTR-GHE-002` | `ACC-GHE-001` | settings/API fixture | YES |
-| `CTR-GHE-003` | `ACC-GHE-001`, `ACC-GHE-010` | PR-state fixture | YES |
-| `CTR-GHE-004` | `ACC-GHE-001`, `ACC-GHE-010` | Check Runs | YES |
-| `CTR-GHE-005` | `ACC-GHE-001` | canonical settings | YES |
-| `CTR-GHE-006` | `ACC-GHE-002` | deterministic matrix | YES |
-| `CTR-GHE-007` | `ACC-GHE-002` | lifecycle matrix | YES |
-| `CTR-GHE-008` | `ACC-GHE-003` | exact-SHA diff matrix | YES |
-| `CTR-GHE-009` | `ACC-GHE-004`, `ACC-GHE-010` | attestation/ledger | YES |
-| `CTR-GHE-010` | `ACC-GHE-005`, `ACC-GHE-010` | owner attestation | YES |
-| `CTR-GHE-011` | `ACC-GHE-005`, `ACC-GHE-010` | compare-and-swap API | YES |
-| `CTR-GHE-012` | `ACC-GHE-006`, `ACC-GHE-010` | synthetic merge | YES |
-| `CTR-GHE-013` | `ACC-GHE-007` | rollout record | YES |
-| `CTR-GHE-014` | `ACC-GHE-007` | phase records | YES |
-| `CTR-GHE-015` | `ACC-GHE-008` | incident/rollback | YES |
-| `CTR-GHE-016` | `ACC-GHE-007` | lockout dry run | YES |
-| `CTR-GHE-017` | `ACC-GHE-009` | drift monitor | YES |
-| `CTR-GHE-018` | `ACC-GHE-002` | authority-negative matrix | YES |
+| `CTR-GHE-001` | `ACC-GHE-001` | authority matrix | YES |
+| `CTR-GHE-002` | `ACC-GHE-001` | local authority graph | YES |
+| `CTR-GHE-003` | `ACC-GHE-002` | topology/sequence graph | YES |
+| `CTR-GHE-004` | `ACC-GHE-003` | settings simulation | YES |
+| `CTR-GHE-005` | `ACC-GHE-003` | producer-source baseline | YES |
+| `CTR-GHE-006` | `ACC-GHE-004` | signed provenance | YES |
+| `CTR-GHE-007` | `ACC-GHE-005`, `ACC-GHE-009` | App/context matrix | YES |
+| `CTR-GHE-008` | `ACC-GHE-006` | WebAuthn ceremony | YES |
+| `CTR-GHE-009` | `ACC-GHE-007` | two-head lifecycle | YES |
+| `CTR-GHE-010` | `ACC-GHE-008` | merge/ancestry race | YES |
+| `CTR-GHE-011` | `ACC-GHE-009` | conclusion matrix | YES |
+| `CTR-GHE-012` | `ACC-GHE-010` | DSH validation | YES |
+| `CTR-GHE-013` | `ACC-GHE-011` | Auth validation | YES |
+| `CTR-GHE-014` | `ACC-GHE-012` | Workflow validation | YES |
+| `CTR-GHE-015` | `ACC-GHE-010`, `ACC-GHE-011`, `ACC-GHE-012`, `ACC-GHE-013` | fail-closed matrix | YES |
+| `CTR-GHE-016` | `ACC-GHE-014` | cutoff/thaw simulation | YES |
+| `CTR-GHE-017` | `ACC-GHE-015` | emergency simulation | YES |
+| `CTR-GHE-018` | `ACC-GHE-016` | WORM canonical record | YES |
+| `CTR-GHE-019` | `ACC-GHE-017` | secret scanning | YES |
+| `CTR-GHE-020` | `ACC-GHE-001`, `ACC-GHE-017` | authority-negative matrix | YES |
 
 ## 11. Alternatives and disposition
 
-### ALT-GHE-001 — Keep manual governance only
+### ALT-GHE-001 — Keep central implementation authority
 
 - Disposition: rejected
-- Reason: observations show no deterministic barrier against direct or stale merge.
+- Reason: violates accepted local-adoption boundaries and can appear to authorize settings in repositories that did not locally accept it.
 - Evidence/Claims considered: `CLM-GHE-001`
-- What would reopen: none while critical bypass risk remains.
+- What would reopen: a separately accepted cross-repository authority model that explicitly replaces local ownership.
 
-### ALT-GHE-002 — Use GitHub approval identity as Agent-independence proof
-
-- Disposition: rejected
-- Reason: one GitHub owner account may front multiple distinct local Agents; account identity does not prove execution independence.
-- Evidence/Claims considered: `CLM-GHE-004`
-- What would reopen: GitHub exposes trusted, non-forgeable local Agent execution identities and reviewer/author separation.
-
-### ALT-GHE-003 — Give the owner a ruleset bypass
+### ALT-GHE-002 — Deploy custom checks before native bootstrap
 
 - Disposition: rejected
-- Reason: owner acceptance is a bounded semantic action, not authority to ignore all deterministic checks.
-- Evidence/Claims considered: `CLM-GHE-001`
-- What would reopen: none for ordinary merges; emergency settings rollback remains separately bounded.
-
-### ALT-GHE-004 — Enable all repositories simultaneously
-
-- Disposition: rejected
-- Reason: absent current check producers make lockout likely and eliminate canary learning.
+- Reason: creates self-hosting recursion and lockout while producer identity and artifacts do not exist.
 - Evidence/Claims considered: `CLM-GHE-002`
-- What would reopen: not for V1.
+- What would reopen: not for V1; native B0 remains mandatory.
 
-### ALT-GHE-005 — Make this Spec product authority in consumers
+### ALT-GHE-003 — Automate Agent independence now
 
 - Disposition: rejected
-- Reason: violates the parent's local product-authority boundary and expands this GitHub-administration Decision into unrelated behavior.
-- Evidence/Claims considered: `CLM-GHE-003`
-- What would reopen: a separately accepted authority model explicitly changing that boundary.
+- Reason: GitHub identity and self-declared Agent execution IDs do not cover signed DSH trust lifecycle.
+- Evidence/Claims considered: `CLM-GHE-004`
+- What would reopen: accepted signed DSH attestation authority and conforming verifier integration.
+
+### ALT-GHE-004 — One-head lifecycle
+
+- Disposition: rejected
+- Reason: semantic review precedes accepted lifecycle finalization; requiring S=F either signs a nonexistent Head or conflates semantic and lifecycle changes.
+- Evidence/Claims considered: persisted investigation blocker.
+- What would reopen: a platform-native atomic lifecycle finalization that preserves equivalent two-head proof.
+
+### ALT-GHE-005 — Squash, rebase, or stale compatibility merge
+
+- Disposition: rejected
+- Reason: destroys or races the exact accepted Head ancestry required for audit.
+- Evidence/Claims considered: persisted investigation blocker.
+- What would reopen: not for V1 personal repositories.
+
+### ALT-GHE-006 — Mutable repository-only settings records
+
+- Disposition: rejected
+- Reason: settings authority and evidence must survive repository compromise and must not expose credentials.
+- Evidence/Claims considered: persisted investigation blocker.
+- What would reopen: an equivalent externally immutable, canonical, secret-safe evidence system.
 
 ## 12. Migration, compatibility, and rollback
 
 ```text
-MIGRATION = implement trusted check producers and evidence records in a separate accepted-authority implementation; run shadow on all targets; activate dsh-agent-core, then auth-service, then svc-workflow
-COMPATIBILITY = existing open PRs remain unmergeable until refreshed onto current main and all exact-Head records/checks succeed; no historical check result is grandfathered
-ROLLBACK = restore the canonical pre-change settings snapshot for the failed phase; do not roll later repositories forward after a failed phase
-EMERGENCY_CONTAINMENT = owner-authorized incident may suspend one failed context or revert the latest settings delta while preserving PR-only, no-force, no-delete, non-Draft, exact-Head, and no-bypass invariants
-ANTI_LOCKOUT = producers-first shadow validation, permission probe, merge dry run, rollback dry run, and phase go/no-go record
-SETTINGS_DRIFT = external comparison of live canonical JSON against the accepted rollout snapshot
+GOVERNANCE_SOURCE_BOOTSTRAP_MODEL = TWO_STAGE_NO_CUSTOM_CHECK_BOOTSTRAP
+S0 = historical unprotected snapshot; forbidden rollback target
+B0 = native PR-only, non-Draft, no-force, no-delete, empty-bypass, merge-commit-only baseline
+LOCKDOWN = all main updates forbidden during context migration or producer emergency
+CHECK_PRODUCER_MODEL = EXTERNALLY_HOSTED_DIGEST_PINNED_PRIVILEGE_SEPARATED_GITHUB_APP_CONTROL_PLANE
+TRUSTED_PRODUCER_IDENTITY = UNRESOLVED_PENDING_CHILD
+AGENT_INDEPENDENCE_MODEL = HUMAN_OWNER_WEBAUTHN_SEMANTIC_GATE_UNTIL_SIGNED_DSH_ATTESTATION_EXISTS
+LIFECYCLE_ACCEPTANCE_MODEL = TWO_HEAD_LIFECYCLE_MODEL
+ALLOWED_MERGE_METHODS = MERGE_COMMIT_ONLY
+RECOMMENDED_MERGE_COORDINATION = EXTERNAL_MERGE_BROKER
+SETTINGS_RECORD_SCHEMA = FROZEN
 ```
 
-This authoring change performs none of those migration or settings actions.
+Migration follows the twelve-step sequence in §3. Existing PRs use cutoff/LOCKDOWN/thaw under `CTR-GHE-016`. Emergency recovery follows `CTR-GHE-017`; rollback always returns to B0 or a later proven safe baseline, never S0. Compatibility with an advancing `main` requires merging current `main` into the PR Head and restarting all evidence; no historical record is grandfathered.
 
 ## 13. Open questions
+
+Implementation identifiers are intentionally unavailable until accepted children create and prove them. Their absence is a blocker to rollout, not a normative design gap.
 
 ```text
 OPEN_OWNER_DECISIONS = NONE
 NORMATIVE_TBD = NONE
 UNRESOLVED_AUTHORITY_CONFLICT = NONE
 PARTIAL_SUPERSESSION = NONE
+APP_IDS = NOT_YET_AVAILABLE
+INSTALLATION_IDS = NOT_YET_AVAILABLE
+OCI_DIGEST = NOT_YET_AVAILABLE
+TRUSTED_PRODUCER_IDENTITY = UNRESOLVED_PENDING_CHILD
+AGENT_IDENTITY_ATTESTATION = NOT_AUTOMATABLE_NOW
+BLOCKERS_RECEIVED = 10
+BLOCKERS_CLOSED_BY_PROGRAM_TEXT = 10
+CONTRACT_COUNT = 20
+CONTRACTS_WITH_ACCEPTANCE = 20
+ACCEPTANCE_COUNT = 17
 SPEC_STATUS = proposed
-IMPLEMENTATION_AUTHORITY = contracts
-CONTRACT_COUNT = 18
-CONTRACTS_WITH_ACCEPTANCE = 18
+SPEC_KIND = program
+IMPLEMENTATION_AUTHORITY = none
 READY_TO_MARK_ACCEPTED = NO
-INDEPENDENT_REVIEW_REQUIRED = YES
+FRESH_FULL_REVIEW_REQUIRED = YES
+INDEPENDENT_REVIEW_RESULT = PENDING
 AUTHORING_READY_FOR_REVIEW = YES
 ```

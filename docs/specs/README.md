@@ -16,8 +16,8 @@ Implementation progress, verification coverage, runtime state, and conformance a
 
 | Spec ID | Status | Kind | Implementation authority | Purpose |
 |---|---|---|---|---|
-| `AGENT_DEVELOPMENT_GOVERNANCE_BOOTSTRAP_V0` | proposed | implementation | contracts | Bootstrap the initial reusable governance distribution and its integrity tooling |
-| `AGENT_DEVELOPMENT_GOVERNANCE_GITHUB_ENFORCEMENT_V1` | proposed | implementation | contracts | Define PR-only, exact-head GitHub enforcement for the three named consumer repositories |
+| `AGENT_DEVELOPMENT_GOVERNANCE_BOOTSTRAP_V0` | accepted | implementation | contracts | Bootstrap the initial reusable governance distribution and its integrity tooling |
+| `AGENT_DEVELOPMENT_GOVERNANCE_GITHUB_ENFORCEMENT_V1` | proposed | program | none | Define the central enforcement standard, required children, trust minimums, and phased local activation sequence |
 
 ## Bootstrap note
 
