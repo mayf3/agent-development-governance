@@ -10,7 +10,7 @@ Publish immutable, versioned governance distributions that consuming repositorie
 
 ```text
 BOOTSTRAP_SPEC = AGENT_DEVELOPMENT_GOVERNANCE_BOOTSTRAP_V0
-BOOTSTRAP_SPEC_STATUS = proposed
+BOOTSTRAP_SPEC_STATUS = accepted
 BOOTSTRAP_EXCEPTION = initial_repository_creation_only
 ACCEPTANCE_ACTOR = mayf3 or another explicitly authorized maintainer
 STABLE_RELEASE = none
