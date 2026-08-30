@@ -16,8 +16,13 @@ Implementation progress, verification coverage, runtime state, and conformance a
 
 | Spec ID | Status | Kind | Implementation authority | Purpose |
 |---|---|---|---|---|
-| `AGENT_DEVELOPMENT_GOVERNANCE_BOOTSTRAP_V0` | proposed | implementation | contracts | Bootstrap the initial reusable governance distribution and its integrity tooling |
+| `AGENT_DEVELOPMENT_GOVERNANCE_BOOTSTRAP_V0` | accepted | implementation | contracts | Current active bootstrap authority for the V0 reusable governance distribution |
+| `AGENT_DEVELOPMENT_GOVERNANCE_V1` | proposed | implementation | contracts | Proposed whole-authority successor introducing goal-driven three-axis routing and bounded execution mandates |
 
 ## Bootstrap note
 
-The initial repository necessarily begins before an accepted Spec exists in its base. The bootstrap Spec records that one-time exception. It must not be generalized into a permanent bypass.
+The initial repository necessarily began before an accepted Spec existed in its base. The bootstrap exception is exhausted and must not be reused for V1 authoring, implementation, or consumer work.
+
+## V1 authoring note
+
+The proposed V1 does not become active and does not supersede V0 merely by existing on a branch. Independent review, authorized atomic acceptance, final-head recheck, and merge into the designated authority branch remain required. Distribution implementation follows in a separate change based on accepted V1.
