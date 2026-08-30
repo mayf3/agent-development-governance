@@ -16,13 +16,14 @@ Implementation progress, verification coverage, runtime state, and conformance a
 
 | Spec ID | Status | Kind | Implementation authority | Purpose |
 |---|---|---|---|---|
-| `AGENT_DEVELOPMENT_GOVERNANCE_BOOTSTRAP_V0` | accepted | implementation | contracts | Current active bootstrap authority for the V0 reusable governance distribution |
-| `AGENT_DEVELOPMENT_GOVERNANCE_V1` | proposed | implementation | contracts | Proposed whole-authority successor introducing goal-driven three-axis routing and bounded execution mandates |
+| `AGENT_DEVELOPMENT_GOVERNANCE_BOOTSTRAP_V0` | accepted | implementation | contracts | Bootstrap the initial reusable governance distribution and its integrity tooling |
+| `AGENT_OPERATIONAL_LAYER_V1` | accepted | implementation | contracts | Define bounded task Skills and a typed, non-normative repository-local Record corpus |
+| `AGENT_DEVELOPMENT_GOVERNANCE_V1` | proposed | implementation | contracts | Replace the single heavy non-mechanical route with independent Authority, Plan, and Assurance decisions while preserving V0 protections |
+
+The accepted Operational Layer is active repository authority already present on `main`; its implementation has not started. PR #5 does not supersede, amend, implement, or silently reparent it.
+
+The proposed Governance V1 supersedes only `AGENT_DEVELOPMENT_GOVERNANCE_BOOTSTRAP_V0` if later accepted through an atomic whole-authority transition. It explicitly carries the compatible Operational Layer forward without changing that authority's accepted frontmatter. Future Operational Layer implementation must re-run PREFLIGHT against the exact active Governance V1 and exact accepted Operational Layer revisions; any conflict or semantic parent change requires a separate authority action.
 
 ## Bootstrap note
 
-The initial repository necessarily began before an accepted Spec existed in its base. The bootstrap exception is exhausted and must not be reused for V1 authoring, implementation, or consumer work.
-
-## V1 authoring note
-
-The proposed V1 does not become active and does not supersede V0 merely by existing on a branch. Independent review, authorized atomic acceptance, final-head recheck, and merge into the designated authority branch remain required. Distribution implementation follows in a separate change based on accepted V1.
+The one-time bootstrap exception is historical and ended when `AGENT_DEVELOPMENT_GOVERNANCE_BOOTSTRAP_V0` became accepted on `main`. It must not be reused for this or any later governance change.
