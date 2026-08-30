@@ -20,6 +20,7 @@ It is not a central product authority. A consuming repository adopts an exact im
 ```text
 DISTRIBUTION_VERSION = 0.2.0-draft.1
 BOOTSTRAP_SPEC_STATUS = accepted
+OPERATIONAL_LAYER_SPEC_STATUS = accepted
 ENFORCEMENT_LEVEL = manual_policy
 SEMANTIC_SPEC_VERIFIER = not_implemented
 SPEC_TRANSITION_VALIDATOR = implemented_for_cross_record_lifecycle_closure
@@ -27,9 +28,9 @@ DISTRIBUTION_INTEGRITY_TOOLS = implemented
 READY_TO_TAG_STABLE_RELEASE = no
 ```
 
-The bootstrap candidate has received independent semantic review and authorized acceptance preparation. It remains unmerged and must pass the independent final-head recheck before merge or a stable `v0.2.0` tag.
+The bootstrap Spec is accepted on `main`. The reusable distribution remains a draft, no stable release tag exists, and `AGENT_OPERATIONAL_LAYER_V1` is prepared as accepted on this candidate branch after exact-revision independent review and owner acceptance preparation. It becomes active repository authority only after an independent final-head recheck and merge to `main`.
 
-## What is frozen in the V0 candidate
+## What is frozen in the accepted V0 draft
 
 - Six entity primitives: `Goal`, `State`, `Observation`, `Claim`, `Decision`, and `Contract`.
 - One first-class relational primitive: `Evidence`.
@@ -152,7 +153,7 @@ See [`docs/adoption/CONSUMER_REPOSITORY.md`](docs/adoption/CONSUMER_REPOSITORY.m
 
 ## Bootstrap and release
 
-The central bootstrap Spec is:
+The accepted central bootstrap Spec is:
 
 ```text
 docs/specs/AGENT_DEVELOPMENT_GOVERNANCE_BOOTSTRAP_V0.md
@@ -160,21 +161,16 @@ docs/specs/AGENT_DEVELOPMENT_GOVERNANCE_BOOTSTRAP_V0.md
 
 Before the first stable release:
 
-1. an independent reviewer reviews the exact candidate commit;
+1. an independent reviewer reviews the exact release-candidate commit, including every change since bootstrap acceptance;
 2. the repository owner explicitly accepts the exact final head;
 3. any semantic delta after review triggers a new review;
-4. the bootstrap Spec becomes `accepted` in a docs-only acceptance commit;
-5. `VERSION` becomes `0.2.0` and the immutable `v0.2.0` release tag is created.
+4. `VERSION` becomes `0.2.0` and the immutable `v0.2.0` release tag is created.
 
-## Publishing the bootstrap repository
+## Historical bootstrap publishing helper
 
-From an authenticated environment with GitHub CLI installed, the committed bootstrap can create or reuse the target repository, push both branches, and open the Draft PR:
+`tools/publish_bootstrap.sh` remains as repository-creation history. It is not the workflow for later governance changes, which use ordinary docs-only Spec, independent review, acceptance, implementation, and release steps.
 
-```bash
-tools/publish_bootstrap.sh
-```
-
-Defaults:
+Historical defaults:
 
 ```text
 TARGET = mayf3/agent-development-governance
@@ -182,8 +178,6 @@ VISIBILITY = public
 BASE = main
 HEAD = agent/bootstrap-development-governance-v0
 ```
-
-Set `VISIBILITY=private` before running when the repository should not be public.
 
 ## License
 
