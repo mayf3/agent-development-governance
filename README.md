@@ -20,7 +20,7 @@ It is not a central product authority. A consuming repository adopts an exact im
 ```text
 DISTRIBUTION_VERSION = 0.2.0-draft.1
 BOOTSTRAP_SPEC_STATUS = accepted
-OPERATIONAL_LAYER_SPEC_STATUS = proposed
+OPERATIONAL_LAYER_SPEC_STATUS = accepted
 ENFORCEMENT_LEVEL = manual_policy
 SEMANTIC_SPEC_VERIFIER = not_implemented
 SPEC_TRANSITION_VALIDATOR = implemented_for_cross_record_lifecycle_closure
@@ -28,7 +28,7 @@ DISTRIBUTION_INTEGRITY_TOOLS = implemented
 READY_TO_TAG_STABLE_RELEASE = no
 ```
 
-The bootstrap Spec is accepted on `main`. The reusable distribution remains a draft, no stable release tag exists, and `AGENT_OPERATIONAL_LAYER_V1` is only a proposed extension until exact-revision independent review and authorized acceptance are complete.
+The bootstrap Spec is accepted on `main`. The reusable distribution remains a draft, no stable release tag exists, and `AGENT_OPERATIONAL_LAYER_V1` is prepared as accepted on this candidate branch after exact-revision independent review and owner acceptance preparation. It becomes active repository authority only after an independent final-head recheck and merge to `main`.
 
 ## What is frozen in the accepted V0 draft
 

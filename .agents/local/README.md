@@ -12,13 +12,14 @@ Publish immutable, versioned governance distributions that consuming repositorie
 BOOTSTRAP_SPEC = AGENT_DEVELOPMENT_GOVERNANCE_BOOTSTRAP_V0
 BOOTSTRAP_SPEC_STATUS = accepted
 BOOTSTRAP_EXCEPTION = closed_after_acceptance
-PROPOSED_EXTENSION = AGENT_OPERATIONAL_LAYER_V1
-PROPOSED_EXTENSION_STATUS = proposed
+OPERATIONAL_LAYER_SPEC = AGENT_OPERATIONAL_LAYER_V1
+OPERATIONAL_LAYER_SPEC_STATUS = accepted
+OPERATIONAL_LAYER_ACTIVE_ON_MAIN = no
 ACCEPTANCE_ACTOR = mayf3 or another explicitly authorized maintainer
 STABLE_RELEASE = none
 ```
 
-The one-time bootstrap exception ended when the accepted bootstrap Spec merged to `main`. It does not authorize this proposed operational-layer Spec, its later implementation, or any consumer change.
+The one-time bootstrap exception ended when the accepted bootstrap Spec merged to `main`. The operational-layer Spec is prepared as accepted on this candidate branch but remains inactive until independent final-head recheck and merge to `main`; it does not yet authorize implementation or any consumer change.
 
 ## Local precedence
 

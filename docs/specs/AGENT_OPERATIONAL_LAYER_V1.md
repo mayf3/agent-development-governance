@@ -1,6 +1,6 @@
 ---
 spec_id: AGENT_OPERATIONAL_LAYER_V1
-status: proposed
+status: accepted
 spec_kind: implementation
 authority_level: governing_spec
 implementation_authority: contracts
@@ -1007,6 +1007,6 @@ PRIOR_REVIEW_RESULTS = REVISE, REVISE, REVISE
 PRIOR_REVIEW_BLOCKERS_ADDRESSED = 7
 INDEPENDENT_REVIEW_REQUIRED = YES
 AUTHORING_READY_FOR_REVIEW = YES
-READY_TO_MARK_ACCEPTED = NO
+READY_TO_MARK_ACCEPTED = YES
 IMPLEMENTATION_IN_THIS_PR = NO
 ```
