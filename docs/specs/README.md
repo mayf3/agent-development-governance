@@ -20,7 +20,9 @@ Implementation progress, verification coverage, runtime state, and conformance a
 | `AGENT_OPERATIONAL_LAYER_V1` | accepted | implementation | contracts | Define bounded task Skills and a typed, non-normative repository-local Record corpus |
 | `AGENT_DEVELOPMENT_GOVERNANCE_V1` | proposed | implementation | contracts | Replace the single heavy non-mechanical route with independent Authority, Plan, and Assurance decisions while preserving V0 protections |
 
-The accepted Operational Layer is active repository authority already present on `main`; its implementation has not started. PR #5 does not supersede, amend, implement, or silently reparent it.
+`AGENT_OPERATIONAL_LAYER_V1` is accepted and active on `main`.
+
+Its implementation progress, verification coverage, conformance, and release state remain separate from Spec lifecycle. PR #5 does not supersede, amend, implement, or silently reparent it.
 
 The proposed Governance V1 supersedes only `AGENT_DEVELOPMENT_GOVERNANCE_BOOTSTRAP_V0` if later accepted through an atomic whole-authority transition. It explicitly carries the compatible Operational Layer forward without changing that authority's accepted frontmatter. Future Operational Layer implementation must re-run PREFLIGHT against the exact active Governance V1 and exact accepted Operational Layer revisions; any conflict or semantic parent change requires a separate authority action.
 

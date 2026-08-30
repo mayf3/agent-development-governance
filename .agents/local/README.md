@@ -19,7 +19,9 @@ ACCEPTANCE_ACTOR = mayf3 or another explicitly authorized maintainer
 STABLE_RELEASE = none
 ```
 
-The one-time bootstrap exception ended when the accepted bootstrap Spec merged to `main`. `AGENT_OPERATIONAL_LAYER_V1` is accepted and is active repository authority on `main`; its `implementation_authority = contracts` is effective there with that exact authority. Implementation has not started. Any implementation still requires a separate implementation task and PR, and this state-mirror alignment does not automatically cause any consumer change.
+The one-time bootstrap exception ended when the accepted bootstrap Spec merged to `main`. `AGENT_OPERATIONAL_LAYER_V1` is accepted and active on `main`.
+
+PR #3 contained no implementation. Its accepted Contracts may authorize bounded implementation in this repository only through a separate task, worktree, and PR whose base contains the accepted authority. The central Spec does not automatically authorize consumer-repository product changes.
 
 ## Local precedence
 
