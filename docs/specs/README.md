@@ -19,7 +19,7 @@ Implementation progress, verification coverage, runtime state, and conformance a
 | `AGENT_DEVELOPMENT_GOVERNANCE_BOOTSTRAP_V0` | accepted | implementation | contracts | Bootstrap the initial reusable governance distribution and its integrity tooling |
 | `AGENT_OPERATIONAL_LAYER_V1` | accepted | implementation | contracts | Define bounded task Skills and a typed, non-normative repository-local Record corpus |
 
-The `accepted` operational-layer row reflects this candidate branch. It becomes active repository authority only after the accepted head passes independent final-head recheck and is merged to `main`.
+The `accepted` operational-layer row reflects active repository authority already present on `main`. Implementation progress remains separate from Spec lifecycle, and implementation has not started.
 
 ## Bootstrap note
 
