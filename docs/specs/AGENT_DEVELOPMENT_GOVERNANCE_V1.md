@@ -63,14 +63,19 @@ This Spec does not authorize or require:
 - consumer changes, historical rewrites, or bulk migration;
 - implementation of `.agents/**`, `distribution/**`, tools, validators, templates, tests, or release metadata in this PR;
 - product implementation, deployment, production writes, permissions, Grants, Credentials, Secrets, or other runtime operation;
-- adoption of open PR #3 or PR #4 as active authority.
+- superseding, amending, implementing, or silently reparenting the accepted `AGENT_OPERATIONAL_LAYER_V1` in this PR;
+- adoption of open PR #4 as active authority.
 
 ## 3. Authority and dependencies
 
 ```text
-CURRENT_ACTIVE_AUTHORITY = AGENT_DEVELOPMENT_GOVERNANCE_BOOTSTRAP_V0
-CURRENT_ACTIVE_AUTHORITY_REVISION = d32b946cbbbc1baa99165d7656fc22e8823a651f
+CURRENT_GENERAL_AUTHORITY = AGENT_DEVELOPMENT_GOVERNANCE_BOOTSTRAP_V0
+CURRENT_GENERAL_AUTHORITY_REVISION = 45d4835723874ac1632434baded7ae5672225389
+CURRENT_ACCEPTED_RELATED_AUTHORITY = AGENT_OPERATIONAL_LAYER_V1
+CURRENT_ACCEPTED_RELATED_AUTHORITY_REVISION = 45d4835723874ac1632434baded7ae5672225389
 AUTHORITY_ACTION = SUPERSEDE
+SUPERSESSION_TARGET = AGENT_DEVELOPMENT_GOVERNANCE_BOOTSTRAP_V0
+PRESERVED_ACCEPTED_AUTHORITY = AGENT_OPERATIONAL_LAYER_V1
 PROPOSED_SUCCESSOR = AGENT_DEVELOPMENT_GOVERNANCE_V1
 ACCEPTANCE_ACTOR = mayf3 or another explicitly authorized maintainer
 EXTERNAL_AUTHORITIES = NONE
@@ -95,21 +100,25 @@ V0.superseded_by = AGENT_DEVELOPMENT_GOVERNANCE_V1
 
 That transaction becomes active only after merge into the designated authority branch. Updating the distributed `.agents` implementation is a later change based on accepted V1.
 
-Open Draft PRs #3 and #4 remain non-authoritative and unchanged:
+`AGENT_OPERATIONAL_LAYER_V1` is already accepted and active on the reconciled authoring base. This Spec supersedes V0 only; it does not supersede, amend, implement, or silently reparent the Operational Layer. The Operational Layer's exact accepted frontmatter, Decisions, and Contracts remain unchanged. Its `governed_by: AGENT_DEVELOPMENT_GOVERNANCE_BOOTSTRAP_V0` field is retained as immutable acceptance-time lineage, while this V1 successor explicitly carries the Operational Layer forward as a compatible specialized authority constrained by the current general governance from V1 activation onward.
+
+Before any Operational Layer implementation begins after V1 activation, PREFLIGHT MUST evaluate the exact active V1 revision and the exact accepted Operational Layer revision together. A conflict or uncovered semantic dependency is `NOT_READY` and returns to PREFLIGHT. Any future change to Operational Layer meaning or to its parent relationship requires a separate authority action and, when accepted meaning changes, a whole-authority successor; it MUST NOT be performed as an in-place edit in this PR.
+
+Current PR dispositions are:
 
 ```text
-PR #3 = HOLD / NON_AUTHORITATIVE_PRIOR_ART
+PR #3 = MERGED / AGENT_OPERATIONAL_LAYER_V1 ACTIVE
 PR #4 = HOLD / OUT_OF_SCOPE_FOR_V1
 ```
 
 ## 4. Current State
 
-### STATE-GOV1-001 — V0 remains active
+### STATE-GOV1-001 — V0 and the Operational Layer are active on the reconciled base
 
 - Subject: `mayf3/agent-development-governance`
-- As of commit: `d32b946cbbbc1baa99165d7656fc22e8823a651f`
+- As of commit: `45d4835723874ac1632434baded7ae5672225389`
 - Environment: repository `main`
-- Projection: V0 is accepted and active; no V1 distribution or consumer adoption exists.
+- Projection: V0 is the accepted active general governance authority; `AGENT_OPERATIONAL_LAYER_V1` is an accepted active specialized authority that refines V0; no V1 distribution or consumer adoption exists.
 - Basis: `OBS-GOV1-001`
 
 ### STATE-GOV1-002 — Cross-repository pilots exposed one repeated routing failure
@@ -130,15 +139,15 @@ PR #4 = HOLD / OUT_OF_SCOPE_FOR_V1
 
 ## 5. Observations
 
-### OBS-GOV1-001 — V0 is accepted on the authoring base
+### OBS-GOV1-001 — The reconciled base has two accepted authorities
 
 - Repository/source: `mayf3/agent-development-governance`
-- Commit/artifact: `d32b946cbbbc1baa99165d7656fc22e8823a651f`
+- Commit/artifact: `45d4835723874ac1632434baded7ae5672225389`
 - Environment: `main`
-- Observed at: 2026-08-30
-- Method: inspect V0 frontmatter and repository version
-- Result: V0 is accepted with `implementation_authority: contracts`; the distribution version is `0.2.0-draft.1`.
-- Provenance: `docs/specs/AGENT_DEVELOPMENT_GOVERNANCE_BOOTSTRAP_V0.md`, `VERSION`
+- Observed at: 2026-08-31
+- Method: inspect the Spec index, V0 and Operational Layer frontmatter, repository-local authority state, and repository version
+- Result: V0 is accepted with `implementation_authority: contracts`; `AGENT_OPERATIONAL_LAYER_V1` is accepted with `implementation_authority: contracts` and `governed_by: [AGENT_DEVELOPMENT_GOVERNANCE_BOOTSTRAP_V0]`; the distribution version remains `0.2.0-draft.1` and Operational Layer implementation has not started.
+- Provenance: `docs/specs/README.md`, `docs/specs/AGENT_DEVELOPMENT_GOVERNANCE_BOOTSTRAP_V0.md`, `docs/specs/AGENT_OPERATIONAL_LAYER_V1.md`, `.agents/local/README.md`, `VERSION`
 
 ### OBS-GOV1-002 — Eight initial simulations retained the three-axis direction
 
@@ -339,6 +348,14 @@ PR #4 = HOLD / OUT_OF_SCOPE_FOR_V1
 - Reason: V0 remains active during authoring and rollout must test both over- and under-governance.
 - Owner decision remaining: NONE
 
+### DEC-GOV1-015 — Continue the accepted Operational Layer without in-place reparenting
+
+- Decision owner: repository owner
+- Decision: V1 supersedes V0 only. `AGENT_OPERATIONAL_LAYER_V1` remains accepted and active with its exact accepted frontmatter, Decisions, Contracts, lifecycle, and implementation authority unchanged. Its `governed_by: AGENT_DEVELOPMENT_GOVERNANCE_BOOTSTRAP_V0` field remains immutable acceptance-time lineage; V1 explicitly carries its compatible specialized obligations forward and becomes the current general constraint after V1 activation. Future Operational Layer implementation must re-run PREFLIGHT against both exact authorities. Any conflict, missing dependency, semantic change, or desired parent rebinding requires a separate authority action and, when accepted meaning changes, a whole-authority successor.
+- Rejected alternatives: delete the accepted Operational Layer from the index; silently edit its accepted `governed_by` field; imply that V1 supersedes it; absorb or rewrite its specialized Contracts in this PR.
+- Reason: current main already contains this accepted authority, while accepted identity and parent metadata cannot be silently rewritten merely to resolve a branch conflict.
+- Owner decision remaining: NONE
+
 ### V0 Contract carry-forward matrix
 
 | V0 Contract | V1 disposition | V1 owner |
@@ -379,6 +396,8 @@ The distribution MUST state `Activity != Knowledge` and `Activity != Progress`. 
 
 Accepted Decision and Contract IDs MUST NOT be renumbered, reused, repurposed, or silently assigned new meaning. Meaning replacement, deletion, narrowing, expansion, or reversal MUST use the active authority-replacement protocol. Historical authority MUST retain exact revision identity and backlinks.
 
+This Spec MUST supersede only `AGENT_DEVELOPMENT_GOVERNANCE_BOOTSTRAP_V0`. It MUST NOT silently supersede, delete, amend, implement, or reparent the accepted `AGENT_OPERATIONAL_LAYER_V1`. The Operational Layer remains accepted and active with its exact accepted bytes; its existing `governed_by` value is immutable acceptance-time lineage. From V1 activation forward, its specialized obligations remain applicable only when compatible with the exact active V1 revision. Any Operational Layer implementation MUST pass PREFLIGHT against both exact authorities. A conflict, uncovered dependency, semantic change, or parent-rebinding requirement MUST be `NOT_READY` and handled by a separate authority action; accepted Operational Layer meaning MUST NOT be repaired in place.
+
 ### CTR-GOV1-005 — Product Authority and Execution Mandate have different effects
 
 Only active accepted Product Authority in the owning repository MAY create or change long-lived Product Contracts. Investigation, Task, Brief, ExecPlan, Runbook, tests, runtime state, and Review comments MUST NOT create Product Authority. A valid Execution Mandate MAY constrain one task or operation and MAY be the source for `SCOPE_ESCALATION`; it MUST NOT alter Product Contracts.
@@ -402,11 +421,13 @@ Authority is determined by whether long-lived required behavior changes. Plan is
 The Authority actions are mutually exclusive at every readiness boundary:
 
 - `REUSE`: active accepted Product Authority already decides the requested long-lived behavior, and the request changes no Contract meaning.
-- `AMEND`: a proposed authority is revised, or an accepted authority receives a strictly additive obligation under unchanged Goal, scope, authority ownership, and accepted Decisions, using new stable IDs while preserving every existing Decision and Contract meaning.
+- `AMEND`: the task explicitly targets one named existing proposed authority and revises that proposal; or an accepted authority receives a strictly additive obligation under unchanged Goal, scope, authority ownership, and accepted Decisions, using new stable IDs while preserving every existing Decision and Contract meaning. When the exact task target is an existing proposed authority, this proposal-target rule takes precedence over `NEW`.
 - `SUPERSEDE`: existing accepted meaning is changed, deleted, narrowed, expanded, reversed, or assigned different failure semantics. The replacement MUST use a whole-authority successor with atomic backlinks; prose-only or inferred partial supersession is forbidden unless a later accepted protocol explicitly implements it.
-- `NEW`: no active accepted Product Authority owns the bounded independent long-lived decision, or the work introduces a new Decision, expanded scope, changed authority ownership, or another independent obligation.
+- `NEW`: no active accepted Product Authority owns the bounded independent long-lived decision, and the task is not revising a named existing proposed authority. `NEW` creates a separate authority for a new Decision, expanded scope, changed authority ownership, or another independent obligation.
 
-`AMEND_OR_NEW_PENDING_OWNERSHIP` MAY be used only while authority ownership is being investigated. Before `AUTHORING_READY_FOR_REVIEW = YES`, `IMPLEMENTATION_ALLOWED = YES`, `MERGE_READY = YES`, or `OPERATION_ALLOWED = YES`, it MUST resolve to exactly one Authority action.
+Expanding an authority's scope or ownership is `NEW`, not `AMEND`. Changing existing accepted Contract meaning or failure semantics is `SUPERSEDE`, not `AMEND` or `NEW`. The mere existence of an unrelated or abandoned proposal does not trigger `AMEND`; the task must name that proposal as its exact authoring target.
+
+`AMEND_OR_NEW_PENDING_OWNERSHIP` MAY be used only while authority ownership and proposal-target identity are being investigated. Before `AUTHORING_READY_FOR_REVIEW = YES`, `IMPLEMENTATION_ALLOWED = YES`, `MERGE_READY = YES`, or `OPERATION_ALLOWED = YES`, it MUST resolve to exactly one Authority action.
 
 An accepted Spec authorizes implementation only when it explicitly declares `implementation_authority: contracts` and the request remains within its active Contracts. An accepted Program Spec or any authority with `implementation_authority: none` MUST NOT authorize child implementation merely because it is accepted.
 
@@ -540,11 +561,11 @@ auth-service workflow.execute = AMEND or NEW + BRIEF + CONTROLLED
 ### ACC-GOV1-002 — Three-axis routing and Authority-action separation
 
 - Contracts: `CTR-GOV1-007`, `CTR-GOV1-008`, `CTR-GOV1-009`, `CTR-GOV1-010`
-- Method: route a complex internal refactor under an implementation-authorizing Contract, a simple controlled one-shot operation, a strictly additive same-scope obligation, an independent new permission obligation, a change to existing accepted meaning, and an accepted Program with `implementation_authority: none`
+- Method: route a complex internal refactor under an implementation-authorizing Contract, a simple controlled one-shot operation, a revision whose exact target is a named existing proposed authority, the same independent decision when no proposed authority is the task target, a strictly additive same-scope obligation on accepted authority, an independent new permission obligation, a change to existing accepted meaning, and an accepted Program with `implementation_authority: none`
 - Environment: exact candidate Head
-- Required evidence: exact authority inventory and revisions; one classification matrix showing a unique Authority action, Plan level, Assurance level, primary authority, and implementation-authority result for every case; plus a negative-control result for each incorrect route
-- Expected result: complexity changes Plan only; risk changes Assurance only; the additive case is `AMEND`; the independent obligation is `NEW`; changed existing meaning is `SUPERSEDE`; `REUSE` changes no Contract meaning; the one-shot remains Brief plus Controlled Runbook; and the accepted non-authorizing Program does not permit child implementation
-- Failure condition: any one axis automatically forces another, the same complete input legally yields both `AMEND` and `NEW`, Investigation detail becomes a Contract, risk alone creates an ExecPlan/platform, partial supersession is inferred from prose, or `implementation_authority: none` authorizes implementation
+- Required evidence: exact accepted/proposed authority inventory and revisions; the declared authoring target or explicit absence of one; one classification matrix showing a unique Authority action, Plan level, Assurance level, primary authority, proposal-target identity, and implementation-authority result for every case; plus a negative-control result for each incorrect route
+- Expected result: complexity changes Plan only; risk changes Assurance only; revision of the named existing proposal is `AMEND`; the same decision without an existing proposed target is `NEW`; the additive accepted-authority case is `AMEND`; the independent obligation is `NEW`; changed existing meaning is `SUPERSEDE`; `REUSE` changes no Contract meaning; the one-shot remains Brief plus Controlled Runbook; and the accepted non-authorizing Program does not permit child implementation
+- Failure condition: any one axis automatically forces another, a complete input with a named proposed target legally yields `NEW`, a complete input without such a target legally yields `AMEND` merely because another proposal exists, the same complete input legally yields both `AMEND` and `NEW`, Investigation detail becomes a Contract, risk alone creates an ExecPlan/platform, partial supersession is inferred from prose, or `implementation_authority: none` authorizes implementation
 
 ### ACC-GOV1-003 — Load-bearing gap stop
 
@@ -573,14 +594,14 @@ auth-service workflow.execute = AMEND or NEW + BRIEF + CONTROLLED
 - Expected result: expansion freezes; neither automatic deletion nor permanent grandfathering occurs; Owner containment precedes docs-first closure and minimal reconcile
 - Failure condition: runtime creates authority, documentation gap causes automatic destructive change, or Reviewer chooses the permanent result
 
-### ACC-GOV1-006 — Review, acceptance, and base-movement binding
+### ACC-GOV1-006 — Review, acceptance, base movement, and Conformance binding
 
 - Contracts: `CTR-GOV1-004`, `CTR-GOV1-014`, `CTR-GOV1-015`
-- Method: keep candidate Head fixed while adding an unrelated base commit; separately change candidate semantics and a relevant parent authority; then prepare a lifecycle-only final accepted Head
-- Environment: exact review candidate and exact acceptance candidate
-- Required evidence: complete review tuple (`REVIEWED_BASE_COMMIT`, `REVIEWED_SPEC_COMMIT`, `REVIEWER_ID`); exact `REVIEW_TARGET_HEAD`, `BASE_HEAD`, and `CURRENT_BASE_HEAD`; bounded conflict/authority/behavior/evidence impact result; complete acceptance tuple (`FINAL_ACCEPTED_HEAD`, `ACCEPTANCE_ACTOR`, `ACCEPTED_AT`, `SEMANTIC_DELTA_AFTER_REVIEW`); and an independent final-head delta recheck of the lifecycle transition and atomic backlinks
-- Expected result: unrelated base movement receives bounded impact check only; candidate or relevant authority change invalidates affected review evidence; semantic delta requires new review; and even lifecycle-only acceptance receives the independent final-head recheck
-- Failure condition: every main commit triggers full review, semantic target drift reuses old review, an acceptance tuple omits the final Head or actor/time/delta, or lifecycle-only metadata bypasses final-head recheck
+- Method: keep candidate Head fixed while adding an unrelated base commit; separately change candidate semantics and a relevant parent authority; prepare a lifecycle-only final accepted Head; then create one valid Conformance Record and three invalid variants that omit `conformance_result`, claim unqualified permanent Spec-level `VERIFIED`, and reuse an old `VERIFIED` result after changing one bound coordinate
+- Environment: exact review candidate, exact acceptance candidate, and temporary Conformance fixtures
+- Required evidence: complete review tuple (`REVIEWED_BASE_COMMIT`, `REVIEWED_SPEC_COMMIT`, `REVIEWER_ID`); exact `REVIEW_TARGET_HEAD`, `BASE_HEAD`, and `CURRENT_BASE_HEAD`; bounded conflict/authority/behavior/evidence impact result; complete acceptance tuple (`FINAL_ACCEPTED_HEAD`, `ACCEPTANCE_ACTOR`, `ACCEPTED_AT`, `SEMANTIC_DELTA_AFTER_REVIEW`); an independent final-head delta recheck of the lifecycle transition and atomic backlinks; one valid Conformance Record containing implementation state, verification state, `conformance_result`, exact authority/implementation/environment/time coordinates, Observations, and Evidence; and executed rejection results for all three invalid variants
+- Expected result: unrelated base movement receives bounded impact check only; candidate or relevant authority change invalidates affected review evidence; semantic delta requires new review; even lifecycle-only acceptance receives the independent final-head recheck; the valid Conformance Record passes; missing `conformance_result`, permanent Spec-level `VERIFIED`, and coordinate-changed result inheritance all fail
+- Failure condition: every main commit triggers full review, semantic target drift reuses old review, an acceptance tuple omits the final Head or actor/time/delta, lifecycle-only metadata bypasses final-head recheck, an invalid Conformance Record passes, a Spec is permanently marked `VERIFIED`, or a changed bound coordinate inherits the old result
 
 ### ACC-GOV1-007 — Reviewer source closure
 
@@ -600,14 +621,14 @@ auth-service workflow.execute = AMEND or NEW + BRIEF + CONTROLLED
 - Expected result: Done When satisfied plus no Expansion Trigger yields `STOP`; optional infrastructure is not progress
 - Failure condition: Agent availability, sunk cost, tool imperfection, or optional platform work extends the task
 
-### ACC-GOV1-009 — V0 protection carry-forward
+### ACC-GOV1-009 — V0 carry-forward and current-authority compatibility
 
 - Contracts: `CTR-GOV1-001`, `CTR-GOV1-002`, `CTR-GOV1-003`, `CTR-GOV1-004`, `CTR-GOV1-007`, `CTR-GOV1-009`, `CTR-GOV1-014`, `CTR-GOV1-015`, `CTR-GOV1-016`, `CTR-GOV1-017`, `CTR-GOV1-018`, `CTR-GOV1-020`
-- Method: review the V0 carry-forward matrix and compare every V0 Contract clause with its V1 owner
-- Environment: exact V0 revision and exact V1 candidate Head
-- Required evidence: exact V0 and V1 revisions; the complete eleven-row mapping; clause-by-clause comparison covering consumer authority, immutable adoption, primitive/Evidence/Claim types, immutable meaning, review and final accepted-Head binding, qualified Conformance result, explicit implementation authority, persistence, enforcement, emergency handling, and exhausted bootstrap exception; plus transition-validation and final-head-recheck expectations
-- Expected result: all eleven V0 Contracts are retained or replaced by equivalent protection; no consumer, identity, evidence, lineage, review-binding, implementation-authority, conformance, persistence, enforcement, emergency, or bootstrap-boundary protection disappears
-- Failure condition: any V0 Contract lacks an explicit equivalent, any listed V1 owner omits a load-bearing V0 clause, or protection is silently weakened outside a deliberate Decision
+- Method: review the V0 carry-forward matrix, compare every V0 Contract clause with its V1 owner, and reconcile the exact current authority inventory including accepted `AGENT_OPERATIONAL_LAYER_V1`
+- Environment: current main `45d4835723874ac1632434baded7ae5672225389`, exact V0 and Operational Layer revisions there, and exact V1 candidate Head
+- Required evidence: current Spec index; exact V0, Operational Layer, and V1 revisions and frontmatter; the complete eleven-row V0 mapping; a compatibility matrix proving which V1 clauses constrain the Operational Layer without changing its accepted meaning; proof that the accepted Operational Layer index row and bytes remain present; clause-by-clause comparison covering consumer authority, immutable adoption, primitive/Evidence/Claim types, immutable meaning, review and final accepted-Head binding, qualified Conformance result, explicit implementation authority, persistence, enforcement, emergency handling, and exhausted bootstrap exception; plus transition-validation and final-head-recheck expectations
+- Expected result: all eleven V0 Contracts are retained or replaced by equivalent protection; V1 supersedes V0 only; `AGENT_OPERATIONAL_LAYER_V1` remains accepted and active without silent deletion, supersession, in-place reparenting, or semantic rewrite; future Operational Layer implementation is gated by exact dual-authority PREFLIGHT; and no consumer, identity, evidence, lineage, review-binding, implementation-authority, conformance, persistence, enforcement, emergency, or bootstrap-boundary protection disappears
+- Failure condition: any V0 Contract lacks an explicit equivalent, any listed V1 owner omits a load-bearing V0 clause, the accepted Operational Layer row or bytes disappear, its accepted `governed_by` field is silently edited, V1 implicitly supersedes it, a conflict is ignored, or protection is silently weakened outside a deliberate Decision
 
 ### ACC-GOV1-010 — Targeted regression and rollout canaries
 
@@ -685,11 +706,15 @@ auth-service workflow.execute = AMEND or NEW + BRIEF + CONTROLLED
 
 ```text
 AUTHORING_MIGRATION = none; this PR is docs-only and proposed
+CURRENT_BASE_RECONCILIATION = 45d4835723874ac1632434baded7ae5672225389
 ACCEPTANCE_MIGRATION = atomic whole-authority V0 -> V1 transition after independent review
-DISTRIBUTION_IMPLEMENTATION = separate later PR based on accepted V1
+OPERATIONAL_LAYER_DISPOSITION = accepted and active; not superseded, amended, implemented, or reparented by this PR
+OPERATIONAL_LAYER_LINEAGE = governed_by V0 retained as immutable acceptance-time lineage
+FUTURE_OPERATIONAL_LAYER_WORK = re-PREFLIGHT against exact active V1 and exact accepted Operational Layer; semantic change or parent rebinding uses a separate authority action and successor when required
+DISTRIBUTION_IMPLEMENTATION = separate later PR based on accepted V1 and compatible accepted Operational Layer obligations
 CONSUMER_ADOPTION = exact immutable revision, repository-local review and acceptance
 HISTORICAL_MIGRATION = forward-only; no bulk rewrite
-COMPATIBILITY = V0 continues to govern until accepted V1 is merged; existing consumer pins remain unchanged until local adoption
+COMPATIBILITY = V0 continues to govern until accepted V1 is merged; accepted AGENT_OPERATIONAL_LAYER_V1 remains active and unchanged; existing consumer pins remain unchanged until local adoption
 ROLLBACK = before acceptance, close or revise this proposal; after distribution release, consumers may revert to their prior exact pin subject to their local authority
 EMERGENCY_CONTAINMENT = V0 emergency boundary remains active until V1 acceptance
 ```
@@ -701,6 +726,10 @@ OPEN_OWNER_DECISIONS = NONE
 NORMATIVE_TBD = NONE
 UNRESOLVED_AUTHORITY_CONFLICT = NONE
 PARTIAL_SUPERSESSION = NONE
+CURRENT_MAIN_RECONCILED = 45d4835723874ac1632434baded7ae5672225389
+OPERATIONAL_LAYER_COMPATIBILITY = COMPATIBLE_NO_SEMANTIC_DELTA
+OPERATIONAL_LAYER_SUPERSEDED = NO
+OPERATIONAL_LAYER_REPARENTED_IN_PLACE = NO
 V0_CONTRACTS_MAPPED = 11 / 11
 CRITICAL_BOUNDARIES_FORMALIZED = 6 / 6
 TARGETED_FAILURES_REPRESENTED = 4 / 4
