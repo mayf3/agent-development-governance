@@ -369,7 +369,11 @@ Consumer adoption MUST bind an exact source commit and distributed-file digests.
 
 ### CTR-GOV1-003 — Semantic primitives and Activity boundaries remain explicit
 
-The distribution MUST preserve Goal, State, Observation, Claim, Decision, Contract, and Evidence boundaries. State MUST be coordinate-bound. A raw artifact or test definition MUST NOT be Evidence; an executed result is an Observation and becomes Evidence only through a qualified relation. The distribution MUST state `Activity != Knowledge` and `Activity != Progress`. It MUST NOT require a complete formal graph when a compact record is sufficient.
+The distribution MUST preserve Goal, State, Observation, Claim, Decision, Contract, and Evidence boundaries. State MUST be coordinate-bound. A Claim that carries a load-bearing interpretation MUST use one support state: `SUPPORTED`, `INFERRED`, or `OPEN_ASSUMPTION`; `VERIFIED CLAIM` MUST NOT be a primitive category. A raw artifact or test definition MUST NOT be Evidence; an executed result is an Observation.
+
+Evidence MUST be a first-class, auditable relation from qualified Observation(s) to a named Claim, State assertion, or Contract at pinned coordinates. Every load-bearing Evidence relation in a governing Spec or Conformance Record MUST have a stable `EVD-*` identity and MUST record its source Observation(s), target type and stable target ID, relation or polarity, bound repository/Spec/implementation/environment/time coordinates, strength or sufficiency, limitations, and provenance. Claim or State relations use `SUPPORTS` or `CONTRADICTS`; Contract relations use `SATISFIES`, `VIOLATES`, or `INCONCLUSIVE`.
+
+The distribution MUST state `Activity != Knowledge` and `Activity != Progress`. It MUST NOT require a complete formal graph for a Routine Change Brief or another compact record when no load-bearing Claim or Evidence relation needs it.
 
 ### CTR-GOV1-004 — Accepted meaning and lineage remain immutable
 
@@ -381,9 +385,9 @@ Only active accepted Product Authority in the owning repository MAY create or ch
 
 ### CTR-GOV1-006 — Execution Mandates and controlled operations are attributable and bounded
 
-Before mutation, the acting Agent MUST have attributable authorization binding target, scope, allowed and forbidden effects, and Done When. A controlled operation MUST additionally bind actor or allowed role, environment, exact operation or operation class, abort conditions, Secret handling, receipt requirements, and validity or attempt bounds before state change. “Owner approved” without persistent, reviewable coordinates is invalid. An Agent-authored Brief MUST NOT self-authorize. Write work MUST use an isolated worktree or equivalent isolated checkout and MUST NOT disturb another active checkout. Post-hoc text MUST NOT fabricate prior authorization.
+Before mutation, the acting Agent MUST have attributable authorization binding target, scope, allowed and forbidden effects, and Done When. A controlled operation MUST additionally bind actor or allowed role, environment, exact operation or operation class, abort conditions, Secret handling, receipt requirements, and validity or attempt bounds before state change. “Owner approved” without persistent, reviewable coordinates is invalid. An Agent-authored Brief MUST NOT self-authorize. Write work MUST use an isolated worktree or equivalent isolated write surface and MUST NOT disturb another active checkout. An equivalent isolated write surface MUST bind an exact parent, write only to an isolated ref and the single intended tree, avoid mutating any existing checkout, and abort rather than silently adopt target-Head movement. Post-hoc text MUST NOT fabricate prior authorization.
 
-### CTR-GOV1-007 — PREFLIGHT classifies three independent axes
+### CTR-GOV1-007 — PREFLIGHT classifies three independent axes and one Authority action
 
 Every non-trivial request MUST independently classify:
 
@@ -394,6 +398,17 @@ ASSURANCE_LEVEL = ROUTINE | DURABLE | CONTROLLED
 ```
 
 Authority is determined by whether long-lived required behavior changes. Plan is determined by execution complexity. Assurance is determined by failure consequence. No axis MAY silently determine another.
+
+The Authority actions are mutually exclusive at every readiness boundary:
+
+- `REUSE`: active accepted Product Authority already decides the requested long-lived behavior, and the request changes no Contract meaning.
+- `AMEND`: a proposed authority is revised, or an accepted authority receives a strictly additive obligation under unchanged Goal, scope, authority ownership, and accepted Decisions, using new stable IDs while preserving every existing Decision and Contract meaning.
+- `SUPERSEDE`: existing accepted meaning is changed, deleted, narrowed, expanded, reversed, or assigned different failure semantics. The replacement MUST use a whole-authority successor with atomic backlinks; prose-only or inferred partial supersession is forbidden unless a later accepted protocol explicitly implements it.
+- `NEW`: no active accepted Product Authority owns the bounded independent long-lived decision, or the work introduces a new Decision, expanded scope, changed authority ownership, or another independent obligation.
+
+`AMEND_OR_NEW_PENDING_OWNERSHIP` MAY be used only while authority ownership is being investigated. Before `AUTHORING_READY_FOR_REVIEW = YES`, `IMPLEMENTATION_ALLOWED = YES`, `MERGE_READY = YES`, or `OPERATION_ALLOWED = YES`, it MUST resolve to exactly one Authority action.
+
+An accepted Spec authorizes implementation only when it explicitly declares `implementation_authority: contracts` and the request remains within its active Contracts. An accepted Program Spec or any authority with `implementation_authority: none` MUST NOT authorize child implementation merely because it is accepted.
 
 ### CTR-GOV1-008 — Implementation choices do not become Product Contracts by precision or repetition
 
@@ -439,7 +454,7 @@ PERMANENT_GRANDFATHER = NO
 
 The Owner or authorized risk actor MUST issue an attributable, scope-bound, reviewable temporary containment or risk disposition with expiry or closure condition. The long-lived gap MUST close docs-first. After acceptance, runtime MUST be minimally reconciled, independently checked for conformance, and the temporary disposition ended. Reviewer MUST NOT choose permanent deletion or retention unless already authorized.
 
-### CTR-GOV1-014 — Review target identity is separate from base movement
+### CTR-GOV1-014 — Review target, acceptance tuple, and base movement are distinct
 
 Every review MUST identify:
 
@@ -447,13 +462,29 @@ Every review MUST identify:
 REVIEW_TARGET_HEAD = exact candidate Head under review
 BASE_HEAD = integration snapshot used for the review
 CURRENT_BASE_HEAD = current branch tip when impact is rechecked
+REVIEWED_BASE_COMMIT = BASE_HEAD
+REVIEWED_SPEC_COMMIT = REVIEW_TARGET_HEAD
+REVIEWER_ID = attributable independent reviewer
 ```
+
+Every acceptance record MUST additionally bind:
+
+```text
+FINAL_ACCEPTED_HEAD
+ACCEPTANCE_ACTOR
+ACCEPTED_AT
+SEMANTIC_DELTA_AFTER_REVIEW
+```
+
+Any semantic delta after `REVIEWED_SPEC_COMMIT` invalidates the prior acceptance recommendation and requires a new independent review. The final accepted Head MUST receive an independent delta recheck even when the intended change is lifecycle- or metadata-only, including `status`, `supersedes`, or `superseded_by`. That recheck MUST verify that only authorized acceptance fields changed and that the whole-authority transition and mutual backlinks are atomic.
 
 Unrelated base movement MUST NOT be called target-Head drift and MUST NOT automatically require rebase or full re-review. A bounded impact check MUST examine merge conflict, relevant authority overlap, affected behavior, and invalidated evidence. Candidate semantic change, relevant authority change, affected-behavior change, or real conflict MUST trigger the required re-review or revalidation.
 
 ### CTR-GOV1-015 — Conformance remains qualified and proportional
 
-Conformance MUST bind Product Authority revision, implementation revision, environment, evaluated time, verification state, executed Observations, and Evidence relations. Standard review SHOULD evaluate affected Contracts and directly dependent accepted invariants. Controlled operations, releases, explicit full audits, and changes whose affected scope cannot be bounded MUST use the complete applicable matrix. A prior passing mechanism MUST NOT be rerun unless the new change invalidates its result.
+A Conformance Record MUST bind Product Authority revision, implementation revision, environment, evaluated time, implementation state, verification state, `conformance_result`, executed Observations, and Evidence relations. Aggregate `conformance_result` MUST be `UNKNOWN`, `VERIFIED`, or `DRIFTED`; a Contract-level `NOT_APPLICABLE` result requires a reason derived from that Contract. `VERIFIED` is valid only for the exact bound Product Authority/implementation/environment/time tuple and MUST NOT be represented as an unqualified permanent property of a Spec. A changed bound coordinate does not automatically inherit the prior result.
+
+Standard review SHOULD evaluate affected Contracts and directly dependent accepted invariants. Controlled operations, releases, explicit full audits, and changes whose affected scope cannot be bounded MUST use the complete applicable matrix. A prior passing mechanism MUST NOT be rerun unless the new change invalidates its result.
 
 ### CTR-GOV1-016 — Non-authoritative knowledge persists without becoming law
 
@@ -502,54 +533,61 @@ auth-service workflow.execute = AMEND or NEW + BRIEF + CONTROLLED
 - Contracts: `CTR-GOV1-001`, `CTR-GOV1-005`, `CTR-GOV1-006`
 - Method: independently classify a persistent product rule, an unattributed “Owner approved” task, and a valid one-shot controlled mandate
 - Environment: exact candidate Head
+- Required evidence: exact candidate Head; cited Product Authority revision; the unattributed task text; the valid mandate with attributable issuer, actor/role, environment, scope, allowed/forbidden effects, Done When, abort/Secret/receipt bounds; and the resulting classification record
 - Expected result: only accepted Product Authority creates long-lived obligations; the unattributed mandate blocks operation; the valid mandate constrains one operation without becoming Product Authority
 - Failure condition: Task text creates Product Contracts, self-authorizes an Agent, or has no execution-scope effect
 
-### ACC-GOV1-002 — Three-axis routing and artifact separation
+### ACC-GOV1-002 — Three-axis routing and Authority-action separation
 
 - Contracts: `CTR-GOV1-007`, `CTR-GOV1-008`, `CTR-GOV1-009`, `CTR-GOV1-010`
-- Method: route a complex internal refactor, a simple controlled one-shot operation, and a new high-risk permission obligation
+- Method: route a complex internal refactor under an implementation-authorizing Contract, a simple controlled one-shot operation, a strictly additive same-scope obligation, an independent new permission obligation, a change to existing accepted meaning, and an accepted Program with `implementation_authority: none`
 - Environment: exact candidate Head
-- Expected result: complexity changes Plan only; risk changes Assurance only; long-lived normative change changes Authority only; the one-shot operation remains Brief plus Controlled Runbook
-- Failure condition: any one axis automatically forces another, Investigation detail becomes a Contract, or risk alone creates an ExecPlan/platform
+- Required evidence: exact authority inventory and revisions; one classification matrix showing a unique Authority action, Plan level, Assurance level, primary authority, and implementation-authority result for every case; plus a negative-control result for each incorrect route
+- Expected result: complexity changes Plan only; risk changes Assurance only; the additive case is `AMEND`; the independent obligation is `NEW`; changed existing meaning is `SUPERSEDE`; `REUSE` changes no Contract meaning; the one-shot remains Brief plus Controlled Runbook; and the accepted non-authorizing Program does not permit child implementation
+- Failure condition: any one axis automatically forces another, the same complete input legally yields both `AMEND` and `NEW`, Investigation detail becomes a Contract, risk alone creates an ExecPlan/platform, partial supersession is inferred from prose, or `implementation_authority: none` authorizes implementation
 
 ### ACC-GOV1-003 — Load-bearing gap stop
 
 - Contracts: `CTR-GOV1-011`
 - Method: inject an unresolved public-interface or permission semantic required by the candidate
 - Environment: exact candidate Head
+- Required evidence: exact authority inventory; the injected semantic dependency; classification output showing `SPEC_GAP_DEPENDENCY = LOAD_BEARING`, all applicable readiness flags set to no, and `NEXT_ACTION = RE-PREFLIGHT`; and a record showing no Reviewer-authored Contract
 - Expected result: dependent implementation/merge/operation is not ready and returns to PREFLIGHT; Reviewer does not write the answer
 - Failure condition: the work proceeds because `SPEC_GAP` is treated as advisory, or Reviewer invents the Product Contract
 
-### ACC-GOV1-004 — Evidence reviewability
+### ACC-GOV1-004 — Evidence reviewability and primitive fidelity
 
 - Contracts: `CTR-GOV1-003`, `CTR-GOV1-012`
-- Method: compare accessible evidence, hidden author-only evidence, sanitized independent receipt, and fabricated execution evidence
+- Method: compare accessible Evidence, hidden author-only material, a sanitized independent receipt, and fabricated execution evidence; then inspect one load-bearing Claim and one Contract-targeted Evidence relation
 - Environment: exact candidate Head
-- Expected result: hidden evidence is a gate failure, sanitized independent receipt can qualify, fabrication is `FALSE_EVIDENCE`, and Secrets remain undisclosed
-- Failure condition: Reviewer must trust hidden evidence, inaccessible evidence is automatically called fabricated, or Secret disclosure is required
+- Required evidence: source artifact and Observation identities; stable `EVD-*` records with target, polarity/relation, bound coordinates, sufficiency, limitations, and provenance; Claim support-state output; access/reproducibility disposition; sanitized receipt; fabricated-evidence negative control; and proof that no Secret value is disclosed
+- Expected result: hidden evidence is a gate failure, sanitized independent receipt can qualify, fabrication is `FALSE_EVIDENCE`, Claim support uses the closed support states, load-bearing Evidence remains a first-class relation, and Secrets remain undisclosed
+- Failure condition: Reviewer must trust hidden evidence, a filename/log is accepted as Evidence without a qualified relation, `VERIFIED CLAIM` is used, inaccessible evidence is automatically called fabricated, or Secret disclosure is required
 
 ### ACC-GOV1-005 — Live authority gap
 
 - Contracts: `CTR-GOV1-013`, `CTR-GOV1-018`
 - Method: simulate a live permission with no accepted authority and known current dependency
 - Environment: exact candidate Head
+- Required evidence: exact live-state Observation; authority-gap classification; frozen expansion scope; attributable Owner containment/risk disposition with expiry or closure condition; docs-first closure reference; minimal runtime-reconcile record; independent Conformance Record; and containment-termination record
 - Expected result: expansion freezes; neither automatic deletion nor permanent grandfathering occurs; Owner containment precedes docs-first closure and minimal reconcile
 - Failure condition: runtime creates authority, documentation gap causes automatic destructive change, or Reviewer chooses the permanent result
 
-### ACC-GOV1-006 — Review target versus base movement
+### ACC-GOV1-006 — Review, acceptance, and base-movement binding
 
 - Contracts: `CTR-GOV1-004`, `CTR-GOV1-014`, `CTR-GOV1-015`
-- Method: keep candidate Head fixed while adding an unrelated base commit, then separately change candidate semantics and a relevant parent authority
-- Environment: exact candidate Head
-- Expected result: unrelated base movement receives bounded impact check only; candidate or relevant authority change invalidates affected review evidence
-- Failure condition: every main commit triggers full review, or semantic target drift reuses old review
+- Method: keep candidate Head fixed while adding an unrelated base commit; separately change candidate semantics and a relevant parent authority; then prepare a lifecycle-only final accepted Head
+- Environment: exact review candidate and exact acceptance candidate
+- Required evidence: complete review tuple (`REVIEWED_BASE_COMMIT`, `REVIEWED_SPEC_COMMIT`, `REVIEWER_ID`); exact `REVIEW_TARGET_HEAD`, `BASE_HEAD`, and `CURRENT_BASE_HEAD`; bounded conflict/authority/behavior/evidence impact result; complete acceptance tuple (`FINAL_ACCEPTED_HEAD`, `ACCEPTANCE_ACTOR`, `ACCEPTED_AT`, `SEMANTIC_DELTA_AFTER_REVIEW`); and an independent final-head delta recheck of the lifecycle transition and atomic backlinks
+- Expected result: unrelated base movement receives bounded impact check only; candidate or relevant authority change invalidates affected review evidence; semantic delta requires new review; and even lifecycle-only acceptance receives the independent final-head recheck
+- Failure condition: every main commit triggers full review, semantic target drift reuses old review, an acceptance tuple omits the final Head or actor/time/delta, or lifecycle-only metadata bypasses final-head recheck
 
 ### ACC-GOV1-007 — Reviewer source closure
 
 - Contracts: `CTR-GOV1-019`
 - Method: ask a Reviewer to block on an accepted Contract violation, an Investigation preference, missing extra fault injection, and a verifier false pass
 - Environment: exact candidate Head
+- Required evidence: a finding matrix containing class, legal source identity, counterexample/reproduction, impact, minimal closure, and final blocker/non-blocker disposition for every injected case
 - Expected result: accepted violation and false pass may block with all four fields; preference and non-load-bearing tooling ideas cannot
 - Failure condition: labels alone create authority, or a concrete false pass cannot block
 
@@ -558,22 +596,25 @@ auth-service workflow.execute = AMEND or NEW + BRIEF + CONTROLLED
 - Contracts: `CTR-GOV1-020`
 - Method: complete the declared disabled-identity target while leaving optional Operator/App/Broker work available
 - Environment: exact candidate Head
+- Required evidence: recorded Goal/current gap, observable `DONE_WHEN`, applicable `EXPANSION_TRIGGER`, post-state Observation(s), Evidence that Done When is satisfied, the `STOP` decision, and the rejected expansion reasons
 - Expected result: Done When satisfied plus no Expansion Trigger yields `STOP`; optional infrastructure is not progress
 - Failure condition: Agent availability, sunk cost, tool imperfection, or optional platform work extends the task
 
 ### ACC-GOV1-009 — V0 protection carry-forward
 
-- Contracts: `CTR-GOV1-001`, `CTR-GOV1-002`, `CTR-GOV1-003`, `CTR-GOV1-004`, `CTR-GOV1-015`, `CTR-GOV1-016`, `CTR-GOV1-017`, `CTR-GOV1-018`
-- Method: review the V0 carry-forward matrix and compare every V0 Contract with its V1 owner
-- Environment: exact candidate Head
-- Expected result: all eleven V0 Contracts are retained or replaced by equivalent protection; no consumer, identity, evidence, lineage, conformance, persistence, enforcement, or emergency protection disappears
-- Failure condition: any V0 Contract lacks an explicit equivalent or is silently weakened outside a deliberate Decision
+- Contracts: `CTR-GOV1-001`, `CTR-GOV1-002`, `CTR-GOV1-003`, `CTR-GOV1-004`, `CTR-GOV1-007`, `CTR-GOV1-009`, `CTR-GOV1-014`, `CTR-GOV1-015`, `CTR-GOV1-016`, `CTR-GOV1-017`, `CTR-GOV1-018`, `CTR-GOV1-020`
+- Method: review the V0 carry-forward matrix and compare every V0 Contract clause with its V1 owner
+- Environment: exact V0 revision and exact V1 candidate Head
+- Required evidence: exact V0 and V1 revisions; the complete eleven-row mapping; clause-by-clause comparison covering consumer authority, immutable adoption, primitive/Evidence/Claim types, immutable meaning, review and final accepted-Head binding, qualified Conformance result, explicit implementation authority, persistence, enforcement, emergency handling, and exhausted bootstrap exception; plus transition-validation and final-head-recheck expectations
+- Expected result: all eleven V0 Contracts are retained or replaced by equivalent protection; no consumer, identity, evidence, lineage, review-binding, implementation-authority, conformance, persistence, enforcement, emergency, or bootstrap-boundary protection disappears
+- Failure condition: any V0 Contract lacks an explicit equivalent, any listed V1 owner omits a load-bearing V0 clause, or protection is silently weakened outside a deliberate Decision
 
 ### ACC-GOV1-010 — Targeted regression and rollout canaries
 
 - Contracts: `CTR-GOV1-009`, `CTR-GOV1-011`, `CTR-GOV1-012`, `CTR-GOV1-013`, `CTR-GOV1-014`, `CTR-GOV1-020`
 - Method: rerun the four targeted failures and later exercise the three named consumer canaries after distribution implementation
 - Environment: exact implementation Head and exact adopted consumer Heads
+- Required evidence: exact implementation and adopted consumer Heads; the four targeted failure-injection inputs and outputs; the three canary classification/route records; affected checks and executed results; and a negative assertion showing no fixed Agent count or unauthorized platform dependency
 - Expected result: four targeted failures pass; canaries produce their distinct routes; no fixed Agent count or new platform is required
 - Failure condition: any prior critical ambiguity returns, permission gap is hidden as REUSE, or rollout requires a platform not authorized here
 
