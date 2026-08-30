@@ -28,7 +28,7 @@ DISTRIBUTION_INTEGRITY_TOOLS = implemented
 READY_TO_TAG_STABLE_RELEASE = no
 ```
 
-The bootstrap Spec is accepted on `main`. The reusable distribution remains a draft, no stable release tag exists, and `AGENT_OPERATIONAL_LAYER_V1` is prepared as accepted on this candidate branch after exact-revision independent review and owner acceptance preparation. It becomes active repository authority only after an independent final-head recheck and merge to `main`.
+The bootstrap Spec is accepted on `main`. `AGENT_OPERATIONAL_LAYER_V1` is accepted and active repository authority on `main`. The reusable distribution remains a draft, and no stable release tag exists. Operational Layer implementation has not started. Any subsequent implementation must use a separate implementation task and PR based on a `main` commit that contains this accepted authority.
 
 ## What is frozen in the accepted V0 draft
 

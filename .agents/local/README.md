@@ -14,12 +14,12 @@ BOOTSTRAP_SPEC_STATUS = accepted
 BOOTSTRAP_EXCEPTION = closed_after_acceptance
 OPERATIONAL_LAYER_SPEC = AGENT_OPERATIONAL_LAYER_V1
 OPERATIONAL_LAYER_SPEC_STATUS = accepted
-OPERATIONAL_LAYER_ACTIVE_ON_MAIN = no
+OPERATIONAL_LAYER_ACTIVE_ON_MAIN = yes
 ACCEPTANCE_ACTOR = mayf3 or another explicitly authorized maintainer
 STABLE_RELEASE = none
 ```
 
-The one-time bootstrap exception ended when the accepted bootstrap Spec merged to `main`. The operational-layer Spec is prepared as accepted on this candidate branch but remains inactive until independent final-head recheck and merge to `main`; it does not yet authorize implementation or any consumer change.
+The one-time bootstrap exception ended when the accepted bootstrap Spec merged to `main`. `AGENT_OPERATIONAL_LAYER_V1` is accepted and is active repository authority on `main`; its `implementation_authority = contracts` is effective there with that exact authority. Implementation has not started. Any implementation still requires a separate implementation task and PR, and this state-mirror alignment does not automatically cause any consumer change.
 
 ## Local precedence
 
