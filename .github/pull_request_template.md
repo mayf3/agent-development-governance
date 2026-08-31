@@ -1,38 +1,55 @@
-## Change type
+## Route
 
 ```text
-CHANGE_CLASS = MECHANICAL | NON_MECHANICAL
-PREFLIGHT_MODE = REUSE | AMEND | SUPERSEDE | NEW
-PRIMARY_GOVERNING_SPEC = <ID | NONE>
-GOVERNING_SPEC_REVISION = <commit/blob | NONE>
-SPEC_PRESENT_IN_BASE = YES | NO | NOT_APPLICABLE
+GOAL_OR_TARGET =
+CURRENT_GAP =
+AUTHORITY_ACTION = REUSE | AMEND | SUPERSEDE | NEW |
+                   AMEND_OR_NEW_PENDING_OWNERSHIP
+PRIMARY_AUTHORITY =
+AUTHORITY_REVISION =
+PLAN_LEVEL = NONE | BRIEF | EXEC_PLAN
+ASSURANCE_LEVEL = ROUTINE | DURABLE | CONTROLLED
+EXECUTION_MANDATE = VALID | INVALID | NOT_APPLICABLE
+SPEC_GAP_DEPENDENCY = NONE | NON_LOAD_BEARING | LOAD_BEARING
+LIVE_AUTHORITY_GAP = NONE | DETECTED
 ```
 
-## What changed
+## Scope and non-goals
 
-Describe the bounded change.
+Describe the bounded change, allowed/forbidden effects, implementation choices that are not Contracts, and exclusions.
 
-## Authority and scope
+## Evidence and stop
 
-List parent and related accepted authorities. State whether this PR is docs-only, implementation-only, or a mechanical exemption.
+```text
+EVIDENCE_NEEDED =
+DONE_WHEN =
+EXPANSION_TRIGGER =
+NEXT_REAL_ACTION =
+```
 
 ## Validation / conformance
 
-For implementation PRs, include the Contract-by-Contract matrix and qualified evidence.
-
 ```text
-IMPLEMENTATION_STATE = ...
-VERIFICATION_STATE = ...
-CONFORMANCE = ...
-IMPLEMENTATION_READY_TO_MERGE = ...
+REVIEW_SCOPE = AFFECTED | FULL
+IMPLEMENTATION_STATE =
+VERIFICATION_STATE =
+CONFORMANCE_RESULT =
+IMPLEMENTATION_READY_TO_MERGE =
 ```
 
-## Review binding for Spec PRs
+Link executed Observations and qualified Evidence; a test filename alone is not Evidence.
+
+## Review / acceptance binding
 
 ```text
-REVIEWED_BASE_COMMIT = ...
-REVIEWED_SPEC_COMMIT = ...
-REVIEWER_ID = ...
-FINAL_ACCEPTED_HEAD = ...
-SEMANTIC_DELTA_AFTER_REVIEW = ...
+REVIEW_TARGET_HEAD =
+BASE_HEAD =
+CURRENT_BASE_HEAD =
+REVIEWER_ID =
+FINAL_ACCEPTED_HEAD = <authority acceptance only>
+SEMANTIC_DELTA_AFTER_REVIEW =
 ```
+
+## Explicit non-effects
+
+State consumer, runtime, production, permission, Secret, deployment, migration, and GitHub-setting effects that did not occur.

@@ -1,0 +1,198 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "urn:mayf3:agent-development-governance:route:v1",
+  "title": "Governance V1 route record",
+  "type": "object",
+  "additionalProperties": true,
+  "required": [
+    "schema_version",
+    "task_id",
+    "goal",
+    "current_gap",
+    "done_when",
+    "authority",
+    "plan",
+    "assurance",
+    "execution_mandate",
+    "spec_gap_dependency",
+    "evidence",
+    "live_authority_gap",
+    "review",
+    "readiness",
+    "stop",
+    "findings"
+  ],
+  "properties": {
+    "schema_version": {
+      "const": 1
+    },
+    "task_id": {
+      "type": "string",
+      "minLength": 1
+    },
+    "goal": {
+      "type": "string",
+      "minLength": 1
+    },
+    "current_gap": {
+      "type": "string",
+      "minLength": 1
+    },
+    "done_when": {
+      "type": "string",
+      "minLength": 1
+    },
+    "authority": {
+      "type": "object",
+      "required": [
+        "declared_action",
+        "ownership_known",
+        "accepted_owner_exists",
+        "accepted_meaning_changed",
+        "accepted_strict_addition",
+        "proposed_target_named",
+        "proposal_scope_changed",
+        "proposal_ownership_changed",
+        "proposal_decision_identity_changed",
+        "implementation_authority"
+      ],
+      "properties": {
+        "declared_action": {
+          "enum": [
+            "REUSE",
+            "AMEND",
+            "SUPERSEDE",
+            "NEW",
+            "AMEND_OR_NEW_PENDING_OWNERSHIP"
+          ]
+        },
+        "ownership_known": {
+          "type": "boolean"
+        },
+        "accepted_owner_exists": {
+          "type": [
+            "boolean",
+            "null"
+          ]
+        },
+        "accepted_meaning_changed": {
+          "type": "boolean"
+        },
+        "accepted_strict_addition": {
+          "type": "boolean"
+        },
+        "proposed_target_named": {
+          "type": "boolean"
+        },
+        "proposal_scope_changed": {
+          "type": "boolean"
+        },
+        "proposal_ownership_changed": {
+          "type": "boolean"
+        },
+        "proposal_decision_identity_changed": {
+          "type": "boolean"
+        },
+        "implementation_authority": {
+          "enum": [
+            "contracts",
+            "none",
+            "unknown",
+            "not_applicable"
+          ]
+        }
+      }
+    },
+    "plan": {
+      "type": "object",
+      "required": [
+        "complexity",
+        "level"
+      ],
+      "properties": {
+        "complexity": {
+          "enum": [
+            "TRIVIAL",
+            "BOUNDED",
+            "COMPLEX"
+          ]
+        },
+        "level": {
+          "enum": [
+            "NONE",
+            "BRIEF",
+            "EXEC_PLAN"
+          ]
+        }
+      }
+    },
+    "assurance": {
+      "type": "object",
+      "required": [
+        "failure_consequence",
+        "level",
+        "controlled_runbook_present"
+      ],
+      "properties": {
+        "failure_consequence": {
+          "enum": [
+            "LOW",
+            "DURABLE_STATE",
+            "HIGH_RISK"
+          ]
+        },
+        "level": {
+          "enum": [
+            "ROUTINE",
+            "DURABLE",
+            "CONTROLLED"
+          ]
+        },
+        "controlled_runbook_present": {
+          "type": "boolean"
+        }
+      }
+    },
+    "spec_gap_dependency": {
+      "enum": [
+        "NONE",
+        "NON_LOAD_BEARING",
+        "LOAD_BEARING"
+      ]
+    },
+    "readiness": {
+      "type": "object",
+      "required": [
+        "implementation_allowed",
+        "merge_ready",
+        "operation_allowed"
+      ],
+      "properties": {
+        "implementation_allowed": {
+          "enum": [
+            "YES",
+            "NO",
+            "NOT_APPLICABLE"
+          ]
+        },
+        "merge_ready": {
+          "enum": [
+            "YES",
+            "NO",
+            "NOT_APPLICABLE"
+          ]
+        },
+        "operation_allowed": {
+          "enum": [
+            "YES",
+            "NO",
+            "NOT_APPLICABLE"
+          ]
+        }
+      }
+    },
+    "findings": {
+      "type": "array"
+    }
+  }
+}

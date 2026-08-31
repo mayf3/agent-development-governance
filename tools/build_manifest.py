@@ -13,6 +13,7 @@ DISTRIBUTION = "development-governance-v0"
 DISTRIBUTED_PATHS = (
     ".agents/README.md",
     ".agents/protocol/SPEC_GOVERNANCE_V0.md",
+    ".agents/protocol/SPEC_GOVERNANCE_V1.md",
     ".agents/protocol/SPEC_FORMAT_V0.md",
     ".agents/skills/spec-governance/SKILL.md",
     ".agents/skills/spec-governance/modes/PREFLIGHT.md",
@@ -21,11 +22,17 @@ DISTRIBUTED_PATHS = (
     ".agents/skills/spec-governance/modes/COMPLIANCE.md",
     ".agents/tools/verify_governance.py",
     ".agents/tools/validate_spec_transition.py",
+    ".agents/tools/validate_governance_route.py",
     ".agents/schemas/distribution-manifest.schema.json",
     ".agents/schemas/spec-frontmatter.schema.json",
     ".agents/schemas/governance-lock.schema.json",
+    ".agents/schemas/governance-route.schema.json",
     ".agents/templates/SPEC_TEMPLATE.md",
     ".agents/templates/GOVERNANCE_ADOPTION_SPEC_TEMPLATE.md",
+    ".agents/templates/CHANGE_BRIEF_TEMPLATE.md",
+    ".agents/templates/EXEC_PLAN_TEMPLATE.md",
+    ".agents/templates/EXECUTION_MANDATE_TEMPLATE.md",
+    ".agents/templates/CONTROLLED_RUNBOOK_TEMPLATE.md",
     ".agents/templates/REVIEW_RECORD_TEMPLATE.md",
     ".agents/templates/CONFORMANCE_RECORD_TEMPLATE.md",
     ".agents/templates/INVESTIGATION_RECORD_TEMPLATE.md",
@@ -43,20 +50,12 @@ def repo_root() -> Path:
 def build_manifest(root: Path) -> dict[str, object]:
     version = (root / "VERSION").read_text(encoding="utf-8").strip()
     files: list[dict[str, object]] = []
-
     for relative in DISTRIBUTED_PATHS:
         path = root / relative
         if not path.is_file():
             raise FileNotFoundError(f"required distribution file is missing: {relative}")
         data = path.read_bytes()
-        files.append(
-            {
-                "path": relative,
-                "sha256": sha256_bytes(data),
-                "size": len(data),
-            }
-        )
-
+        files.append({"path": relative, "sha256": sha256_bytes(data), "size": len(data)})
     return {
         "$schema": "urn:mayf3:agent-development-governance:distribution-manifest:v0",
         "schema_version": 1,
@@ -72,36 +71,21 @@ def serialize(manifest: dict[str, object]) -> bytes:
 
 def main(argv: list[str] | None = None) -> int:
     parser = argparse.ArgumentParser()
-    parser.add_argument(
-        "--check",
-        action="store_true",
-        help="fail when distribution/manifest.json differs from generated content",
-    )
+    parser.add_argument("--check", action="store_true")
     args = parser.parse_args(argv)
-
     root = repo_root()
     output = root / "distribution" / "manifest.json"
-
     try:
         expected = serialize(build_manifest(root))
     except (OSError, ValueError) as exc:
         print(f"manifest build failed: {exc}", file=sys.stderr)
         return 2
-
     if args.check:
-        if not output.is_file():
-            print("distribution/manifest.json is missing", file=sys.stderr)
-            return 1
-        actual = output.read_bytes()
-        if actual != expected:
-            print(
-                "distribution/manifest.json is stale; run tools/build_manifest.py",
-                file=sys.stderr,
-            )
+        if not output.is_file() or output.read_bytes() != expected:
+            print("distribution/manifest.json is stale; run tools/build_manifest.py", file=sys.stderr)
             return 1
         print("distribution manifest is current")
         return 0
-
     output.parent.mkdir(parents=True, exist_ok=True)
     output.write_bytes(expected)
     print(f"wrote {output.relative_to(root)}")
