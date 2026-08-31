@@ -1,6 +1,6 @@
 ---
 spec_id: AGENT_DEVELOPMENT_GOVERNANCE_V1
-status: proposed
+status: accepted
 spec_kind: implementation
 authority_level: governing_spec
 implementation_authority: contracts
@@ -8,7 +8,8 @@ scope:
   - agent-development-governance
 governed_by: []
 external_authorities: []
-supersedes: []
+supersedes:
+  - AGENT_DEVELOPMENT_GOVERNANCE_BOOTSTRAP_V0
 superseded_by: null
 owners:
   - mayf3
@@ -76,20 +77,20 @@ CURRENT_ACCEPTED_RELATED_AUTHORITY_REVISION = 45d4835723874ac1632434baded7ae5672
 AUTHORITY_ACTION = SUPERSEDE
 SUPERSESSION_TARGET = AGENT_DEVELOPMENT_GOVERNANCE_BOOTSTRAP_V0
 PRESERVED_ACCEPTED_AUTHORITY = AGENT_OPERATIONAL_LAYER_V1
-PROPOSED_SUCCESSOR = AGENT_DEVELOPMENT_GOVERNANCE_V1
+ACCEPTED_SUCCESSOR_CANDIDATE = AGENT_DEVELOPMENT_GOVERNANCE_V1
 ACCEPTANCE_ACTOR = mayf3 or another explicitly authorized maintainer
 EXTERNAL_AUTHORITIES = NONE
 ```
 
-This proposed Spec is not normative and does not yet supersede V0. Therefore its frontmatter remains:
+This Spec is prepared as accepted on this candidate branch after exact-Head independent review and Owner acceptance preparation. Its frontmatter is:
 
 ```text
-status = proposed
-supersedes = []
+status = accepted
+supersedes = [AGENT_DEVELOPMENT_GOVERNANCE_BOOTSTRAP_V0]
 superseded_by = null
 ```
 
-After independent review, an authorized acceptance transaction must atomically prepare:
+The candidate atomically records:
 
 ```text
 V1.status = accepted
@@ -98,7 +99,7 @@ V0.status = superseded
 V0.superseded_by = AGENT_DEVELOPMENT_GOVERNANCE_V1
 ```
 
-That transaction becomes active only after merge into the designated authority branch. Updating the distributed `.agents` implementation is a later change based on accepted V1.
+This lifecycle transition remains inactive until mandatory independent final-head recheck and merge into the designated authority branch. Updating the distributed `.agents` implementation is a later change based on active accepted V1.
 
 `AGENT_OPERATIONAL_LAYER_V1` is already accepted and active on the reconciled authoring base. This Spec supersedes V0 only; it does not supersede, amend, implement, or silently reparent the Operational Layer. The Operational Layer's exact accepted frontmatter, Decisions, and Contracts remain unchanged. Its `governed_by: AGENT_DEVELOPMENT_GOVERNANCE_BOOTSTRAP_V0` field is retained as immutable acceptance-time lineage, while this V1 successor explicitly carries the Operational Layer forward as a compatible specialized authority constrained by the current general governance from V1 activation onward.
 
@@ -705,7 +706,7 @@ auth-service workflow.execute = AMEND or NEW + BRIEF + CONTROLLED
 ## 12. Migration, compatibility, and rollback
 
 ```text
-AUTHORING_MIGRATION = none; this PR is docs-only and proposed
+AUTHORING_MIGRATION = accepted-candidate lifecycle only; this PR remains docs-only and performs no implementation
 CURRENT_BASE_RECONCILIATION = 45d4835723874ac1632434baded7ae5672225389
 ACCEPTANCE_MIGRATION = atomic whole-authority V0 -> V1 transition after independent review
 OPERATIONAL_LAYER_DISPOSITION = accepted and active; not superseded, amended, implemented, or reparented by this PR
@@ -735,7 +736,7 @@ CRITICAL_BOUNDARIES_FORMALIZED = 6 / 6
 TARGETED_FAILURES_REPRESENTED = 4 / 4
 ROLLOUT_CANARIES_REPRESENTED = 3 / 3
 AUTHORING_READY_FOR_REVIEW = YES
-READY_TO_MARK_ACCEPTED = NO
+READY_TO_MARK_ACCEPTED = YES
 DISTRIBUTION_IMPLEMENTED = NO
 CONSUMERS_CHANGED = NO
 PRODUCTION_OPERATION_AUTHORIZED = NO
