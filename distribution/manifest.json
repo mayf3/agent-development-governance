@@ -6,8 +6,8 @@
   "files": [
     {
       "path": ".agents/README.md",
-      "sha256": "378ad82e78d134a27b11363be075cb61f580d47cc0394dacb5824b8b9690c811",
-      "size": 10920
+      "sha256": "6bf609fa6151580513017d230748856ba4e6b30d39b08b1f331108dce5cf370a",
+      "size": 13175
     },
     {
       "path": ".agents/protocol/SPEC_GOVERNANCE_V0.md",
@@ -16,8 +16,8 @@
     },
     {
       "path": ".agents/protocol/SPEC_GOVERNANCE_V1.md",
-      "sha256": "dd527d7e54031021273bc17ea6e18b83c5b9175e86aa2739ffe0f28d8bbfe37a",
-      "size": 9767
+      "sha256": "297fb6d84ce359ff6f7ab191835c6f791693c8d3a04ff3f1989d1e1d13eac1e7",
+      "size": 12723
     },
     {
       "path": ".agents/protocol/SPEC_FORMAT_V0.md",
@@ -26,13 +26,13 @@
     },
     {
       "path": ".agents/skills/spec-governance/SKILL.md",
-      "sha256": "5cbb7ef4d83caf68cbe6a8623b6bc13467349e230e4a451b08e3b581d0454cc9",
-      "size": 2276
+      "sha256": "a26f27a6f37a40984d8f80be0eea67bcf99d5055b96d840a3116a58e9603be4f",
+      "size": 2589
     },
     {
       "path": ".agents/skills/spec-governance/modes/PREFLIGHT.md",
-      "sha256": "8ff4c59f9a3c0ea4fc0cd957e2c6b67147ab635a9ed84ff0b4aa4d49d8e5a32d",
-      "size": 2793
+      "sha256": "de4c851e594ec0cc9266053c51839adcc9d5a3cd0f47236929ac051c12e0066c",
+      "size": 4242
     },
     {
       "path": ".agents/skills/spec-governance/modes/AUTHOR.md",
@@ -61,8 +61,8 @@
     },
     {
       "path": ".agents/tools/validate_governance_route.py",
-      "sha256": "ad6cc8788349cbc6276ab18da1a4cf36b8fa07c27740274a03556e4db60b9cac",
-      "size": 13694
+      "sha256": "6efec5be27547c093aeb188643bd82c58ee1fbccbf91b898388d6dbd45d9d3f7",
+      "size": 22467
     },
     {
       "path": ".agents/schemas/distribution-manifest.schema.json",
@@ -81,8 +81,8 @@
     },
     {
       "path": ".agents/schemas/governance-route.schema.json",
-      "sha256": "91ab6bf1c011f0d20f32f8290985415039ebf4b12cbcb0923d6166652894bb81",
-      "size": 4103
+      "sha256": "b73e9d20e602a1071a0d2d56345c0fa672d4e7e7a2f84256726769ca8d9c4579",
+      "size": 10530
     },
     {
       "path": ".agents/templates/SPEC_TEMPLATE.md",
@@ -96,8 +96,8 @@
     },
     {
       "path": ".agents/templates/CHANGE_BRIEF_TEMPLATE.md",
-      "sha256": "2b3541dca03162db1d6de7d23e2304a95bc0397de598749a05e4a10f9bab2b91",
-      "size": 1154
+      "sha256": "b7f87479a4b2c2c5bc3a34fd66631ff037cc3fbb9eb4bfa3cd68adb934398e20",
+      "size": 1592
     },
     {
       "path": ".agents/templates/EXEC_PLAN_TEMPLATE.md",
@@ -106,13 +106,13 @@
     },
     {
       "path": ".agents/templates/EXECUTION_MANDATE_TEMPLATE.md",
-      "sha256": "219e40da27702034f2b26e9770e1f658c3558a8381fbeb12b4f85196310ee167",
-      "size": 770
+      "sha256": "dedeb24b0f7e53fa962693155a014da4777c8183cc16ff1e9cb138ff9fc62748",
+      "size": 1682
     },
     {
       "path": ".agents/templates/CONTROLLED_RUNBOOK_TEMPLATE.md",
-      "sha256": "8379ea8d8cadab969e898e1949c5cc1b53f25c502487195b71d99dbf8b63a228",
-      "size": 1045
+      "sha256": "4e36d81de5233f834fc745b917111e08f67e132fbb2a78dcdeb82ec9701a9d9b",
+      "size": 1498
     },
     {
       "path": ".agents/templates/REVIEW_RECORD_TEMPLATE.md",

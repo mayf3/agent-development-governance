@@ -11,7 +11,7 @@ This protocol turns Development Grammar V1 into a repository workflow. The execu
 
 ## Scope
 
-This protocol governs authority discovery/mutation, one-operation mandates, three-axis routing, compact execution artifacts, governing-Spec lifecycle, load-bearing gaps, Evidence reviewability, live-authority gaps, exact-Head review, proportional conformance, and exact-revision consumer adoption.
+This protocol governs authority discovery/mutation, one-operation mandates, three-axis routing, compact execution artifacts, governing-Spec lifecycle, load-bearing gaps, Evidence reviewability, live-authority gaps, emergency containment, exact-Head review, proportional conformance, and exact-revision consumer adoption.
 
 It does not prescribe a central registry, project manager, GitHub App, merge broker, WORM store, fixed Agent count, or semantic CI oracle.
 
@@ -42,7 +42,7 @@ Before non-trivial implementation, configuration, schema, behavior-defining test
 5. classify exactly one Authority action;
 6. classify Plan from execution complexity;
 7. classify Assurance from failure consequence;
-8. check implementation authority, mandate, load-bearing gap, Evidence reviewability, live authority gap, and stop controls;
+8. check route stage, authority acceptance in base, implementation authority, mutation authorization, isolated write surface, Controlled Runbook, load-bearing gap, Evidence reviewability, live authority gap, emergency containment, and stop controls;
 9. select the shortest authorized route.
 
 ### Authority action
@@ -86,6 +86,8 @@ TARGET_REPOSITORY = <owner/repository>
 REVIEW_TARGET_HEAD = <sha | NOT_APPLICABLE>
 BASE_HEAD = <sha | NOT_APPLICABLE>
 CURRENT_BASE_HEAD = <sha | NOT_APPLICABLE>
+ROUTE_STAGE = AUTHORITY_AUTHORING | IMPLEMENTATION | OPERATION
+AUTHORITY_ACCEPTED_IN_BASE = YES | NO | NOT_APPLICABLE
 GOAL_OR_TARGET = <outcome>
 CURRENT_GAP = <gap>
 AUTHORITY_ACTION = REUSE | AMEND | SUPERSEDE | NEW |
@@ -93,13 +95,21 @@ AUTHORITY_ACTION = REUSE | AMEND | SUPERSEDE | NEW |
 PRIMARY_AUTHORITY = <ID@revision | NONE>
 RELATED_AUTHORITIES = <IDs@revisions | NONE>
 IMPLEMENTATION_AUTHORITY = contracts | none | unknown | not_applicable
+ATOMIC_SPEC_IMPLEMENTATION_PERMITTED = YES | NO
 PLAN_LEVEL = NONE | BRIEF | EXEC_PLAN
 ASSURANCE_LEVEL = ROUTINE | DURABLE | CONTROLLED
 EXECUTION_MANDATE = VALID | INVALID | NOT_APPLICABLE
+MUTATION_AUTHORIZATION = VALID | INVALID | NOT_APPLICABLE
+ISOLATED_WRITE_SURFACE = YES | NO | NOT_APPLICABLE
 CONTROLLED_RUNBOOK_REQUIRED = YES | NO
 SPEC_GAP_DEPENDENCY = NONE | NON_LOAD_BEARING | LOAD_BEARING
 EVIDENCE_REVIEWABILITY = PASS | FAIL | NOT_APPLICABLE
 LIVE_AUTHORITY_GAP = NONE | DETECTED
+OWNER_DECISION_REQUIRED = YES | NO
+EMERGENCY_STATE = NONE | ACTIVE
+EMERGENCY_ACTION = NONE | ROLLBACK | DISABLEMENT | SHUTDOWN |
+                   REVOCATION | ISOLATION | CONTAINMENT
+INCIDENT_REFERENCE = <reference | NOT_APPLICABLE>
 IMPLEMENTATION_ALLOWED = YES | NO | NOT_APPLICABLE
 MERGE_READY = YES | NO | NOT_APPLICABLE
 OPERATION_ALLOWED = YES | NO | NOT_APPLICABLE
@@ -128,6 +138,27 @@ AMEND/NEW + CONTROLLED -> docs-first
 SUPERSEDE -> docs-first whole-authority successor
 ```
 
+Stage rules:
+
+```text
+AMEND/NEW + CONTROLLED
++ AUTHORITY_ACCEPTED_IN_BASE = NO
+-> ROUTE_STAGE = AUTHORITY_AUTHORING
+-> IMPLEMENTATION_ALLOWED = NO
+-> OPERATION_ALLOWED = NO
+
+SUPERSEDE
+-> ROUTE_STAGE = AUTHORITY_AUTHORING
+-> same-stage implementation and operation forbidden
+
+authority accepted, later implementation/operation begins
+-> new task
+-> AUTHORITY_ACTION = REUSE
+-> AUTHORITY_ACCEPTED_IN_BASE = YES
+```
+
+For `AMEND/NEW + ROUTINE/DURABLE`, an atomic Spec-delta-and-code PR is valid only when local authority explicitly permits it. It MUST NOT be inferred merely from low risk.
+
 ## Governing-Spec authoring
 
 The Author resolves ownership and load-bearing normative decisions before implementation depends on them. Formal Specs follow `SPEC_FORMAT_V0.md` and preserve Goal, scope/non-goals, authority, qualified knowledge where load-bearing, Decisions, Contracts, Acceptance with Required Evidence and negative controls, alternatives, migration/compatibility/rollback, and open owner decisions.
@@ -140,11 +171,13 @@ Reviewer may identify a missing long-lived decision but cannot author it in Revi
 
 ```text
 SPEC_GAP_DEPENDENCY = LOAD_BEARING
-READINESS = NOT_READY
+AUTHORITY_ACTION = AMEND | SUPERSEDE | NEW
+at least one applicable readiness flag = NO
+all readiness flags = NOT_APPLICABLE  # forbidden
 NEXT_ACTION = RE_PREFLIGHT
 ```
 
-The owning Author/Owner resolves `AMEND`, `SUPERSEDE`, or `NEW`, or removes the dependency.
+`REUSE` and unresolved `AMEND_OR_NEW_PENDING_OWNERSHIP` are invalid at the readiness boundary. `OWNER_DECISION_REQUIRED = YES` may coexist when ownership or containment requires Owner input, but it does not replace `NEXT_ACTION = RE_PREFLIGHT`. The owning Author/Owner resolves the action or removes the dependency.
 
 ## Evidence reviewability
 
@@ -168,9 +201,26 @@ When live state exists without accepted Product Authority:
 7. independently verify conformance;
 8. end containment and stop.
 
+## Emergency containment
+
+Before normal Product Authority is available, emergency action is limited to rollback, disablement or shutdown, revocation, isolation, or equivalent containment. It requires attributable Owner authorization and an incident reference, introduces no durable new behavior, and records that permanent repair must return through normal PREFLIGHT and Product Authority. It cannot authorize feature implementation or merge.
+
+Positive route:
+
+```text
+incident + Owner authorization + containment-only action
++ durable new behavior = NO
++ normal authority reconciliation required
+-> emergency operation may proceed under a valid controlled mandate/runbook
+```
+
+Missing incident reference, missing Owner authorization, or durable new behavior MUST fail.
+
 ## Implementation
 
-Implementation records primary/related authorities, Base, implementation commit, Authority action, Plan, Assurance, and mandate where applicable. Work stays inside accepted Contracts and mandate scope.
+Implementation records primary/related authorities, Base, implementation commit, Authority action, Plan, Assurance, route stage, authority acceptance in base, and mutation authorization. Before any mutation, attributable authorization MUST bind target, scope, allowed/forbidden effects, and Done When. Every write MUST use an isolated worktree or equivalent isolated write surface. Controlled mutation additionally requires actor/role, environment, exact operation or operation class, abort conditions, Secret handling, receipt requirements, validity/attempt bounds, and an exact Controlled Runbook.
+
+A Task, Issue, PR, or Change Brief MAY carry the general authorization; a separate large mandate document is not mandatory. `NOT_APPLICABLE` cannot be used while implementation or operation is allowed.
 
 If a load-bearing gap appears, stop only dependent semantic work and re-PREFLIGHT. Do not rewrite accepted authority to excuse code or expand into optional infrastructure without an observed Expansion Trigger.
 

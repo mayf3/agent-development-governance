@@ -80,6 +80,24 @@ Re-PREFLIGHT only if implementation proves that accepted V1 lacks a required lon
 
 Optional platform work, extra Agent roles, and unrelated repository protection are not triggers.
 
+
+## Affected-Contract amendment after review #5071929702
+
+The independent review accepted the three-axis document direction but found five deterministic false-pass classes. This amendment is limited to:
+
+```text
+1. docs-first route stage and authority-accepted-in-base checks;
+2. general mutation authorization, controlled target/exact-operation binding,
+   and mandatory isolated write surfaces;
+3. one exact load-bearing SPEC_GAP route: AMEND/SUPERSEDE/NEW,
+   applicable readiness NO, NEXT_ACTION = RE_PREFLIGHT;
+4. emergency containment carry-forward and negative controls;
+5. complete A/B/C/D targeted scenario fixtures, with no fixed Agent
+   formation and no unauthorized platform dependency.
+```
+
+The accepted Governance V1 and Operational Layer Spec bytes remain unchanged. No consumer, runtime, permission, Credential, deployment, migration, or GitHub setting is modified.
+
 ## Next real action
 
 After independent review and merge, prepare an immutable distribution revision and let each consumer separately review and adopt that exact revision. Do not bulk-update consumers.

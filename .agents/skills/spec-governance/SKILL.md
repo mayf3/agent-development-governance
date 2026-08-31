@@ -31,12 +31,15 @@ Read the V1 protocol and Spec format only as needed.
 ```text
 Product Authority creates long-lived obligations.
 Execution Mandate constrains one operation.
+Every mutation needs attributable target/scope/effects/Done When authorization and an isolated write surface.
 Complexity determines Plan.
 Failure consequence determines Assurance.
 Investigation / Task / test / Review comment do not create Product Authority.
-Load-bearing SPEC_GAP -> NOT_READY.
+AMEND/NEW + CONTROLLED and every SUPERSEDE route are docs-first.
+Load-bearing SPEC_GAP -> AMEND/SUPERSEDE/NEW + readiness NO + RE_PREFLIGHT.
 Inaccessible required Evidence -> REQUIRED_GATE_FAILURE, not automatically FALSE_EVIDENCE.
 Runtime is Observation, not authority.
+Emergency pre-Spec action is Owner-authorized incident containment only; no durable new behavior.
 DONE_WHEN met without EXPANSION_TRIGGER -> STOP.
 ```
 

@@ -41,6 +41,14 @@ CONFORMANCE_REPORTS = <PR records / docs/reports>
 OPERATION_RECEIPTS = <Secret-safe persistent location>
 ```
 
+## Mandatory write isolation
+
+All write work MUST use an isolated worktree or equivalent isolated write surface. An equivalent surface binds an exact parent, writes only to an isolated ref and the single intended tree, does not mutate another active checkout, and aborts rather than silently adopting target-Head movement.
+
+## Emergency containment
+
+Emergency authorization is limited to rollback, disablement or shutdown, revocation, isolation, or equivalent containment tied to an incident. It MUST NOT introduce durable new behavior; permanent repair returns to normal Product Authority.
+
 ## Local extensions
 
-Name stricter rules for combined Spec-delta/code PRs, always-controlled surfaces, review independence, isolated write surfaces, and branch protection. Local rules may refine but not silently weaken the adopted governance.
+Name stricter rules for combined Spec-delta/code PRs, always-controlled surfaces, review independence, and branch protection. Local rules may refine but not silently weaken the adopted governance.

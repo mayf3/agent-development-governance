@@ -8,6 +8,13 @@ EXECUTION_MANDATE =
 ACTOR_OR_ROLE =
 TARGET =
 ENVIRONMENT =
+ISOLATED_WRITE_SURFACE =
+EMERGENCY_STATE = NONE | ACTIVE
+EMERGENCY_ACTION = NONE | ROLLBACK | DISABLEMENT | SHUTDOWN |
+                   REVOCATION | ISOLATION | CONTAINMENT
+INCIDENT_REFERENCE = <reference | NOT_APPLICABLE>
+DURABLE_NEW_BEHAVIOR = NO
+POST_INCIDENT_AUTHORITY_RECONCILIATION_REQUIRED = YES | NO | NOT_APPLICABLE
 EXPECTED_PRE_STATE =
 ALLOWED_EFFECTS =
 FORBIDDEN_EFFECTS =
@@ -25,6 +32,8 @@ NEGATIVE_POSTCONDITIONS =
 - exact authority/implementation coordinates:
 - mandate validity:
 - access/identity:
+- isolated worktree or equivalent isolated write surface:
+- emergency Owner authorization and incident reference when active:
 - backup/rollback or containment:
 - Secret-safe logging:
 - independent verifier availability:

@@ -82,7 +82,9 @@ runtime state
 Review comment
 ```
 
-A valid **Execution Mandate** authorizes and constrains one task or operation. It binds an attributable issuer, actor/role, target, environment, scope, allowed/forbidden effects, `DONE_WHEN`, validity/attempt bounds and, when controlled, abort, Secret, and receipt rules. It cannot create or weaken Product Contracts. An Agent-authored Brief cannot self-authorize.
+A valid **Execution Mandate** authorizes and constrains one task or operation. It binds an attributable issuer, target, scope, allowed/forbidden effects, and `DONE_WHEN`. A controlled mutation additionally binds actor/role, environment, exact operation or operation class, abort conditions, Secret handling, receipt requirements, and validity/attempt bounds. It cannot create or weaken Product Contracts. An Agent-authored Brief cannot self-authorize.
+
+Every mutation—including code, documentation, configuration, schema, behavior-defining tests, generated files, and operational state—MUST have attributable authorization before it begins. The authorization may be carried by a Task, Issue, PR, Brief, or dedicated mandate; it need not become a separate large document, but it MUST remain persistent and reviewable. All write work MUST use an isolated worktree or equivalent isolated write surface bound to an exact parent, isolated ref, and single intended tree without mutating another active checkout.
 
 ## Three independent PREFLIGHT axes
 
@@ -136,6 +138,19 @@ A Controlled Runbook is an Assurance artifact, not a Plan level. A one-shot oper
 | `AMEND/NEW` | `CONTROLLED` | docs-first Product Authority, then controlled execution |
 | `SUPERSEDE` | any | docs-first whole-authority successor |
 
+### Route stage and docs-first gate
+
+Every structured route records:
+
+```text
+ROUTE_STAGE = AUTHORITY_AUTHORING | IMPLEMENTATION | OPERATION
+AUTHORITY_ACCEPTED_IN_BASE = YES | NO | NOT_APPLICABLE
+```
+
+`AMEND/NEW + CONTROLLED` remains in `AUTHORITY_AUTHORING` with implementation and operation forbidden until the new authority is accepted in the relevant base. Every `SUPERSEDE` route is docs-first and cannot share a same-stage implementation or operation. After the authority is accepted, the actual implementation or operation is a new task routed as `REUSE`.
+
+`AMEND/NEW + ROUTINE/DURABLE` MAY combine Spec delta and implementation only when local authority explicitly permits that atomic route. This exception never applies to `CONTROLLED` or `SUPERSEDE`.
+
 Implementation detail does not become a Contract because an Investigation, PR body, test, or Reviewer repeats it. A public interface, permission, security, durable-data, lifecycle, or compatibility obligation cannot be demoted by calling it an implementation detail.
 
 ## One legal effect per artifact
@@ -154,11 +169,13 @@ A Reviewer may identify a missing long-lived decision but cannot write it in Rev
 
 ```text
 SPEC_GAP_DEPENDENCY = LOAD_BEARING
-IMPLEMENTATION_ALLOWED = NO
-MERGE_READY = NO
-OPERATION_ALLOWED = NO
+AUTHORITY_ACTION = AMEND | SUPERSEDE | NEW
+at least one applicable readiness boundary = NO
+all readiness boundaries = NOT_APPLICABLE  # forbidden
 NEXT_ACTION = RE_PREFLIGHT
 ```
+
+`REUSE` and `AMEND_OR_NEW_PENDING_OWNERSHIP` cannot cross this readiness boundary. `OWNER_DECISION_REQUIRED = YES` may record that the re-PREFLIGHT needs an Owner decision, but `OWNER_DECISION` cannot replace the required `RE_PREFLIGHT` route result.
 
 Required Evidence must be accessible to the designated independent Reviewer, reproducible in an authorized environment, or represented by a sanitized coordinate-bound receipt from a legally independent actor.
 
@@ -179,6 +196,10 @@ PERMANENT_GRANDFATHER = NO
 ```
 
 An authorized Owner/risk actor issues temporary scope-bound containment with an expiry or closure condition. Close the long-lived gap docs-first, perform minimum reconcile after acceptance, independently verify conformance, end containment, and stop.
+
+## Emergency containment
+
+A pre-Spec emergency action is limited to rollback, disablement or shutdown, revocation, isolation, or equivalent containment. It MUST have attributable Owner authorization and an incident reference, MUST NOT introduce durable new behavior, and MUST require permanent repair to return through normal PREFLIGHT and Product Authority. Emergency containment may authorize the minimum operation needed to reduce harm; it does not authorize feature implementation, merge, or permanent semantics.
 
 ## Review coordinates and Blockers
 
