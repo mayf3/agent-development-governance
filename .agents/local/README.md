@@ -10,8 +10,11 @@ Publish immutable, versioned governance distributions that consuming repositorie
 
 ```text
 BOOTSTRAP_SPEC = AGENT_DEVELOPMENT_GOVERNANCE_BOOTSTRAP_V0
-BOOTSTRAP_SPEC_STATUS = accepted
+BOOTSTRAP_SPEC_STATUS = superseded
 BOOTSTRAP_EXCEPTION = closed_after_acceptance
+GOVERNANCE_V1_SPEC = AGENT_DEVELOPMENT_GOVERNANCE_V1
+GOVERNANCE_V1_SPEC_STATUS = accepted
+GOVERNANCE_V1_ACTIVE_ON_MAIN = no
 OPERATIONAL_LAYER_SPEC = AGENT_OPERATIONAL_LAYER_V1
 OPERATIONAL_LAYER_SPEC_STATUS = accepted
 OPERATIONAL_LAYER_ACTIVE_ON_MAIN = yes
@@ -19,7 +22,7 @@ ACCEPTANCE_ACTOR = mayf3 or another explicitly authorized maintainer
 STABLE_RELEASE = none
 ```
 
-The one-time bootstrap exception ended when the accepted bootstrap Spec merged to `main`. `AGENT_OPERATIONAL_LAYER_V1` is accepted and active on `main`.
+On this candidate branch, `AGENT_DEVELOPMENT_GOVERNANCE_V1` is prepared as accepted and the bootstrap V0 as superseded. The transition remains inactive until independent final-head recheck and merge, so current `main` remains governed by V0. `AGENT_OPERATIONAL_LAYER_V1` remains accepted, active, and unchanged.
 
 PR #3 contained no implementation. Its accepted Contracts may authorize bounded implementation in this repository only through a separate task, worktree, and PR whose base contains the accepted authority. The central Spec does not automatically authorize consumer-repository product changes.
 

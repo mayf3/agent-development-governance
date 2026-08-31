@@ -1,6 +1,6 @@
 ---
 spec_id: AGENT_DEVELOPMENT_GOVERNANCE_BOOTSTRAP_V0
-status: accepted
+status: superseded
 spec_kind: implementation
 authority_level: governing_spec
 implementation_authority: contracts
@@ -9,7 +9,7 @@ scope:
 governed_by: []
 external_authorities: []
 supersedes: []
-superseded_by: null
+superseded_by: AGENT_DEVELOPMENT_GOVERNANCE_V1
 owners:
   - mayf3
 ---

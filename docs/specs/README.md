@@ -16,12 +16,15 @@ Implementation progress, verification coverage, runtime state, and conformance a
 
 | Spec ID | Status | Kind | Implementation authority | Purpose |
 |---|---|---|---|---|
-| `AGENT_DEVELOPMENT_GOVERNANCE_BOOTSTRAP_V0` | accepted | implementation | contracts | Bootstrap the initial reusable governance distribution and its integrity tooling |
+| `AGENT_DEVELOPMENT_GOVERNANCE_BOOTSTRAP_V0` | superseded | implementation | contracts | Bootstrap the initial reusable governance distribution and its integrity tooling |
 | `AGENT_OPERATIONAL_LAYER_V1` | accepted | implementation | contracts | Define bounded task Skills and a typed, non-normative repository-local Record corpus |
+| `AGENT_DEVELOPMENT_GOVERNANCE_V1` | accepted | implementation | contracts | Replace the single heavy non-mechanical route with independent Authority, Plan, and Assurance decisions while preserving V0 protections |
 
 `AGENT_OPERATIONAL_LAYER_V1` is accepted and active on `main`.
 
-Its implementation progress, verification coverage, conformance, and release state remain separate from Spec lifecycle.
+Its implementation progress, verification coverage, conformance, and release state remain separate from Spec lifecycle. PR #5 does not supersede, amend, implement, or silently reparent it.
+
+The `accepted` Governance V1 and `superseded` V0 rows reflect this candidate branch. They become active on `main` only after independent final-head recheck and merge; until then `main` remains governed by V0. Governance V1 supersedes only V0 and carries the compatible Operational Layer forward without changing that authority's accepted frontmatter. Future Operational Layer implementation must re-run PREFLIGHT against the exact active Governance V1 and exact accepted Operational Layer revisions; any conflict or semantic parent change requires a separate authority action.
 
 ## Bootstrap note
 

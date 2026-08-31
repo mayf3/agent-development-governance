@@ -19,7 +19,9 @@ It is not a central product authority. A consuming repository adopts an exact im
 
 ```text
 DISTRIBUTION_VERSION = 0.2.0-draft.1
-BOOTSTRAP_SPEC_STATUS = accepted
+BOOTSTRAP_SPEC_STATUS = superseded
+GOVERNANCE_V1_SPEC_STATUS = accepted
+GOVERNANCE_V1_ACTIVE_ON_MAIN = no
 OPERATIONAL_LAYER_SPEC_STATUS = accepted
 ENFORCEMENT_LEVEL = manual_policy
 SEMANTIC_SPEC_VERIFIER = not_implemented
@@ -28,7 +30,7 @@ DISTRIBUTION_INTEGRITY_TOOLS = implemented
 READY_TO_TAG_STABLE_RELEASE = no
 ```
 
-The bootstrap Spec and `AGENT_OPERATIONAL_LAYER_V1` are accepted and active on `main`. The reusable distribution remains a draft and no stable release exists. Spec acceptance is separate from implementation progress; PR #3 implemented none of the operational-layer Contracts.
+On this candidate branch, Governance V1 is prepared as accepted and bootstrap V0 as superseded; the transition remains inactive until independent final-head recheck and merge, so current `main` continues to use V0. `AGENT_OPERATIONAL_LAYER_V1` remains accepted, active, and unchanged. The reusable distribution remains a draft and no stable release exists. Spec acceptance remains separate from implementation progress; PR #3 implemented none of the operational-layer Contracts.
 
 ```text
 SPEC_ACCEPTANCE != IMPLEMENTATION_STATE
