@@ -6,13 +6,18 @@
   "files": [
     {
       "path": ".agents/README.md",
-      "sha256": "23c86e5f60ee2321c637572c5199cd66d232a28eb5f36262fcc414f23161341a",
-      "size": 16007
+      "sha256": "6bf609fa6151580513017d230748856ba4e6b30d39b08b1f331108dce5cf370a",
+      "size": 13175
     },
     {
       "path": ".agents/protocol/SPEC_GOVERNANCE_V0.md",
-      "sha256": "eaa0ea44581b6f25d1c6d0b9e5842cc9643cc98ccb6a06d3e7407e7f5c2edd7a",
-      "size": 18612
+      "sha256": "dd5392b2921a40553c28579701cd94ae282c5b85794cc619f353e9ff14240511",
+      "size": 938
+    },
+    {
+      "path": ".agents/protocol/SPEC_GOVERNANCE_V1.md",
+      "sha256": "297fb6d84ce359ff6f7ab191835c6f791693c8d3a04ff3f1989d1e1d13eac1e7",
+      "size": 12723
     },
     {
       "path": ".agents/protocol/SPEC_FORMAT_V0.md",
@@ -21,28 +26,28 @@
     },
     {
       "path": ".agents/skills/spec-governance/SKILL.md",
-      "sha256": "2ef55ddaa72051dc7b948851538bde1c33d9e9b9026d1cac15c4c44d491214b7",
-      "size": 2369
+      "sha256": "a26f27a6f37a40984d8f80be0eea67bcf99d5055b96d840a3116a58e9603be4f",
+      "size": 2589
     },
     {
       "path": ".agents/skills/spec-governance/modes/PREFLIGHT.md",
-      "sha256": "4fb139bd43726fb880ccb3431df4c38d1bac84c078807dace578cf1a89d063c7",
-      "size": 3014
+      "sha256": "de4c851e594ec0cc9266053c51839adcc9d5a3cd0f47236929ac051c12e0066c",
+      "size": 4242
     },
     {
       "path": ".agents/skills/spec-governance/modes/AUTHOR.md",
-      "sha256": "b568a174a1370ffb637afec27cdc66a67e7e0017a1b07e1927700568233eca4c",
-      "size": 2757
+      "sha256": "317b28afb24b4dd657671215de705bf9f631842c38b1add60c7847ff4d986327",
+      "size": 2495
     },
     {
       "path": ".agents/skills/spec-governance/modes/REVIEW.md",
-      "sha256": "6f2ccbea5c2e867293e50dbf8be7215b88d8684fdc19f1726bd3ca4208cd31ff",
-      "size": 2645
+      "sha256": "ed1a8078469e2908c6311269fb058ea8b5bd20a45c033d86a569c5b079b8afbd",
+      "size": 3208
     },
     {
       "path": ".agents/skills/spec-governance/modes/COMPLIANCE.md",
-      "sha256": "dd28faaea5eff25066097a9aa45af9e5b52a07ced6d755cbc4d7bc7fad63aeee",
-      "size": 2805
+      "sha256": "1f26b23f69fef5a1fce219bbc10f23770b5e34a9c026bf05b5abea4bc934881d",
+      "size": 2626
     },
     {
       "path": ".agents/tools/verify_governance.py",
@@ -53,6 +58,11 @@
       "path": ".agents/tools/validate_spec_transition.py",
       "sha256": "255838a907607aeb931b18e38473b603c5da9af07eb61d66219eaf393deecf6c",
       "size": 10901
+    },
+    {
+      "path": ".agents/tools/validate_governance_route.py",
+      "sha256": "6efec5be27547c093aeb188643bd82c58ee1fbccbf91b898388d6dbd45d9d3f7",
+      "size": 22467
     },
     {
       "path": ".agents/schemas/distribution-manifest.schema.json",
@@ -70,6 +80,11 @@
       "size": 2812
     },
     {
+      "path": ".agents/schemas/governance-route.schema.json",
+      "sha256": "b73e9d20e602a1071a0d2d56345c0fa672d4e7e7a2f84256726769ca8d9c4579",
+      "size": 10530
+    },
+    {
       "path": ".agents/templates/SPEC_TEMPLATE.md",
       "sha256": "fbc45e2996065f3ad9db266d7bf8fad6b0adc3866bbacc6a0e32df9104e5c1e2",
       "size": 3343
@@ -80,14 +95,34 @@
       "size": 11290
     },
     {
+      "path": ".agents/templates/CHANGE_BRIEF_TEMPLATE.md",
+      "sha256": "b7f87479a4b2c2c5bc3a34fd66631ff037cc3fbb9eb4bfa3cd68adb934398e20",
+      "size": 1592
+    },
+    {
+      "path": ".agents/templates/EXEC_PLAN_TEMPLATE.md",
+      "sha256": "edb7252b7416b57a8abea5ce3022d56872e849b5437f1e302c155d8183196196",
+      "size": 1034
+    },
+    {
+      "path": ".agents/templates/EXECUTION_MANDATE_TEMPLATE.md",
+      "sha256": "dedeb24b0f7e53fa962693155a014da4777c8183cc16ff1e9cb138ff9fc62748",
+      "size": 1682
+    },
+    {
+      "path": ".agents/templates/CONTROLLED_RUNBOOK_TEMPLATE.md",
+      "sha256": "4e36d81de5233f834fc745b917111e08f67e132fbb2a78dcdeb82ec9701a9d9b",
+      "size": 1498
+    },
+    {
       "path": ".agents/templates/REVIEW_RECORD_TEMPLATE.md",
-      "sha256": "0ef6dd2acb479426d31afb586e31dcfdf09a7e93dc5c4422407e03913be76cfb",
-      "size": 1215
+      "sha256": "497159bbb38d8726dc149c27734620a3f7fc25a738880960b310125301bd5a49",
+      "size": 1737
     },
     {
       "path": ".agents/templates/CONFORMANCE_RECORD_TEMPLATE.md",
-      "sha256": "a22dfad8c948d801ae9f19ab41d6885b14926902dd4b492b4d17524321d94f96",
-      "size": 1960
+      "sha256": "bfc491210cf0754b818a48290a3ce07639ac0f301e3c891c3eea4fc0a4b0dbdd",
+      "size": 1848
     },
     {
       "path": ".agents/templates/INVESTIGATION_RECORD_TEMPLATE.md",

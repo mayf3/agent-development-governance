@@ -1,135 +1,93 @@
 # Agent Development Governance
 
-A versioned development grammar, Spec-governance protocol, and reusable Agent Skill for repositories where software is designed, implemented, reviewed, and operated across many Agent sessions.
-
-The repository exists to make this chain explicit and auditable:
+A versioned development grammar, Spec-governance protocol, and reusable Agent Skill for repositories developed across many Agent sessions.
 
 ```text
 what we observed
-→ what we think it means
-→ what we decided
-→ what the system must guarantee
-→ what was implemented
-→ what the evidence actually verifies
+-> what we think it means
+-> what we decided
+-> what the system must guarantee
+-> what was implemented or operated
+-> what the Evidence actually verifies
 ```
 
-It is not a central product authority. A consuming repository adopts an exact immutable revision, vendors the files into its own base branch, and remains the owner of its Product Direction, Architecture, Specs, acceptance actors, and code.
+It is not a central product authority. A consumer adopts an exact immutable source revision and remains owner of its Product Direction, Architecture, Specs, acceptance actors, code, runtime, and operations.
 
 ## Current status
 
 ```text
 DISTRIBUTION_VERSION = 0.2.0-draft.1
-BOOTSTRAP_SPEC_STATUS = superseded
 GOVERNANCE_V1_SPEC_STATUS = accepted
-GOVERNANCE_V1_ACTIVE_ON_MAIN = no
+GOVERNANCE_V1_ACTIVE_ON_MAIN = yes
+BOOTSTRAP_V0_STATUS = superseded
 OPERATIONAL_LAYER_SPEC_STATUS = accepted
-ENFORCEMENT_LEVEL = manual_policy
+OPERATIONAL_LAYER_IMPLEMENTATION = not_started
+ENFORCEMENT_LEVEL = manual_policy_plus_deterministic_integrity
 SEMANTIC_SPEC_VERIFIER = not_implemented
-SPEC_TRANSITION_VALIDATOR = implemented_for_cross_record_lifecycle_closure
-DISTRIBUTION_INTEGRITY_TOOLS = implemented
-READY_TO_TAG_STABLE_RELEASE = no
+SPEC_TRANSITION_VALIDATOR = implemented
+ROUTE_CONSISTENCY_VALIDATOR = implemented_in_candidate_distribution
+STABLE_RELEASE = none
 ```
 
-On this candidate branch, Governance V1 is prepared as accepted and bootstrap V0 as superseded; the transition remains inactive until independent final-head recheck and merge, so current `main` continues to use V0. `AGENT_OPERATIONAL_LAYER_V1` remains accepted, active, and unchanged. The reusable distribution remains a draft and no stable release exists. Spec acceptance remains separate from implementation progress; PR #3 implemented none of the operational-layer Contracts.
+Governance V1 separates:
 
 ```text
-SPEC_ACCEPTANCE != IMPLEMENTATION_STATE
-PR_3_IMPLEMENTATION = none
+new or changed long-lived obligation -> Authority action
+execution complexity                 -> Plan level
+failure consequence                  -> Assurance level
 ```
 
-## What is frozen in the accepted V0 draft
+Complex work gets enough planning. Dangerous work gets stronger authorization, controls, Evidence, and receipts. Neither fact automatically creates a new Spec.
 
-- Six entity primitives: `Goal`, `State`, `Observation`, `Claim`, `Decision`, and `Contract`.
-- One first-class relational primitive: `Evidence`.
-- Two entity-primitive families: epistemic (`Observation`, `Claim`, `State`) and normative (`Goal`, `Decision`, `Contract`).
-- `State` is a time-indexed projection, not raw truth.
-- `Evidence` is an auditable relation from qualified Observations to a specific Claim, State assertion, or Contract at a pinned Spec revision; it is not merely a file, log, test definition, or screenshot.
-- Spec authority lifecycle is separate from implementation progress, verification coverage, runtime state, and conformance.
-- Non-mechanical implementation requires an accepted implementation-authorizing Spec already present in the implementation PR base.
-- Accepted Decision and Contract meaning is immutable under the same stable ID.
-- V0 forbids partial supersession.
-- Grandfathered legacy governing-Spec IDs have a retirement-only atomic transition; new active legacy IDs remain forbidden.
-- External authorities may be referenced at an exact revision, but one repository may not govern or supersede another repository.
-- Review recommendations are bound to exact commits and do not themselves perform acceptance.
-- Vendoring records preparation and acceptance as separate states; preparing bytes never fabricates acceptance.
-- Conformance is a point-in-time relation over a Spec revision, implementation commit, environment, time, and evidence.
-- Rejected or no-change investigations are persisted as Investigation Records rather than being added to governing Spec lifecycle.
+## Core rules
 
-## Repository layout
+- only active accepted Product Authority creates long-lived Contracts;
+- an Execution Mandate constrains one operation and cannot change Product Contracts;
+- Investigation, Task, Brief, test, runtime, or Review comment cannot become Product Authority;
+- `REUSE`, `AMEND`, `SUPERSEDE`, and `NEW` are mutually exclusive at readiness boundaries;
+- a load-bearing `SPEC_GAP` stops dependent implementation, merge, or operation;
+- inaccessible required Evidence is a gate failure, not automatically false evidence;
+- a Controlled Runbook is an Assurance artifact, not an ExecPlan;
+- live state without authority freezes expansion and requires Owner containment plus docs-first closure;
+- exact candidate Head and Base movement are different facts;
+- Blockers have closed classes, legal sources, counterexamples, impact, and minimal closure;
+- affected-Contract review is default; full matrices are for controlled, release, explicit full, or unbounded surfaces;
+- `DONE_WHEN` met without an `EXPANSION_TRIGGER` means `STOP`.
+
+## Layout
 
 ```text
-AGENTS.md
 .agents/
 ├── README.md
-├── local/
-│   └── README.md
 ├── protocol/
-│   ├── SPEC_FORMAT_V0.md
-│   └── SPEC_GOVERNANCE_V0.md
-├── schemas/
-├── skills/
-│   └── spec-governance/
-│       ├── SKILL.md
-│       └── modes/
-│           ├── PREFLIGHT.md
-│           ├── AUTHOR.md
-│           ├── REVIEW.md
-│           └── COMPLIANCE.md
-├── tools/
-│   ├── validate_spec_transition.py
-│   └── verify_governance.py
+│   ├── SPEC_GOVERNANCE_V1.md
+│   ├── SPEC_GOVERNANCE_V0.md        # historical compatibility
+│   └── SPEC_FORMAT_V0.md
+├── skills/spec-governance/
+├── schemas/governance-route.schema.json
+├── tools/validate_governance_route.py
 └── templates/
-    ├── SPEC_TEMPLATE.md
-    ├── GOVERNANCE_ADOPTION_SPEC_TEMPLATE.md
+    ├── CHANGE_BRIEF_TEMPLATE.md
+    ├── EXEC_PLAN_TEMPLATE.md
+    ├── EXECUTION_MANDATE_TEMPLATE.md
+    ├── CONTROLLED_RUNBOOK_TEMPLATE.md
     ├── REVIEW_RECORD_TEMPLATE.md
-    ├── CONFORMANCE_RECORD_TEMPLATE.md
-    ├── INVESTIGATION_RECORD_TEMPLATE.md
-    └── consumer/
+    └── CONFORMANCE_RECORD_TEMPLATE.md
 
-docs/
-├── adoption/
-├── rationale/
-├── releases/
-└── specs/
-
-distribution/
-└── manifest.json
-
-tools/
-├── build_manifest.py
-├── vendor.py
-├── verify_vendor.py
-└── publish_bootstrap.sh
+docs/changes/
+distribution/manifest.json
+tools/{build_manifest.py,vendor.py,verify_vendor.py}
 ```
 
-## Minimum operating loop
+## Deterministic tool boundary
 
-```text
-1. Discover governing authorities.
-2. Classify the work as REUSE / AMEND / SUPERSEDE / NEW.
-3. Treat uncertainty about “mechanical” as NON_MECHANICAL.
-4. Do not implement non-mechanical behavior without an accepted,
-   implementation-authorizing Spec in the base branch.
-5. Author and independently review the docs-only Spec.
-6. Bind acceptance to the exact reviewed and final accepted commits.
-7. Implement against the pinned Spec revision.
-8. Produce Contract-by-Contract conformance evidence.
-9. Report drift; never rewrite an accepted Spec to make incorrect code look conforming.
-```
+`validate_governance_route.py` checks structured route consistency and known negative controls. It does not decide whether an authority truly owns a decision, whether a Claim is justified, whether a Contract is complete, or whether real Evidence is sufficient.
+
+`verify_governance.py`, the manifest, and transition validator check bytes, adoption metadata, and lifecycle closure. None performs semantic acceptance.
 
 ## Consumer model
 
-V0 uses **vendored, commit-pinned adoption** rather than a floating branch, Git submodule, or runtime fetch.
-
-Why:
-
-- every clone contains the actual governance text;
-- Agents can read it without initializing a submodule;
-- implementation PR base branches contain the governing content;
-- update PRs show the exact governance diff;
-- a later change in this repository cannot silently change another repository.
-
-A consumer pins an exact source revision and uses a two-stage local adoption record:
+Consumers vendor an exact source commit and record preparation separately from local acceptance. Upstream movement cannot alter a consumer without a new consumer commit.
 
 ```json
 {
@@ -137,55 +95,10 @@ A consumer pins an exact source revision and uses a two-stage local adoption rec
   "source_commit": "<40-hex commit>",
   "distribution": "development-governance-v0",
   "version": "0.2.0-draft.1",
-  "adoption": {
-    "status": "proposed | accepted"
-  }
+  "adoption": {"status": "proposed | accepted"}
 }
 ```
 
-Preparing vendored bytes does not fabricate acceptance. The authorized local acceptance action is recorded separately before the accepted head is merged.
+The distribution identifier remains stable for compatibility; exact source commit and version carry revision identity.
 
-See [`docs/adoption/CONSUMER_REPOSITORY.md`](docs/adoption/CONSUMER_REPOSITORY.md).
-
-## What this repository does not do in V0
-
-- It does not own any consuming repository's product decisions.
-- It does not provide a central Spec registry or database.
-- It does not permit per-Contract or partial supersession.
-- It does not automatically accept Specs.
-- It does not claim that a Skill is an unbypassable merge gate.
-- It does not perform semantic review in CI.
-- It does not migrate historical documents in bulk.
-- It does not treat tests passing as sufficient proof without qualified execution evidence.
-
-## Bootstrap and release
-
-The accepted central bootstrap Spec is:
-
-```text
-docs/specs/AGENT_DEVELOPMENT_GOVERNANCE_BOOTSTRAP_V0.md
-```
-
-Before the first stable release:
-
-1. an independent reviewer reviews the exact release-candidate commit, including every change since bootstrap acceptance;
-2. the repository owner explicitly accepts the exact final head;
-3. any semantic delta after review triggers a new review;
-4. `VERSION` becomes `0.2.0` and the immutable `v0.2.0` release tag is created.
-
-## Historical bootstrap publishing helper
-
-`tools/publish_bootstrap.sh` remains as repository-creation history. It is not the workflow for later governance changes, which use ordinary docs-only Spec, independent review, acceptance, implementation, and release steps.
-
-Historical defaults:
-
-```text
-TARGET = mayf3/agent-development-governance
-VISIBILITY = public
-BASE = main
-HEAD = agent/bootstrap-development-governance-v0
-```
-
-## License
-
-MIT.
+No stable release tag exists. Governance V1 authority and distribution implementation are separate states. `AGENT_OPERATIONAL_LAYER_V1` remains accepted but is not implemented by this work.

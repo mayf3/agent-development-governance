@@ -1,6 +1,6 @@
 # Repository-local governance
 
-This file contains rules that belong only to `mayf3/agent-development-governance`. It is not part of the reusable consumer distribution.
+This file belongs only to `mayf3/agent-development-governance`. It is not part of the reusable consumer distribution.
 
 ## Repository purpose
 
@@ -14,33 +14,34 @@ BOOTSTRAP_SPEC_STATUS = superseded
 BOOTSTRAP_EXCEPTION = closed_after_acceptance
 GOVERNANCE_V1_SPEC = AGENT_DEVELOPMENT_GOVERNANCE_V1
 GOVERNANCE_V1_SPEC_STATUS = accepted
-GOVERNANCE_V1_ACTIVE_ON_MAIN = no
+GOVERNANCE_V1_ACTIVE_ON_MAIN = yes
 OPERATIONAL_LAYER_SPEC = AGENT_OPERATIONAL_LAYER_V1
 OPERATIONAL_LAYER_SPEC_STATUS = accepted
 OPERATIONAL_LAYER_ACTIVE_ON_MAIN = yes
+OPERATIONAL_LAYER_IMPLEMENTATION = not_started
 ACCEPTANCE_ACTOR = mayf3 or another explicitly authorized maintainer
+CONTROLLED_OPERATION_MANDATE_ACTOR = mayf3 or another explicitly authorized operator
 STABLE_RELEASE = none
 ```
 
-On this candidate branch, `AGENT_DEVELOPMENT_GOVERNANCE_V1` is prepared as accepted and the bootstrap V0 as superseded. The transition remains inactive until independent final-head recheck and merge, so current `main` remains governed by V0. `AGENT_OPERATIONAL_LAYER_V1` remains accepted, active, and unchanged.
-
-PR #3 contained no implementation. Its accepted Contracts may authorize bounded implementation in this repository only through a separate task, worktree, and PR whose base contains the accepted authority. The central Spec does not automatically authorize consumer-repository product changes.
+A source-repository implementation PR may implement accepted Governance V1 only within its Contracts. It does not automatically authorize consumer product changes, production writes, permissions, credentials, deployment, or Operational Layer implementation.
 
 ## Local precedence
 
 ```text
 Explicit repository-owner direction
 > accepted local Product Direction / Architecture authority
-> accepted local governing Spec
+> accepted local governing Specs
+> valid one-operation Execution Mandate
 > repository files, tests, tooling, and runtime observations
 ```
 
-The reusable distribution describes the grammar and process. It does not override explicit product decisions in consuming repositories.
+An Execution Mandate constrains one operation only. It cannot weaken or replace accepted Product Authority.
 
 ## Release constraints
 
-- A draft version must not be represented as an accepted stable governance release.
+- A draft version must not be represented as a stable release.
 - Release tags are immutable; changed normative meaning requires a new version.
-- Consumer updates must pin an exact commit and occur through a local docs-only adoption PR.
+- Consumer updates pin an exact commit and use a local docs-only adoption PR.
 - `distribution/manifest.json` must match all distributed files.
-- Distribution-integrity tools may validate bytes and metadata; they must not claim semantic acceptance.
+- Integrity and route-consistency tools must not claim semantic acceptance.
