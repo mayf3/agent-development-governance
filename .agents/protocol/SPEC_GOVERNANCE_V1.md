@@ -1,7 +1,7 @@
 # Spec Governance Protocol V1
 
 ```text
-PROTOCOL_VERSION = 0.2.0-draft.1
+PROTOCOL_VERSION = 1.0.0
 GOVERNING_AUTHORITY = AGENT_DEVELOPMENT_GOVERNANCE_V1
 STATUS = accepted
 ENFORCEMENT_LEVEL = manual_semantic_policy_plus_deterministic_integrity

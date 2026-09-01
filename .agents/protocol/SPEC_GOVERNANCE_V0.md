@@ -1,7 +1,7 @@
 # Spec Governance Protocol V0 — historical compatibility record
 
 ```text
-PROTOCOL_VERSION = 0.2.0-draft.1
+PROTOCOL_VERSION = 1.0.0
 STATUS = superseded
 SUPERSEDED_BY = .agents/protocol/SPEC_GOVERNANCE_V1.md
 ```

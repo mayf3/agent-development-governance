@@ -16,7 +16,7 @@ It is not a central product authority. A consumer adopts an exact immutable sour
 ## Current status
 
 ```text
-DISTRIBUTION_VERSION = 0.2.0-draft.1
+DISTRIBUTION_VERSION = 1.0.0
 GOVERNANCE_V1_SPEC_STATUS = accepted
 GOVERNANCE_V1_ACTIVE_ON_MAIN = yes
 BOOTSTRAP_V0_STATUS = superseded
@@ -25,8 +25,8 @@ OPERATIONAL_LAYER_IMPLEMENTATION = not_started
 ENFORCEMENT_LEVEL = manual_policy_plus_deterministic_integrity
 SEMANTIC_SPEC_VERIFIER = not_implemented
 SPEC_TRANSITION_VALIDATOR = implemented
-ROUTE_CONSISTENCY_VALIDATOR = implemented_in_candidate_distribution
-STABLE_RELEASE = none
+ROUTE_CONSISTENCY_VALIDATOR = implemented
+STABLE_RELEASE = v1.0.0
 ```
 
 Governance V1 separates:
@@ -94,11 +94,11 @@ Consumers vendor an exact source commit and record preparation separately from l
   "source_repository": "mayf3/agent-development-governance",
   "source_commit": "<40-hex commit>",
   "distribution": "development-governance-v0",
-  "version": "0.2.0-draft.1",
+  "version": "1.0.0",
   "adoption": {"status": "proposed | accepted"}
 }
 ```
 
 The distribution identifier remains stable for compatibility; exact source commit and version carry revision identity.
 
-No stable release tag exists. Governance V1 authority and distribution implementation are separate states. `AGENT_OPERATIONAL_LAYER_V1` remains accepted but is not implemented by this work.
+The first stable distribution is `v1.0.0`. Consumers should pin the exact `v1.0.0` commit and still complete their own local acceptance; an upstream release never changes a consumer automatically. `AGENT_OPERATIONAL_LAYER_V1` remains accepted but is not implemented by this release.

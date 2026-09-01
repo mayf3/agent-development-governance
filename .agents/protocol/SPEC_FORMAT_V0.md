@@ -1,7 +1,7 @@
 # Governing Spec Format V0
 
 ```text
-FORMAT_VERSION = 0.2.0-draft.1
+FORMAT_VERSION = 1.0.0
 STATUS = accepted
 ```
 
@@ -134,7 +134,7 @@ Transition rules:
 - superseded Spec: `superseded_by` names the accepted replacement;
 - backlinks change atomically in the same docs-only change.
 
-For the narrow legacy identifier retirement rule in `SPEC_GOVERNANCE_V0 §9.2.1`:
+For the narrow legacy identifier retirement rule defined in this section and enforced by `.agents/tools/validate_spec_transition.py`:
 
 - a new proposed or accepted `spec_id` remains strict `_V<number>` only;
 - an already-existing legacy `spec_id` in the narrow

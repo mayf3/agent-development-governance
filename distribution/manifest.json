@@ -2,27 +2,27 @@
   "$schema": "urn:mayf3:agent-development-governance:distribution-manifest:v0",
   "schema_version": 1,
   "distribution": "development-governance-v0",
-  "version": "0.2.0-draft.1",
+  "version": "1.0.0",
   "files": [
     {
       "path": ".agents/README.md",
-      "sha256": "6bf609fa6151580513017d230748856ba4e6b30d39b08b1f331108dce5cf370a",
-      "size": 13175
+      "sha256": "730e7c53a5fed05ae601054a01e2b26195acd323de37c2cf6df5e4fc7d6850aa",
+      "size": 13167
     },
     {
       "path": ".agents/protocol/SPEC_GOVERNANCE_V0.md",
-      "sha256": "dd5392b2921a40553c28579701cd94ae282c5b85794cc619f353e9ff14240511",
-      "size": 938
+      "sha256": "4f6deb623ccd38336d1ae5313fcb1f1bbccd41c175e1474f390d643ed12ca41b",
+      "size": 930
     },
     {
       "path": ".agents/protocol/SPEC_GOVERNANCE_V1.md",
-      "sha256": "297fb6d84ce359ff6f7ab191835c6f791693c8d3a04ff3f1989d1e1d13eac1e7",
-      "size": 12723
+      "sha256": "0c6c6394c304a9690111ec4e0790d79ea2d9f9008b0c4bcc872b7aa069b4ee95",
+      "size": 12715
     },
     {
       "path": ".agents/protocol/SPEC_FORMAT_V0.md",
-      "sha256": "73cd134f60f66e270e5d774966fb96d94a0e7d8eff34275b32a3028aee7f2adb",
-      "size": 13201
+      "sha256": "027b7600e240d33602e3e75ece381e82d097fdf3d5aa6f907fe46ccfff249ec4",
+      "size": 13245
     },
     {
       "path": ".agents/skills/spec-governance/SKILL.md",
