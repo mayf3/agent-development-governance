@@ -1,6 +1,12 @@
 # Changelog
 
-## Unreleased — Governance V1 distribution implementation
+## Unreleased
+
+- No changes yet.
+
+## 1.0.0 — 2026-09-01
+
+- publish the first stable Governance V1 distribution as `v1.0.0`;
 
 - implement independent Authority, Plan, and Assurance routing;
 - separate Product Authority from one-operation Execution Mandates;
