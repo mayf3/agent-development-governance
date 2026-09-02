@@ -316,7 +316,9 @@ class DistributionToolsTest(unittest.TestCase):
         for relative in (
             ".agents/README.md",
             ".agents/protocol/SPEC_GOVERNANCE_V0.md",
+            ".agents/protocol/SPEC_GOVERNANCE_V1.md",
             ".agents/protocol/SPEC_FORMAT_V0.md",
+            ".agents/templates/consumer/governance.lock.json",
             "README.md",
         ):
             self.assertIn(version, (ROOT / relative).read_text(encoding="utf-8"))

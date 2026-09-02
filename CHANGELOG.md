@@ -4,6 +4,20 @@
 
 - No changes yet.
 
+## 1.0.1 — 2026-09-03
+
+- allow an accepted predecessor and a proposed whole-authority successor to
+  coexist while the successor declares future replacement intent;
+- keep the predecessor active and unbacklinked until authorized acceptance;
+- preserve atomic accepted-successor lifecycle closure and reject premature
+  predecessor retirement or backlink mutation;
+- add transition-validator regression tests for proposal coexistence, premature
+  transition, missing predecessor, and final atomic acceptance;
+- clarify the Spec format, active protocol, adoption template, and schema
+  description without changing accepted Product Authority;
+- retain v1.0.0 as an immutable historical release and require consumers blocked
+  by this defect to adopt a newly reviewed exact v1.0.1 revision.
+
 ## 1.0.0 — 2026-09-01
 
 - publish the first stable Governance V1 distribution as `v1.0.0`;
