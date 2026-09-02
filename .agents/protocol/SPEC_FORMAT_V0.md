@@ -1,7 +1,7 @@
 # Governing Spec Format V0
 
 ```text
-FORMAT_VERSION = 1.0.1
+FORMAT_VERSION = 1.0.0
 STATUS = accepted
 ```
 
@@ -129,19 +129,10 @@ V0 uses whole-Spec IDs only. Contract fragments such as `OLD_SPEC#CTR-003` are f
 
 Transition rules:
 
-- a proposed successor MAY name its intended whole-authority predecessor(s) in
-  `supersedes` while every predecessor remains `status: accepted` with
-  `superseded_by: null`;
-- that proposed edge records non-active replacement intent for review; it does
-  not activate the successor or retire the predecessor;
-- a proposed successor MUST NOT cause a predecessor lifecycle or backlink
-  change;
-- an accepted replacement MUST name every fully replaced authority in
-  `supersedes`;
-- every replaced authority MUST become `status: superseded` and name the
-  accepted replacement in `superseded_by`;
-- acceptance activates both directions atomically in the same docs-only
-  final Head.
+- proposed Spec: `superseded_by: null`;
+- accepted replacement: `supersedes` names every fully replaced authority;
+- superseded Spec: `superseded_by` names the accepted replacement;
+- backlinks change atomically in the same docs-only change.
 
 For the narrow legacy identifier retirement rule defined in this section and enforced by `.agents/tools/validate_spec_transition.py`:
 

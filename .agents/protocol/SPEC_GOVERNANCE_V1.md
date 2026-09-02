@@ -1,7 +1,7 @@
 # Spec Governance Protocol V1
 
 ```text
-PROTOCOL_VERSION = 1.0.1
+PROTOCOL_VERSION = 1.0.0
 GOVERNING_AUTHORITY = AGENT_DEVELOPMENT_GOVERNANCE_V1
 STATUS = accepted
 ENFORCEMENT_LEVEL = manual_semantic_policy_plus_deterministic_integrity
@@ -164,8 +164,6 @@ For `AMEND/NEW + ROUTINE/DURABLE`, an atomic Spec-delta-and-code PR is valid onl
 The Author resolves ownership and load-bearing normative decisions before implementation depends on them. Formal Specs follow `SPEC_FORMAT_V0.md` and preserve Goal, scope/non-goals, authority, qualified knowledge where load-bearing, Decisions, Contracts, Acceptance with Required Evidence and negative controls, alternatives, migration/compatibility/rollback, and open owner decisions.
 
 A named proposal can be `AMEND` only inside its declared scope, ownership, and bounded Decision identity. Accepted meaning is immutable under the same stable IDs.
-
-A proposed whole-authority successor MAY declare its intended predecessor(s) in `supersedes` while those predecessors remain accepted and unbacklinked. This is reviewable replacement intent, not an active lifecycle transition. Only the authorized final acceptance Head may atomically set the successor to accepted, each predecessor to superseded, and both directions of the backlink.
 
 ## Load-bearing gaps
 

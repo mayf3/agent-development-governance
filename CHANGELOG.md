@@ -13,8 +13,8 @@
   predecessor retirement or backlink mutation;
 - add transition-validator regression tests for proposal coexistence, premature
   transition, missing predecessor, and final atomic acceptance;
-- clarify the Spec format, active protocol, adoption template, and schema
-  description without changing accepted Product Authority;
+- clarify the adoption template and schema description without changing any
+  accepted authority Spec bytes;
 - retain v1.0.0 as an immutable historical release and require consumers blocked
   by this defect to adopt a newly reviewed exact v1.0.1 revision.
 
