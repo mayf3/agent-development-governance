@@ -313,10 +313,12 @@ class DistributionToolsTest(unittest.TestCase):
             (ROOT / "distribution/manifest.json").read_text(encoding="utf-8")
         )
         self.assertEqual(version, manifest["version"])
+        # Accepted authority spec files are byte-frozen; their embedded
+        # PROTOCOL/FORMAT versions intentionally stay at their accepted values
+        # and are excluded from the release-version coherence check.
         for relative in (
             ".agents/README.md",
-            ".agents/protocol/SPEC_GOVERNANCE_V0.md",
-            ".agents/protocol/SPEC_FORMAT_V0.md",
+            ".agents/templates/consumer/governance.lock.json",
             "README.md",
         ):
             self.assertIn(version, (ROOT / relative).read_text(encoding="utf-8"))

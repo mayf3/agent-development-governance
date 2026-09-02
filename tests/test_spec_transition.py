@@ -49,6 +49,51 @@ class LegacyAuthorityRetirementTest(unittest.TestCase):
         record["superseded_by"] = None
         return record
 
+    def proposed_successor_records(self):
+        predecessor = self.strict_record("EXAMPLE_AUTHORITY_V1")
+        successor = self.strict_record("EXAMPLE_AUTHORITY_V2", "proposed")
+        successor["supersedes"] = [predecessor["spec_id"]]
+        return [predecessor], [copy.deepcopy(predecessor), successor]
+
+    def test_proposed_successor_can_declare_intent_without_retiring_predecessor(self) -> None:
+        base, candidate = self.proposed_successor_records()
+        self.assertEqual([], transition.validate_transition(base, candidate))
+
+    def test_proposed_successor_cannot_retire_predecessor_early(self) -> None:
+        base, candidate = self.proposed_successor_records()
+        candidate[0]["status"] = "superseded"
+        candidate[0]["superseded_by"] = candidate[1]["spec_id"]
+        errors = transition.validate_transition(base, candidate)
+        self.assertTrue(any("cannot retire" in error for error in errors))
+        self.assertTrue(any("non-accepted successor" in error for error in errors))
+
+    def test_proposed_successor_cannot_set_predecessor_backlink_early(self) -> None:
+        base, candidate = self.proposed_successor_records()
+        candidate[0]["superseded_by"] = candidate[1]["spec_id"]
+        errors = transition.validate_transition(base, candidate)
+        self.assertTrue(any("must be null while active" in error for error in errors))
+        self.assertTrue(any("cannot set predecessor backlink" in error for error in errors))
+
+    def test_accepted_successor_still_requires_atomic_predecessor_transition(self) -> None:
+        base, candidate = self.proposed_successor_records()
+        candidate[1]["status"] = "accepted"
+        errors = transition.validate_transition(base, candidate)
+        self.assertTrue(any("not superseded atomically" in error for error in errors))
+        self.assertTrue(any("backlink does not name" in error for error in errors))
+
+    def test_accepted_successor_with_atomic_backlinks_is_valid(self) -> None:
+        base, candidate = self.proposed_successor_records()
+        candidate[0]["status"] = "superseded"
+        candidate[0]["superseded_by"] = candidate[1]["spec_id"]
+        candidate[1]["status"] = "accepted"
+        self.assertEqual([], transition.validate_transition(base, candidate))
+
+    def test_proposed_successor_cannot_target_nonexistent_predecessor(self) -> None:
+        successor = self.strict_record("EXAMPLE_AUTHORITY_V2", "proposed")
+        successor["supersedes"] = ["MISSING_AUTHORITY_V1"]
+        errors = transition.validate_transition([], [successor])
+        self.assertTrue(any("nonexistent base authority" in error for error in errors))
+
     def test_schema_keeps_active_ids_strict_and_retirement_references_narrow(self) -> None:
         schema = json.loads(
             (ROOT / ".agents/schemas/spec-frontmatter.schema.json").read_text(
