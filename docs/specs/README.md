@@ -27,7 +27,7 @@ Its implementation progress, verification coverage, conformance, and release sta
 
 `AGENT_SIX_PACK_DELIVERY_PROFILE_V1` is a proposed child profile governed by the accepted Governance V1 and Operational Layer V1. It does not activate a six-Agent runtime, change consumers, or authorize product work until it receives independent exact-Head review, Owner acceptance, merge, and a separate implementation.
 
-The `accepted` Governance V1 and `superseded` V0 rows reflect this candidate branch. They become active on `main` only after independent final-head recheck and merge; until then `main` remains governed by V0. Governance V1 supersedes only V0 and carries the compatible Operational Layer forward without changing that authority's accepted frontmatter. Future Operational Layer implementation must re-run PREFLIGHT against the exact active Governance V1 and exact accepted Operational Layer revisions; any conflict or semantic parent change requires a separate authority action.
+The `accepted` Governance V1 and `superseded` V0 rows describe the authority currently active on `main`. Governance V1 supersedes only V0 and carries the compatible Operational Layer forward without changing that authority's accepted frontmatter. Future Operational Layer implementation must re-run PREFLIGHT against the exact active Governance V1 and exact accepted Operational Layer revisions; any conflict or semantic parent change requires a separate authority action.
 
 ## Bootstrap note
 

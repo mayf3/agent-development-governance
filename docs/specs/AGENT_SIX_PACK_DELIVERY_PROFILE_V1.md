@@ -95,14 +95,20 @@ commit-based handoff
 restart-safe file-backed inbox lifecycle
 task and batch receive modes
 back-propagation of structural changes
-two-call unchanged-candidate self-audit
+two-call unchanged-handoff self-audit
 Gherkin and end-to-end specification
+coder-owned project acceptance generator/runtime/step handlers/scripts
 TDD implementation
+cleaner-owned coverage and local CRAP/DRY checks
 cleanup before architecture review
 architecture before mutation hardening
 mutation hardening before final QA
-terminal completion broadcast
+QA-owned executable end-to-end automation kept aligned with the procedure
+final QA CRAP/DRY checks on the terminal candidate
+terminal completion broadcast to the other five roles at priority 00
 ```
+
+The repeated quality checks are deliberate stage-local checks rather than accidental duplication: cleaner evaluates the result of local cleanup, hardender evaluates the result of mutation hardening, and QA evaluates the terminal candidate. Each check remains limited to the owning role and exact candidate it examines.
 
 The following adaptations are required by higher local authority:
 
@@ -230,10 +236,10 @@ This Spec creates a new bounded delivery profile under those authorities. SwarmF
 - Environment: public repository source
 - Observed at: 2026-09-03
 - Method: inspect coder, cleaner, architect, and hardender role prompts
-- Result: coder owns TDD and minimal implementation; cleaner owns behavior-preserving local cleanup; architect owns boundaries, dependency direction, information hiding, and property testing; hardender owns mutation and related test-effectiveness hardening.
+- Result: coder owns TDD, minimal implementation, and the project-specific acceptance entrypoint generator, runtime, step handlers, and normal runner scripts; cleaner owns behavior-preserving local cleanup plus coverage and local CRAP/DRY checks; architect owns boundaries, dependency direction, information hiding, and property testing; hardender owns differential mutation, Gherkin mutation when applicable, and post-hardening CRAP/DRY verification.
 - Provenance: four named role prompt files
 
-### OBS-SIX-007 — QA owns final user-facing verification
+### OBS-SIX-007 — QA owns executable user-facing verification and terminal quality checks
 
 - Subject: terminal quality gate
 - Repository/source: `unclebob/swarm-forge`
@@ -241,7 +247,7 @@ This Spec creates a new bounded delivery profile under those authorities. SwarmF
 - Environment: public repository source
 - Observed at: 2026-09-03
 - Method: inspect `swarmforge/roles/QA.prompt`
-- Result: QA executes accepted specifications, generated acceptance tests, end-to-end user-facing procedures, property tests when present, architecture-sensitive workflows, and release checks; the role may fix discovered bugs in the original source.
+- Result: QA converts the specifier's end-to-end QA procedure into executable scripts, keeps the scripts aligned with procedure changes, verifies generated acceptance tests and the public user boundary, runs final CRAP/DRY checks, checks handoff/manifests, and sends the terminal completion broadcast.
 - Provenance: `swarmforge/roles/QA.prompt`
 
 ### OBS-SIX-008 — Handoffs are durable, commit-bound, restart-safe queue items
@@ -403,28 +409,28 @@ This Spec creates a new bounded delivery profile under those authorities. SwarmF
 ### DEC-SIX-005 — Preserve the original professional ownership split
 
 - Decision owner: repository owner
-- Decision: retain the six role responsibilities defined below, including explicit `Does Not Own` boundaries and stage-specific verification.
-- Rejected alternative: ask every Agent for a broad full review at every stage.
-- Reason: concern-specific ownership makes findings attributable and reduces repeated open-ended review.
+- Decision: retain the six role responsibilities defined below, including explicit `Does Not Own` boundaries and closed ownership of required acceptance assets. Specifier owns behavior and the human-readable QA procedure; coder owns the project-specific acceptance generator/runtime/step handlers/runner scripts; cleaner owns behavior-preserving cleanup plus coverage and local CRAP/DRY checks; architect owns boundaries and property testing; hardender owns mutation hardening plus post-hardening CRAP/DRY; QA owns executable QA automation, terminal user-boundary verification, and terminal CRAP/DRY.
+- Rejected alternative: ask every Agent for a broad full review at every stage, or leave required acceptance artifacts to an unnamed helper.
+- Reason: concern-specific ownership makes findings attributable, prevents ownership vacancies, and preserves the mature prior-art split.
 - Owner decision remaining: NONE
 
 ### DEC-SIX-006 — Use durable exact-commit handoffs with task-stable identity
 
 - Decision owner: repository owner
-- Decision: every forward or backward handoff names a stable task, sender, recipient, exact full commit, exact parent/base, affected authority/Contracts, artifacts, and stage Evidence. Durable queue state survives lost notifications and Agent restarts.
-- Rejected alternatives: chat-only summaries; branch-name handoffs; unvalidated abbreviated SHAs as the authority coordinate.
-- Reason: the candidate itself, not the sender's narrative, must be the handoff object.
+- Decision: every forward or terminal handoff binds one normalized semantic envelope containing sender, stable task, recipients, priority, handoff type, exact base, exact candidate Head/tree, accepted authority revisions, affected Contracts, artifacts, and executed stage Evidence. Durable queue state survives lost notifications and Agent restarts.
+- Rejected alternatives: chat-only summaries; branch-name handoffs; unvalidated abbreviated SHAs; self-audit of only the candidate bytes while changing the requested operation.
+- Reason: the exact candidate and complete requested transition, not the sender's narrative, must be the handoff object.
 - Owner decision remaining: NONE
 
-### DEC-SIX-007 — Require unchanged-candidate sender self-audit before forward handoff
+### DEC-SIX-007 — Require unchanged-envelope sender self-audit before delivery
 
 - Decision owner: repository owner
-- Decision: the first valid forward Git handoff records the exact candidate and returns `AUDIT_REQUIRED`; only a second submission of the unchanged candidate may enter the recipient queue. Any tree, commit, task, authority, or Evidence change invalidates the challenge.
-- Rejected alternative: send immediately after tests pass.
-- Reason: a deliberate second look catches omissions while binding the check to the current candidate.
+- Decision: the first valid normal-forward or terminal Git handoff records a challenge over the complete normalized semantic handoff envelope and returns `AUDIT_REQUIRED`; only a second submission of the unchanged envelope may enter the recipient queue. Any semantic field change invalidates the challenge. Helper-generated timestamps and delivery-copy metadata are excluded.
+- Rejected alternative: send immediately after tests pass, or reuse a challenge after changing recipients, priority, handoff type, base, Contracts, or Evidence.
+- Reason: the sender must audit the operation actually delivered, not merely a related commit.
 - Owner decision remaining: NONE
 
-### DEC-SIX-008 — Preserve task/batch receiving and backward convergence
+### DEC-SIX-008 — Preserve task/batch receiving, backward convergence, and terminal priority
 
 - Decision owner: repository owner
 - Decision: the default receive and propagation profile is:
@@ -435,12 +441,12 @@ coder      task   forward-only
 cleaner    batch  back-one
 architect  batch  back-all
 hardender  batch  forward-only
-QA         batch  back-all terminal broadcast
+QA         batch  back-all terminal broadcast priority 00
 ```
 
-Backward copies are merge-only state convergence. A correction request is explicit work and returns to the earliest affected owning role before moving forward again.
-- Rejected alternative: each role keeps an unrelated branch and relies on a final conflict-heavy merge.
-- Reason: structural improvements should propagate without turning reverse synchronization into new feature work.
+Backward copies are merge-only state convergence. A correction request is explicit work and returns to the earliest affected owning role before moving forward again. The terminal handoff targets exactly the other five roles at priority `00`.
+- Rejected alternative: each role keeps an unrelated branch and relies on a final conflict-heavy merge, or a partial/low-priority terminal broadcast declares completion.
+- Reason: structural improvements should propagate without turning reverse synchronization into new feature work, while terminal convergence receives deterministic highest priority.
 - Owner decision remaining: NONE
 
 ### DEC-SIX-009 — Pin tools and prior-art inputs to exact revisions
@@ -496,25 +502,27 @@ Specifier MUST:
 - read the exact accepted Product Authority and task mandate;
 - express externally observable behavior, examples, failure cases, and acceptance criteria in concise deterministic form;
 - produce Gherkin-compatible behavior specifications when the repository supports the Acceptance Pipeline;
-- produce an end-to-end QA procedure through the supported public user boundary;
+- produce a human-readable end-to-end QA procedure through the supported public user boundary;
 - avoid unnecessary implementation prescription;
 - stop with `SPEC_GAP_DEPENDENCY = LOAD_BEARING` and `NEXT_ACTION = RE_PREFLIGHT` when required behavior is not decided by accepted authority.
 
-Specifier MUST NOT invent a Product Contract, accept a Spec, modify product implementation, run mutation hardening, or declare final conformance.
+Specifier MUST NOT invent a Product Contract, accept a Spec, modify product implementation, build the project-specific acceptance runtime, implement executable QA automation, run mutation hardening, or declare final conformance.
 
 For an API-first product, the supported public API is a user-facing boundary; privileged internal APIs, test-only service hooks, and direct persistence access are not valid end-to-end substitutes.
 
-### CTR-SIX-005 — Coder owns TDD and minimal implementation
+### CTR-SIX-005 — Coder owns TDD, minimal implementation, and the project acceptance pipeline
 
-Coder MUST start from the exact accepted behavior specification, write focused unit tests that fail for plausible wrong implementations, implement only enough production behavior to satisfy accepted behavior, and run unit plus generated acceptance tests before handoff. Coder MUST keep environment-specific behavior behind narrow adapters when practical.
+Coder MUST start from the exact accepted behavior specification, write focused unit tests that fail for plausible wrong implementations, and implement only enough production behavior to satisfy accepted behavior.
 
-Coder MUST NOT redefine acceptance behavior, perform broad cleanup, own architectural restructuring, run mutation hardening, or certify final QA.
+When the Acceptance Pipeline applies, coder MUST use the repository-approved exact pinned parser rather than reimplementing it, and MUST build or maintain the project-specific acceptance entrypoint generator, acceptance runtime, step handlers, runner adapters, and normal acceptance scripts. Coder MUST generate and run the resulting acceptance tests together with the unit tests before handoff. If a required pipeline component cannot be produced or executed, coder MUST fail closed and report the missing artifact rather than silently skipping acceptance.
+
+Coder MUST keep environment-specific behavior behind narrow adapters when practical. Coder MUST NOT redefine acceptance behavior, implement or run the specifier's end-to-end QA suite, perform broad cleanup, own architectural restructuring, run mutation hardening, or certify final QA.
 
 ### CTR-SIX-006 — Cleaner preserves behavior while improving local structure
 
 Cleaner MUST preserve accepted observable behavior and passing acceptance/unit tests while improving local names, cohesion, duplication, complexity, test readability, stale comments, dead code, and testability. Cleaner MAY split mixed-duty local functions or files and move behavior behind small adapter boundaries when behavior remains unchanged.
 
-Cleaner MUST NOT introduce new behavior, alter Product Contracts, own high-level dependency direction, or perform mutation testing.
+Cleaner MUST run repository-approved coverage plus local CRAP/DRY checks after cleanup when those tools are applicable, and MUST bind their results to the cleaner output candidate. Cleaner MUST NOT introduce new behavior, alter Product Contracts, own high-level dependency direction, or perform mutation testing.
 
 ### CTR-SIX-007 — Architect owns system boundaries and dependency direction
 
@@ -526,17 +534,19 @@ Architect MUST preserve accepted behavior and MUST NOT create new Product Author
 
 Hardender MUST evaluate whether tests reject plausible wrong implementations through repository-approved differential language mutation, Gherkin mutation when applicable, and related CRAP/DRY checks. Hardening MUST target changed or affected behavior, preserve tool manifests, and keep hardening tests distinct from unit and acceptance tests. The default changed-file CRAP gate is 10 or below, except a documented single-question branch construct that does not hide mixed duties.
 
-Hardender MUST NOT invent behavior, change accepted examples merely to kill mutants, or bypass pinned tool requirements.
+Hardender MUST run the applicable post-hardening CRAP/DRY checks on its output candidate. Hardender MUST NOT invent behavior, change accepted examples merely to kill mutants, or bypass pinned tool requirements.
 
-### CTR-SIX-009 — QA owns final independent user-facing verification
+### CTR-SIX-009 — QA owns executable automation and final independent user-facing verification
 
-QA MUST verify the exact candidate against accepted behavior specifications, generated acceptance tests, the specifier's end-to-end QA procedure, unit tests, property tests when present, architecture-sensitive workflows, required manifests, and release checks. End-to-end verification MUST use the supported public user boundary and MUST NOT use a privileged internal bypass.
+QA MUST convert the specifier's end-to-end QA procedure into executable scripts and keep each script aligned when its procedure changes. QA MUST verify the exact candidate against accepted behavior specifications, generated acceptance tests, executable end-to-end QA scripts, unit tests, property tests when present, architecture-sensitive workflows, required manifests, release checks, and final repository-approved CRAP/DRY checks. End-to-end verification MUST use the supported public user boundary and MUST NOT use a privileged internal bypass.
 
-A valid final QA receipt MUST bind the exact candidate Head/tree, environment, procedures, results, limitations, and artifacts. QA MUST NOT declare Owner acceptance or merge authority.
+QA-owned automation artifacts MUST be committed before the final QA run. If QA changes product code, behavior-defining tests, configuration, accepted examples, or other bytes outside the QA automation responsibility, that change is a substantive correction and MUST enter the correction loop. A valid final QA receipt MUST bind the unchanged exact candidate Head/tree, environment, procedures and executable scripts, results, limitations, and artifacts. QA MUST NOT declare Owner acceptance or merge authority.
 
-### CTR-SIX-010 — Role ownership is closed and explicit
+### CTR-SIX-010 — Role and required-asset ownership is closed and explicit
 
-Every role prompt or machine-readable role definition MUST declare `Owns`, `Does Not Own`, required inputs, permitted mutations, required checks, handoff target, failure output, and done criteria consistent with `CTR-SIX-004` through `CTR-SIX-009`. A role MUST stop and report when asked to perform another role's exclusive decision rather than silently broadening scope.
+Every role prompt or machine-readable role definition MUST declare `Owns`, `Does Not Own`, required inputs, permitted mutations, required checks, handoff target, failure output, and done criteria consistent with `CTR-SIX-004` through `CTR-SIX-009`.
+
+Every required output MUST have exactly one owning role. At minimum, the project-specific acceptance generator/runtime/step handlers/runner scripts are owned by coder, and executable QA automation plus procedure/script synchronization are owned by QA. A missing, duplicated, or ambiguous owner MUST fail profile validation before work begins. A role MUST stop and report when asked to perform another role's exclusive decision rather than silently broadening scope.
 
 ### CTR-SIX-011 — Handoffs bind exact candidate state
 
@@ -579,13 +589,33 @@ audit_pending
 
 File or record location is the durable queue state. Wake-up notifications are lossy hints only. Helper tooling, not Agents, owns atomic queue transitions, timestamps, duplicate suppression, restart recovery, and refusal of ambiguous multiple-in-process states. Runtime queue state MUST NOT be committed as product source.
 
-### CTR-SIX-013 — Forward handoff requires a two-call unchanged-candidate audit
+### CTR-SIX-013 — Normal-forward and terminal handoffs require a two-call unchanged-envelope audit
 
-On the first valid forward Git handoff attempt for a sender/task/candidate tuple, the helper MUST persist the exact challenge, increment the task audit count once, leave the task in process, and return `AUDIT_REQUIRED` without delivery. The sender MUST re-read the complete inbound task, authority, constraints, role ownership, changed files, tests, boundaries, and failure cases. A second attempt MAY deliver only when task identity, candidate Head/tree, authority coordinates, artifacts, and Evidence remain unchanged. Any change invalidates the old challenge and requires a new audit.
+On the first valid normal-forward or terminal Git handoff attempt, the helper MUST normalize and persist a semantic envelope containing:
+
+```text
+sender
+task_id
+from_role
+to_role_or_roles
+priority
+handoff_type
+base_head
+candidate_head_full_sha
+candidate_tree
+accepted_authority_revisions
+affected_contracts
+artifacts
+executed_stage_evidence
+```
+
+The helper MUST bind the audit challenge to the complete normalized envelope, increment the task audit count once, leave the task in process, and return `AUDIT_REQUIRED` without delivery. Helper-generated timestamps, queue filenames, recipient-copy metadata, and other non-semantic delivery fields are excluded from the equality check.
+
+The sender MUST re-read the complete inbound task, authority, constraints, role ownership, changed files, tests, boundaries, and failure cases. A second attempt MAY deliver only when every semantic envelope field remains unchanged. Any recipient, priority, handoff type, base, candidate, authority, affected-Contract, artifact, or Evidence change invalidates the old challenge and requires a new audit. Converting a normal forward handoff into a terminal broadcast is a changed invocation and MUST NOT reuse the prior challenge.
 
 This gate is author self-check, not independent review.
 
-### CTR-SIX-014 — Handoff progression and correction are deterministic
+### CTR-SIX-014 — Normal progression, state convergence, and substantive correction are distinct
 
 Normal forward progression MUST be:
 
@@ -593,13 +623,15 @@ Normal forward progression MUST be:
 specifier -> coder -> cleaner -> architect -> hardender -> QA
 ```
 
-Every stage commits before forward handoff. A forward role MUST hand off even when its only changes are structural, test, manifest, formatting, or audit artifacts required by the profile. Back-propagation copies are merge-only and MUST NOT create duplicate forward work. A substantive correction request MUST identify the earliest affected owning role, preserve the stable task ID, and then replay all affected downstream stages.
+Every stage commits before forward handoff. A forward role MUST hand off even when its only changes are structural, test, manifest, formatting, QA-automation, or audit artifacts required by the profile. A normal downstream role change made wholly within that role's `Owns` boundary is expected progression and MUST NOT by itself create a correction request or restart the pipeline.
 
-The implementation MUST provide helper-owned merge/replay semantics and MUST reject ad hoc invented merge commands when the helper owns the transition.
+Configured back-propagation copies are merge-only state convergence and MUST NOT create duplicate forward work. A substantive correction request MUST identify the earliest affected owning role, preserve the stable task ID, and then replay only that role and its affected downstream stages. The implementation MUST provide helper-owned merge/replay semantics and MUST reject ad hoc invented merge commands when the helper owns the transition.
 
 ### CTR-SIX-015 — Receive modes and terminal broadcast preserve convergence
 
-The default receive modes and propagation tokens in `DEC-SIX-008` MUST be represented in configuration and validated. Equal-priority batch roles MUST process helper-delivered items in deterministic order. Final QA completion MUST broadcast the exact terminal candidate to the other five roles as merge-only state convergence; recipients MUST NOT re-forward terminal copies. Terminal broadcast completes the profile lane but does not merge to main.
+The default receive modes and propagation tokens in `DEC-SIX-008` MUST be represented in configuration and validated. Invalid task/batch modes, wrong propagation tokens, or manual bypass of helper-owned merge transitions MUST fail. Equal-priority batch roles MUST process helper-delivered items in deterministic order.
+
+Final QA completion MUST pass the two-call audit gate and broadcast the exact terminal candidate to exactly the other five roles, with `handoff_type = terminal` and `priority = 00`, as merge-only state convergence. A partial recipient set, different terminal priority, or terminal recipient re-forward MUST fail. Terminal broadcast completes the profile lane but does not merge to main.
 
 ### CTR-SIX-016 — All profile bytes and tools are exactly pinned
 
@@ -613,22 +645,31 @@ The profile MUST NOT configure `--yolo`, `bypassPermissions`, unrestricted shell
 
 When any role discovers that current work depends on a new or changed long-lived behavior not decided by accepted Product Authority, it MUST stop dependent work, record the Observation and affected boundary, and return `SPEC_GAP_DEPENDENCY = LOAD_BEARING`, readiness `NO`, and `NEXT_ACTION = RE_PREFLIGHT`. Calling an exported or consumer-dependent interface an “implementation detail” MUST NOT bypass this rule. The role MAY identify questions and counterexamples but MUST NOT author the missing Product Contract unless separately assigned the valid authoring route.
 
-### CTR-SIX-019 — Candidate mutation invalidates downstream attestations
+### CTR-SIX-019 — Stage history, terminal coverage, normal mutation, and correction are distinct
 
-Any candidate Head/tree change after a stage receipt invalidates that receipt for the changed and transitively affected surface. The correction MUST return to the earliest affected owning role and replay every affected downstream stage. When QA changes product, test, configuration, or behavior-defining bytes, the current QA receipt is invalid and a later QA run over an unchanged exact candidate is required. Unaffected prior Evidence MAY be reused only when an explicit impact check shows its bound tuple is unchanged.
+A stage receipt is an immutable historical record that binds the role, stage input Head/tree, stage output Head/tree, checks, artifacts, results, and limitations. It proves that the role completed its responsibility on that output; it does not claim blanket conformance for every later descendant.
 
-### CTR-SIX-020 — Final integration remains independently reviewed and Owner-controlled
+A normal downstream mutation is a child commit made within the current role's `Owns` boundary while preserving accepted behavior and earlier exclusive decisions. It does not invalidate an earlier stage-local historical receipt and does not automatically trigger backward replay. The downstream role MUST run its required checks on its own output and preserve exact ancestry.
+
+A substantive correction is a later change that touches an earlier role's exclusive decision, behavior specification, acceptance oracle, public interface, architectural responsibility, mutation conclusion, or other surface on which terminal conformance depends. An explicit impact projection MUST identify the earliest affected role and the transitively affected surfaces. The affected terminal-coverage claims become stale, the historical receipts remain immutable, and the task MUST replay the earliest affected role and all affected downstream stages to produce new receipts.
+
+QA-owned changes limited to executable QA automation are normal QA-stage work when committed before the final run. Any QA change to product code, behavior-defining tests, configuration, accepted examples, or equivalent behavior-defining bytes is a substantive correction, invalidates the current QA coverage claim, and requires a later QA run over an unchanged exact candidate. Unaffected Evidence MAY be reused only when an explicit impact projection proves its bound tuple and decision surface remain unchanged.
+
+### CTR-SIX-020 — Final integration uses stage history plus terminal exact-Head conformance
 
 Profile completion requires:
 
 ```text
-six stage receipts
+six stage-local historical receipts proving traversal
 terminal exact candidate Head/tree
-final QA receipt on an unchanged candidate
+terminal impact-and-coverage matrix
+final QA receipt on an unchanged terminal candidate
 handoff/manifest consistency
 no unresolved load-bearing SPEC_GAP
 DONE_WHEN satisfied
 ```
+
+The terminal impact-and-coverage matrix MUST map every affected surface to the most recent applicable stage or replay receipt and to the terminal checks that cover it. A stale historical receipt MAY prove that the stage occurred, but MUST NOT by itself satisfy terminal conformance for a surface changed afterward. Normal downstream changes do not require replay when the impact projection shows earlier exclusive responsibilities remain untouched; substantive corrections require replacement coverage from the earliest affected role forward.
 
 For Durable or Controlled work, a legally independent Reviewer MUST perform the applicable exact-Head affected-Contract or complete review after terminal QA. Owner acceptance, Ready transition, and merge remain separate actions. Neither terminal broadcast nor QA success MAY auto-merge or self-authorize main-branch mutation.
 
@@ -657,25 +698,25 @@ The task record MUST define `DONE_WHEN`, `EXPANSION_TRIGGER`, and `NEXT_REAL_ACT
 - Expected result: only the fully authorized six-stage route passes; unresolved authority, invalid mandate, skipped stage, demoted public interface, and post-completion expansion fail.
 - Failure condition: any operational artifact creates authority, any invalid route passes, or a valid selected six-stage route is rejected.
 
-### ACC-SIX-002 — Topology and role-ownership checks reject collapsed or reordered roles
+### ACC-SIX-002 — Topology, role ownership, and ownership vacancies are rejected
 
 - Contracts: `CTR-SIX-003`, `CTR-SIX-004`, `CTR-SIX-005`, `CTR-SIX-006`, `CTR-SIX-007`, `CTR-SIX-008`, `CTR-SIX-009`, `CTR-SIX-010`
-- Method: validate role definitions and inject missing, duplicated, reordered, merged, and overreaching-role configurations.
+- Method: validate role definitions and the required-asset ownership graph; inject missing, duplicated, reordered, merged, overreaching, vacant, and ambiguously owned configurations.
 - Environment: clean candidate checkout
-- Inputs/configuration: canonical six roles; coder claiming architecture ownership; cleaner introducing behavior; architect running final QA; hardender changing examples to kill mutants; QA claiming Owner acceptance; merged cleaner/architect role.
-- Required evidence: parsed role definitions, validation output, exact configuration bytes, and rejection results
-- Expected result: canonical ownership passes and every ownership/topology mutation fails.
-- Failure condition: a selected profile can run without six distinct role identities or a role can claim another role's exclusive decision.
+- Inputs/configuration: canonical six roles; coder claiming architecture ownership; cleaner introducing behavior; architect running final QA; hardender changing examples to kill mutants; QA claiming Owner acceptance; merged cleaner/architect role; no owner for acceptance generator/runtime/step handlers; no owner for executable QA automation; coder and QA both claiming the same exclusive required asset.
+- Required evidence: parsed role definitions, required-output ownership map, validation output, exact configuration bytes, and rejection results
+- Expected result: canonical topology and exactly-one ownership for every required output pass; every topology, overreach, vacancy, duplicate-owner, or ambiguous-owner mutation fails.
+- Failure condition: a selected profile can run without six distinct role identities, a role can claim another role's exclusive decision, or a required acceptance/QA artifact has no single accountable owner.
 
-### ACC-SIX-003 — Specifier and coder pipeline rejects authority invention and test-free implementation
+### ACC-SIX-003 — Specifier and coder pipeline rejects authority invention, missing acceptance infrastructure, and test-free implementation
 
-- Contracts: `CTR-SIX-004`, `CTR-SIX-005`, `CTR-SIX-018`
-- Method: execute one accepted-behavior slice and one missing-authority public behavior slice through specifier and coder fixtures.
+- Contracts: `CTR-SIX-004`, `CTR-SIX-005`, `CTR-SIX-010`, `CTR-SIX-018`
+- Method: execute one accepted-behavior slice and one missing-authority public behavior slice through specifier and coder fixtures; begin once without a project-specific acceptance runtime and require coder to create the pinned generator/runtime/step-handler/runner path.
 - Environment: pilot repository clean worktrees
-- Inputs/configuration: accepted behavior with plausible wrong implementation; public behavior not covered by authority; Gherkin/acceptance procedure; focused unit tests.
-- Required evidence: exact behavior spec, generated acceptance artifacts, failing-before/passing-after unit tests, SPEC_GAP output, and commits
-- Expected result: accepted behavior proceeds with tests; missing Product Authority stops before implementation and returns to PREFLIGHT.
-- Failure condition: specifier invents the missing Contract, coder implements before the gap closes, or code passes without a focused failing test for the changed behavior.
+- Inputs/configuration: accepted behavior with plausible wrong implementation; public behavior not covered by authority; Gherkin and human-readable QA procedure; focused unit tests; pinned parser; initially absent project acceptance components.
+- Required evidence: exact behavior spec, coder-owned acceptance generator/runtime/step handlers/runner scripts, generated acceptance artifacts, failing-before/passing-after unit tests, SPEC_GAP output, and commits
+- Expected result: accepted behavior proceeds with coder-owned acceptance infrastructure and focused tests; missing Product Authority stops before implementation and returns to PREFLIGHT.
+- Failure condition: specifier invents the missing Contract, coder implements before the gap closes, required acceptance infrastructure remains ownerless or absent, or code passes without a focused failing test for the changed behavior.
 
 ### ACC-SIX-004 — Cleaner, architect, and hardender provide distinct quality Evidence
 
@@ -683,39 +724,39 @@ The task record MUST define `DONE_WHEN`, `EXPANSION_TRIGGER`, and `NEXT_REAL_ACT
 - Method: seed a candidate with one local duplication/complexity defect, one dependency-direction or adapter/domain duplication defect, and one test-surviving behavior mutation.
 - Environment: medium internal-feature canary
 - Inputs/configuration: exact seeded candidate and repository-approved pinned tools
-- Required evidence: stage-by-stage commits, tests before/after, architecture check, mutation survivor/kill record, CRAP/DRY outputs, and stage decision-impact record
-- Expected result: cleaner fixes the local structural defect without behavior change; architect fixes the boundary defect; hardender adds or improves tests that kill the surviving mutation.
-- Failure condition: the wrong stage silently owns the correction, accepted behavior changes without PREFLIGHT, the mutation remains undetected without a limitation, or all three stages produce indistinguishable open-ended review.
+- Required evidence: stage-by-stage commits, tests before/after, cleaner coverage and CRAP/DRY outputs, architecture check, mutation survivor/kill record, hardender CRAP/DRY outputs, and stage decision-impact record
+- Expected result: cleaner fixes the local structural defect without behavior change and reports its stage-local quality checks; architect fixes the boundary defect; hardender adds or improves tests that kill the surviving mutation and reports post-hardening checks.
+- Failure condition: the wrong stage silently owns the correction, accepted behavior changes without PREFLIGHT, the mutation remains undetected without a limitation, required stage-local checks disappear, or all three stages produce indistinguishable open-ended review.
 
-### ACC-SIX-005 — QA certification is invalidated by QA-owned mutation
+### ACC-SIX-005 — QA automation, correction, and terminal certification remain distinct
 
 - Contracts: `CTR-SIX-009`, `CTR-SIX-019`, `CTR-SIX-020`
-- Method: run final QA on a candidate containing a user-facing defect; let QA prepare a fix; verify that certification fails and the task returns to the earliest affected role; then replay affected stages and run QA without further mutation.
+- Method: let QA convert a procedure into executable automation and commit it before a successful final run; separately run final QA on a candidate containing a user-facing defect, let QA prepare a product fix, verify that certification fails and the task returns to the earliest affected role, then replay affected stages and run QA without further mutation.
 - Environment: public-interface canary
-- Inputs/configuration: exact pre-fix and post-fix Heads, user-facing QA procedure, affected-stage map
-- Required evidence: failing QA result, QA fix commit, invalidation record, correction handoff, replayed receipts, and final unchanged-candidate QA receipt
-- Expected result: the QA-authored change cannot certify itself; only the later unchanged exact Head may receive final QA PASS.
-- Failure condition: QA modifies bytes and immediately certifies them, or unaffected Evidence is discarded without impact analysis.
+- Inputs/configuration: exact pre-automation, pre-fix, post-fix, and terminal Heads; human-readable procedure; executable QA scripts; affected-stage map
+- Required evidence: procedure/script alignment result, QA automation commit, failing QA result, product-fix commit, invalidation record, correction handoff, replayed receipts, final CRAP/DRY outputs, and final unchanged-candidate QA receipt
+- Expected result: QA may own executable QA automation, but a QA-authored product or behavior-defining change cannot certify itself; only the later unchanged exact terminal Head may receive final QA PASS.
+- Failure condition: QA automation has no owner or drifts from its procedure, QA modifies behavior-defining bytes and immediately certifies them, or unaffected Evidence is discarded or reused without impact analysis.
 
-### ACC-SIX-006 — Worktree and durable queue survive lost notifications and restart
+### ACC-SIX-006 — Worktree, queue, propagation, and terminal convergence are enforced
 
 - Contracts: `CTR-SIX-003`, `CTR-SIX-011`, `CTR-SIX-012`, `CTR-SIX-014`, `CTR-SIX-015`
-- Method: launch six isolated role worktrees; queue multiple task/batch handoffs; suppress wake-up notifications; restart at least two role processes and the handoff service; inject an interrupted multi-recipient delivery.
+- Method: launch six isolated role worktrees; queue multiple task/batch handoffs; suppress wake-up notifications; restart at least two role processes and the handoff service; inject an interrupted multi-recipient delivery, invalid receive/propagation configuration, partial terminal recipients, non-`00` terminal priority, terminal re-forward, and a manual merge command that bypasses the helper.
 - Environment: isolated integration test repository
-- Inputs/configuration: canonical profile, equal-priority batch items, terminal broadcast, duplicate-delivery interruption
-- Required evidence: worktree map, queue trees and headers before/after, exact commit ancestry, duplicate-suppression result, restart logs, and terminal convergence
-- Expected result: no role writes main; durable inbox state recovers; each recipient gets one copy; batch order is deterministic; terminal copies are merge-only.
-- Failure condition: notification loss drops work, restart duplicates delivery, queue state becomes ambiguous, or a role writes outside its assigned surface.
+- Inputs/configuration: canonical profile, equal-priority batch items, valid and invalid propagation tokens, complete and partial terminal broadcasts, duplicate-delivery interruption, helper-bypass attempt
+- Required evidence: worktree map, validated configuration, queue trees and headers before/after, exact commit ancestry, duplicate-suppression result, restart logs, helper-bypass rejection, and terminal convergence
+- Expected result: no role writes main; durable inbox state recovers; each recipient gets one copy; batch order is deterministic; invalid propagation and helper bypass fail; only a priority-`00` terminal broadcast to all other five roles converges and recipients do not re-forward.
+- Failure condition: notification loss drops work, restart duplicates delivery, queue state becomes ambiguous, propagation is misconfigured without rejection, a partial/wrong-priority terminal broadcast completes the lane, helper-owned merge is bypassed, or a role writes outside its assigned surface.
 
-### ACC-SIX-007 — Two-call self-audit is exact-candidate bound
+### ACC-SIX-007 — Two-call self-audit binds the complete semantic handoff envelope
 
-- Contracts: `CTR-SIX-011`, `CTR-SIX-013`
-- Method: submit a valid handoff once, resubmit unchanged, then repeat with candidate, task, authority, artifact, and Evidence changes between calls.
+- Contracts: `CTR-SIX-011`, `CTR-SIX-013`, `CTR-SIX-015`
+- Method: submit a valid normal-forward handoff once and resubmit it unchanged; then repeat with one semantic envelope field changed between calls, including sender, task, recipient set, priority, handoff type, base Head, candidate Head, candidate tree, accepted authority revision, affected Contracts, artifact, and Evidence. Repeat the valid and changed-envelope cases for a terminal handoff.
 - Environment: handoff helper integration tests
-- Inputs/configuration: canonical handoff plus five changed-field variants
-- Required evidence: audit-pending records, task audit counts, delivery results, rejection diagnostics, and exact candidate coordinates
-- Expected result: first call returns `AUDIT_REQUIRED`; unchanged second call delivers once; every changed tuple invalidates the old challenge and requires a new audit.
-- Failure condition: first call delivers, changed candidate reuses a prior challenge, audit count increments repeatedly for an unchanged retry, or self-audit is labeled independent review.
+- Inputs/configuration: canonical normal and terminal handoffs plus field-by-field changed variants; one normal handoff changed into terminal broadcast; helper-generated timestamp changes only
+- Required evidence: normalized envelope snapshots/hashes, audit-pending records, task audit counts, delivery results, rejection diagnostics, and exact candidate coordinates
+- Expected result: first call returns `AUDIT_REQUIRED`; a semantically unchanged second call delivers once despite non-semantic generated timestamp differences; every semantic field change invalidates the old challenge and requires a new audit; terminal handoff receives the same gate.
+- Failure condition: first call delivers, any changed semantic invocation reuses a prior challenge, a normal handoff becomes terminal without re-audit, audit count increments repeatedly for an unchanged retry, terminal bypasses the gate, or self-audit is labeled independent review.
 
 ### ACC-SIX-008 — Exact pinning and permission safety reject moving or bypassed inputs
 
@@ -727,15 +768,15 @@ The task record MUST define `DONE_WHEN`, `EXPANSION_TRIGGER`, and `NEXT_REAL_ACT
 - Expected result: exact pinned configuration passes; every mutable, tampered, bypassed, or incompletely authorized configuration fails closed.
 - Failure condition: startup downloads unreviewed moving bytes, permission bypass is enabled by profile default, or an incomplete mandate authorizes it.
 
-### ACC-SIX-009 — Two real canaries complete the full six-stage chain
+### ACC-SIX-009 — Two real canaries converge through normal progression and bounded correction
 
-- Contracts: `CTR-SIX-002`, `CTR-SIX-004`, `CTR-SIX-005`, `CTR-SIX-006`, `CTR-SIX-007`, `CTR-SIX-008`, `CTR-SIX-009`, `CTR-SIX-014`, `CTR-SIX-019`, `CTR-SIX-020`, `CTR-SIX-021`
-- Method: run the medium internal-feature and new public-interface canaries through all six roles and the required final exact-Head review.
+- Contracts: `CTR-SIX-002`, `CTR-SIX-004`, `CTR-SIX-005`, `CTR-SIX-006`, `CTR-SIX-007`, `CTR-SIX-008`, `CTR-SIX-009`, `CTR-SIX-014`, `CTR-SIX-015`, `CTR-SIX-019`, `CTR-SIX-020`, `CTR-SIX-021`
+- Method: run the medium internal-feature and new public-interface canaries through all six roles and the required final exact-Head review. Record a normal `H1 -> H2 -> H3 -> H4 -> H5 -> H6` chain, then inject: a cleaner-only structural change; an architect change that alters public behavior; a QA product fix; and an unaffected Evidence reuse claim with an explicit impact projection.
 - Environment: two repository-local pilot workspaces using pinned profile implementation
-- Inputs/configuration: accepted internal behavior; public-interface proposal with an initial load-bearing gap; exact Owner decisions and mandates
-- Required evidence: complete task and handoff history, six role receipts per canary, candidate ancestry, review record, stage decision-impact matrix, timings, handbacks, defects, mutation results, QA results, and Owner disposition
-- Expected result: both tasks traverse all six roles; the public-interface canary stops for authority closure before code; both finish with exact-Head review and no automatic merge.
-- Failure condition: a role is skipped, the public gap is implemented before acceptance, role Evidence is not candidate-bound, or terminal QA bypasses independent review/Owner merge.
+- Inputs/configuration: accepted internal behavior; public-interface proposal with an initial load-bearing gap; exact Owner decisions and mandates; stage ownership map; correction-impact fixtures
+- Required evidence: complete task and handoff history, six stage-local receipts per canary, candidate ancestry, impact-and-coverage matrices, replacement receipts after corrections, exact-Head review record, stage decision-impact matrix, timings, handbacks, defects, mutation results, QA results, and Owner disposition
+- Expected result: both tasks traverse all six roles; ordinary cleaner structure work progresses without unconditional return to coder; the public-interface canary stops for authority closure before code; an architect public-behavior change returns to specifier/PREFLIGHT; a QA product fix invalidates QA coverage and replays from the earliest affected role; unaffected Evidence is reused only with a valid impact projection; both finish with terminal exact-Head review and no automatic merge.
+- Failure condition: a role is skipped, normal downstream mutation creates an infinite replay loop, a substantive correction does not return to the earliest affected role, stale historical receipts alone are used as terminal conformance, the public gap is implemented before acceptance, role Evidence is not candidate-bound, or terminal QA bypasses independent review/Owner merge.
 
 ### ACC-SIX-010 — Stop rule prevents post-completion platform expansion
 
