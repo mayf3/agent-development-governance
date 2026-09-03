@@ -2,11 +2,11 @@
   "$schema": "urn:mayf3:agent-development-governance:distribution-manifest:v0",
   "schema_version": 1,
   "distribution": "development-governance-v0",
-  "version": "1.0.1",
+  "version": "1.0.2",
   "files": [
     {
       "path": ".agents/README.md",
-      "sha256": "5e134a23424e9fae9ca2c92f38fd899f2321ed62ea01abb4fa326ce28371bf14",
+      "sha256": "0cff1b38716af6ff0b46c9b08967c9ba8ddb9489251cb75ba5cd1f7de3a64372",
       "size": 13167
     },
     {

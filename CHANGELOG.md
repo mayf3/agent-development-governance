@@ -4,6 +4,20 @@
 
 - No changes yet.
 
+## 1.0.2 — 2026-09-03
+
+- carry forward the v1.0.1 proposed-successor transition fix without changing
+  validator or accepted Product Authority semantics;
+- repair the stable-publication record after v1.0.1 was published without
+  closing its required named-consumer release-note gate on the exact final Head;
+- explicitly record that `mayf3/svc-workflow` PR #22 remains a separate Draft
+  consumer adoption and is not modified, accepted, marked Ready, or merged by
+  this upstream release;
+- require PR #22 to re-vendor the exact reviewed v1.0.2 tag commit and rerun
+  repository-local tests, independent audit, and Owner acceptance;
+- retain the v1.0.0 and v1.0.1 tags as immutable historical releases; do not
+  move, overwrite, or retroactively relabel either tag.
+
 ## 1.0.1 — 2026-09-03
 
 - allow an accepted predecessor and a proposed whole-authority successor to
