@@ -1,6 +1,6 @@
 ---
 spec_id: AGENT_SIX_PACK_DELIVERY_PROFILE_V1
-status: proposed
+status: accepted
 spec_kind: implementation
 authority_level: governing_spec
 implementation_authority: contracts
@@ -870,8 +870,8 @@ The task record MUST define `DONE_WHEN`, `EXPANSION_TRIGGER`, and `NEXT_REAL_ACT
 
 ```text
 MIGRATION =
-  docs-only proposal now;
-  after acceptance, implement runtime/profile distribution in a separate exact-Head PR;
+  accepted docs-only authority on this candidate branch;
+  after final-Head recheck and merge, implement runtime/profile distribution in a separate exact-Head PR;
   run two full six-stage canaries before stable release or consumer rollout
 
 COMPATIBILITY =
@@ -908,7 +908,7 @@ OPEN_OWNER_DECISIONS = NONE
 NORMATIVE_TBD = NONE
 UNRESOLVED_AUTHORITY_CONFLICT = NONE
 PARTIAL_SUPERSESSION = NONE
-READY_TO_MARK_ACCEPTED = NO
+READY_TO_MARK_ACCEPTED = YES
 IMPLEMENTATION_IN_THIS_PR = NO
 CONSUMER_ADOPTION_IN_THIS_PR = NO
 RUNTIME_OR_PRODUCTION_WRITE = NO
