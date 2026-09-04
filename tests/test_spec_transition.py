@@ -278,5 +278,160 @@ class LegacyAuthorityRetirementTest(unittest.TestCase):
         self.assertTrue(any("active legacy authority" in error for error in errors))
 
 
+class MultiGenerationChainTest(unittest.TestCase):
+    """Raw multi-generation successor chains (v1.0.3).
+
+    Fixtures carry the real consumer graph that the v1.0.1 validator rejected:
+    AGENT_REPO_KNOWLEDGE_GOVERNANCE_V1 (raw minimal frontmatter, superseded)
+    -> AGENT_DEVELOPMENT_GOVERNANCE_ADOPTION_V0 (superseded, reciprocal)
+    -> AGENT_DEVELOPMENT_GOVERNANCE_ADOPTION_V1 (accepted, current authority).
+    """
+
+    def setUp(self) -> None:
+        self.base = load_fixture("../multi_generation_chain/base.json")
+        self.candidate = load_fixture("../multi_generation_chain/candidate.json")
+
+    def errors(self, base=None, candidate=None):
+        return transition.validate_transition(
+            self.base if base is None else base,
+            self.candidate if candidate is None else candidate,
+        )
+
+    def strict_record(self, spec_id, status="accepted"):
+        return {
+            "spec_id": spec_id,
+            "status": status,
+            "spec_kind": "invariant",
+            "authority_level": "governing_spec",
+            "implementation_authority": "none",
+            "scope": ["fixture"],
+            "governed_by": [],
+            "external_authorities": [],
+            "supersedes": [],
+            "superseded_by": None,
+            "owners": ["fixture-owner"],
+        }
+
+    def test_real_consumer_three_generation_chain_is_valid_raw(self) -> None:
+        self.assertEqual([], self.errors())
+        for record in self.candidate:
+            self.assertEqual(
+                [], transition.validate_metadata(record, record["spec_id"])
+            )
+
+    def test_raw_historical_records_self_transition_is_valid(self) -> None:
+        self.assertEqual([], self.errors(base=self.base, candidate=self.base))
+
+    def test_four_generation_chain_is_valid(self) -> None:
+        # A accepted -> B superseded -> C superseded -> D accepted, where the
+        # raw legacy record B predates the current schema (no array fields).
+        a = self.strict_record("EXAMPLE_AUTHORITY_V1")
+        b = self.strict_record("EXAMPLE_AUTHORITY_V2", "superseded")
+        del b["governed_by"]
+        del b["supersedes"]
+        b["superseded_by"] = "EXAMPLE_AUTHORITY_V3"
+        c = self.strict_record("EXAMPLE_AUTHORITY_V3", "superseded")
+        c["supersedes"] = ["EXAMPLE_AUTHORITY_V2"]
+        c["superseded_by"] = "EXAMPLE_AUTHORITY_V4"
+        d = self.strict_record("EXAMPLE_AUTHORITY_V4")
+        d["supersedes"] = ["EXAMPLE_AUTHORITY_V3"]
+        base = [a, b, c]
+        candidate = [a, copy.deepcopy(b), copy.deepcopy(c), d]
+        self.assertEqual([], transition.validate_transition(base, candidate))
+
+    def test_proposed_successor_over_three_generation_chain_is_valid(self) -> None:
+        # Preparation state on top of an existing chain: the accepted current
+        # authority gains a proposed successor; nothing is retired early.
+        a = self.strict_record("EXAMPLE_AUTHORITY_V1")
+        b = self.strict_record("EXAMPLE_AUTHORITY_V2", "superseded")
+        del b["governed_by"]
+        del b["supersedes"]
+        b["superseded_by"] = "EXAMPLE_AUTHORITY_V3"
+        c = self.strict_record("EXAMPLE_AUTHORITY_V3")
+        c["supersedes"] = ["EXAMPLE_AUTHORITY_V2"]
+        proposed = self.strict_record("EXAMPLE_AUTHORITY_V4", "proposed")
+        proposed["supersedes"] = ["EXAMPLE_AUTHORITY_V3"]
+        base = [a, b, c]
+        candidate = [a, b, c, proposed]
+        self.assertEqual([], transition.validate_transition(base, candidate))
+
+    def test_final_accepted_transaction_over_chain_is_atomic(self) -> None:
+        # From the proposed state above, acceptance retires the accepted chain
+        # tail atomically and backlinks it; the chain still terminates.
+        a = self.strict_record("EXAMPLE_AUTHORITY_V1")
+        b = self.strict_record("EXAMPLE_AUTHORITY_V2", "superseded")
+        del b["governed_by"]
+        del b["supersedes"]
+        b["superseded_by"] = "EXAMPLE_AUTHORITY_V3"
+        c = self.strict_record("EXAMPLE_AUTHORITY_V3")
+        c["supersedes"] = ["EXAMPLE_AUTHORITY_V2"]
+        proposed = self.strict_record("EXAMPLE_AUTHORITY_V4", "proposed")
+        proposed["supersedes"] = ["EXAMPLE_AUTHORITY_V3"]
+        base = [a, b, c, proposed]
+        candidate = [a, b, copy.deepcopy(c), copy.deepcopy(proposed)]
+        candidate[2]["status"] = "superseded"
+        candidate[2]["superseded_by"] = "EXAMPLE_AUTHORITY_V4"
+        candidate[3]["status"] = "accepted"
+        self.assertEqual([], transition.validate_transition(base, candidate))
+
+    def test_active_records_still_require_array_fields(self) -> None:
+        record = copy.deepcopy(self.candidate[2])
+        record["governed_by"] = None
+        record["supersedes"] = None
+        errors = self.errors(candidate=[record])
+        self.assertTrue(any("governed_by is not an array" in error for error in errors))
+        self.assertTrue(any("supersedes is not an array" in error for error in errors))
+
+    def test_superseded_record_cannot_newly_activate_edge(self) -> None:
+        # A record that was never accepted must not appear as a superseded
+        # successor claiming a supersession edge over an accepted authority.
+        base = copy.deepcopy(self.base) + [self.strict_record("EXAMPLE_AUTHORITY_V4")]
+        late = self.strict_record("EXAMPLE_AUTHORITY_V5", "superseded")
+        late["supersedes"] = ["EXAMPLE_AUTHORITY_V4"]
+        late["superseded_by"] = "EXAMPLE_AUTHORITY_V6"
+        candidate = copy.deepcopy(self.candidate)
+        candidate.append(copy.deepcopy(base[2]))
+        candidate.append(late)
+        errors = transition.validate_transition(base, candidate)
+        self.assertTrue(any("cannot carry a new edge" in error for error in errors))
+        self.assertTrue(any("creates already-superseded authority" in error for error in errors))
+        self.assertTrue(any("nonexistent successor" in error for error in errors))
+
+    def test_cycle_in_supersession_chain_is_rejected(self) -> None:
+        candidate = copy.deepcopy(self.candidate)
+        candidate[0]["superseded_by"] = "AGENT_DEVELOPMENT_GOVERNANCE_ADOPTION_V1"
+        candidate[2]["status"] = "superseded"
+        candidate[2]["superseded_by"] = "AGENT_REPO_KNOWLEDGE_GOVERNANCE_V1"
+        errors = self.errors(candidate=candidate)
+        self.assertTrue(
+            any("cycle at" in error for error in errors),
+            errors,
+        )
+
+    def test_chain_terminating_at_proposed_successor_is_rejected(self) -> None:
+        candidate = copy.deepcopy(self.candidate)
+        candidate[2]["status"] = "proposed"
+        errors = self.errors(candidate=candidate)
+        self.assertTrue(any("terminates at a proposed successor" in error for error in errors))
+        self.assertTrue(any("backlinks non-accepted successor" in error for error in errors))
+
+    def test_mutating_a_frozen_legacy_record_is_rejected(self) -> None:
+        candidate = copy.deepcopy(self.candidate)
+        candidate[0]["superseded_by"] = "AGENT_DEVELOPMENT_GOVERNANCE_ADOPTION_V1"
+        errors = self.errors(candidate=candidate)
+        self.assertTrue(any("mutates historical successor backlink" in error for error in errors))
+
+    def test_forked_current_authority_is_rejected(self) -> None:
+        candidate = copy.deepcopy(self.candidate)
+        fork = self.strict_record("FORKED_AUTHORITY_V1")
+        fork["supersedes"] = ["AGENT_DEVELOPMENT_GOVERNANCE_ADOPTION_V0"]
+        candidate.append(fork)
+        errors = self.errors(candidate=candidate)
+        self.assertTrue(
+            any("superseded by multiple successors" in error for error in errors),
+            errors,
+        )
+
+
 if __name__ == "__main__":
     unittest.main()
