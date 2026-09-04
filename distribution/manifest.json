@@ -2,11 +2,11 @@
   "$schema": "urn:mayf3:agent-development-governance:distribution-manifest:v0",
   "schema_version": 1,
   "distribution": "development-governance-v0",
-  "version": "1.0.2",
+  "version": "1.0.3",
   "files": [
     {
       "path": ".agents/README.md",
-      "sha256": "0cff1b38716af6ff0b46c9b08967c9ba8ddb9489251cb75ba5cd1f7de3a64372",
+      "sha256": "1fff395516880b972d785ad898298a49d5ea8dbcc3dc031bebef23973b29906d",
       "size": 13167
     },
     {
@@ -56,8 +56,8 @@
     },
     {
       "path": ".agents/tools/validate_spec_transition.py",
-      "sha256": "b6afa390a70854c7c53174622db1430f13eabf3662a958d5527c7094f3dc0643",
-      "size": 12088
+      "sha256": "1f34e8fe1a52464a60893b4ef7ca1493aa14cac836fb1e940ec7a3c80859ce6a",
+      "size": 15168
     },
     {
       "path": ".agents/tools/validate_governance_route.py",

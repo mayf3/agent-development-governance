@@ -1,0 +1,33 @@
+[
+  {
+    "spec_id": "AGENT_REPO_KNOWLEDGE_GOVERNANCE_V1",
+    "status": "superseded",
+    "superseded_by": "AGENT_DEVELOPMENT_GOVERNANCE_ADOPTION_V0"
+  },
+  {
+    "spec_id": "AGENT_DEVELOPMENT_GOVERNANCE_ADOPTION_V0",
+    "status": "accepted",
+    "spec_kind": "invariant",
+    "authority_level": "governing_spec",
+    "implementation_authority": "none",
+    "scope": [
+      "mayf3/dsh-agent-core"
+    ],
+    "governed_by": [],
+    "external_authorities": [
+      {
+        "repository": "mayf3/agent-development-governance",
+        "authority_id": "AGENT_DEVELOPMENT_GOVERNANCE_BOOTSTRAP_V0",
+        "revision": "46f78c3f00d768d99a4c8c2da975b124bce042f9",
+        "relation": "constrained_by"
+      }
+    ],
+    "supersedes": [
+      "AGENT_REPO_KNOWLEDGE_GOVERNANCE_V1"
+    ],
+    "superseded_by": null,
+    "owners": [
+      "mayf3"
+    ]
+  }
+]

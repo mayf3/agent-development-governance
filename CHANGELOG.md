@@ -4,6 +4,28 @@
 
 - No changes yet.
 
+## 1.0.3 — 2026-09-05
+
+- extend the transition validator to raw, unnormalized whole-authority
+  successor chains of any legal depth: a superseded record may backlink a
+  successor that is itself superseded, provided every chain terminates at an
+  accepted authority (cycles and proposed-chain terminations are rejected);
+- accept raw historical superseded records that predate the current
+  frontmatter schema and omit the `governed_by`/`supersedes` array fields
+  (treated as empty); active proposed/accepted records still require
+  well-formed arrays;
+- keep every existing rejection unchanged: premature predecessor retirement,
+  premature backlinks, nonexistent predecessors/successors, multiple
+  successors, cycles, forked current authority, mutation of accepted
+  normative fields, partial supersession, and reactivation of superseded
+  authority;
+- reject a superseded successor carrying a newly activated supersession edge;
+- add the real three-generation consumer chain
+  (`AGENT_REPO_KNOWLEDGE_GOVERNANCE_V1` -> `AGENT_DEVELOPMENT_GOVERNANCE_ADOPTION_V0`
+  -> `AGENT_DEVELOPMENT_GOVERNANCE_ADOPTION_V1`) as a regression fixture;
+- carry forward the v1.0.2 publication-remediation record; the v1.0.0,
+  v1.0.1, and v1.0.2 tags remain immutable historical releases.
+
 ## 1.0.2 — 2026-09-03
 
 - carry forward the v1.0.1 proposed-successor transition fix without changing

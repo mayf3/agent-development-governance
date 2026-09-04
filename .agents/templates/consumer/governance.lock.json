@@ -1,7 +1,7 @@
 {
   "schema_version": 1,
   "distribution": "development-governance-v0",
-  "version": "1.0.2",
+  "version": "1.0.3",
   "source_repository": "mayf3/agent-development-governance",
   "source_commit": "0000000000000000000000000000000000000000",
   "distribution_manifest_sha256": "0000000000000000000000000000000000000000000000000000000000000000",
