@@ -1,6 +1,6 @@
 ---
 spec_id: AGENT_MULTI_REPO_SIX_PACK_HOST_V1
-status: proposed
+status: accepted
 spec_kind: implementation
 authority_level: governing_spec
 implementation_authority: contracts
@@ -525,7 +525,7 @@ EMERGENCY_CONTAINMENT = disable admission (WINDOW_CLOSED) and leases;
 ## 13. Open questions
 
 ```text
-OPEN_OWNER_DECISIONS = owner acceptance (status stays proposed until then)
+OPEN_OWNER_DECISIONS = none (owner acceptance recorded 2026-09-05 by Owner decision; accepted head 8186595a9abb93bfdb75c21c6d0be9e93abdc863, independent review 5119235263 ACCEPT, merged via PR #14 merge commit 68e4e743886e1266b0c3a3a30192b3c11dc53535; lifecycle metadata only, content bytes otherwise unchanged)
 NORMATIVE_TBD = NONE
 UNRESOLVED_AUTHORITY_CONFLICT = NONE
 PARTIAL_SUPERSESSION = NONE
