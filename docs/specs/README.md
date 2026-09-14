@@ -20,6 +20,9 @@ Implementation progress, verification coverage, runtime state, and conformance a
 | `AGENT_OPERATIONAL_LAYER_V1` | accepted | implementation | contracts | Define bounded task Skills and a typed, non-normative repository-local Record corpus |
 | `AGENT_DEVELOPMENT_GOVERNANCE_V1` | accepted | implementation | contracts | Replace the single heavy non-mechanical route with independent Authority, Plan, and Assurance decisions while preserving V0 protections |
 | `AGENT_SIX_PACK_DELIVERY_PROFILE_V1` | accepted | implementation | contracts | Define a faithful six-role software-delivery profile with exact-commit handoffs, mutation hardening, and independent final QA |
+| `AGENT_MODEL_CONVERGENCE_V1` | proposed | implementation | contracts | Propose historical-model convergence and subtraction-first refactoring; current distribution and consumer authority remain unchanged |
+
+`AGENT_MODEL_CONVERGENCE_V1` is a [docs-only proposal](AGENT_MODEL_CONVERGENCE_V1.md), with [author scenario probes](../rationale/model-convergence/SCENARIO_REVIEW.md). It does not activate distributed rules or authorize consumer cleanup. Acceptance, distribution implementation, and local consumer adoption remain separate.
 
 `AGENT_OPERATIONAL_LAYER_V1` is accepted and active on `main`.
 
