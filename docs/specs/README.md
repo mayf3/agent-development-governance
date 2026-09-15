@@ -32,3 +32,11 @@ The `accepted` Governance V1 and `superseded` V0 rows describe the authority cur
 ## Bootstrap note
 
 The one-time bootstrap exception is historical and ended when `AGENT_DEVELOPMENT_GOVERNANCE_BOOTSTRAP_V0` became accepted on `main`. It must not be reused for this or any later governance change.
+
+## Proposed repository-quality baseline
+
+| Spec ID | Status | Kind | Implementation authority | Purpose |
+|---|---|---|---|---|
+| [`AGENT_REPOSITORY_QUALITY_V1`](AGENT_REPOSITORY_QUALITY_V1.md) | proposed | implementation | contracts | Define proportionate repository structure, truthful documentation, verifiable usage, and explicitly scoped open-source publication requirements |
+
+This is an independent docs-only proposal, not active distributed policy or an open-source certification. Source acceptance, distribution implementation, consumer-local exact-commit adoption, and repository/publication conformance remain separate. It neither changes nor depends on the unaccepted model-convergence proposal in PR #16. No existing authority, distribution, consumer, release, or production state is changed by adding this proposal.
