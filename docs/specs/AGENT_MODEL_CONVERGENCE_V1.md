@@ -1,6 +1,6 @@
 ---
 spec_id: AGENT_MODEL_CONVERGENCE_V1
-status: proposed
+status: accepted
 spec_kind: implementation
 authority_level: governing_spec
 implementation_authority: contracts
@@ -37,7 +37,7 @@ It does not prescribe consumer identity formats or cardinality, merge `agentId`/
 AUTHORITY_ACTION = NEW
 PARENT = AGENT_DEVELOPMENT_GOVERNANCE_V1
 PARENT_REVISION = 9dcd0c49a5932e44e2801317b6281bdc6a168d25
-AUTHORING_STAGE = docs-only proposal
+AUTHORING_STAGE = docs-only acceptance preparation
 ACCEPTANCE_ACTOR = mayf3 or an explicitly authorized maintainer
 IMPLEMENTATION_AUTHORITY = governance-distribution Contracts only, after acceptance
 CONSUMER_PRODUCT_AUTHORITY = unchanged; local adoption required
@@ -46,6 +46,8 @@ CONSUMER_PRODUCT_AUTHORITY = unchanged; local adoption required
 This is a bounded new development obligation, not a reinterpretation of an existing accepted Decision. It supplements the parent without superseding or editing any accepted meaning. Product support commitments, review-source rules, proportional routing, controlled-operation safeguards, and stop controls remain governed by the parent. A conflicting consumer Contract must be resolved by its existing authority process, not overridden by this standard.
 
 The proposal does not activate rules in `.agents/**`. Acceptance, distribution implementation/release, consumer adoption, and product migration remain separately evidenced states. This PR authorizes none of the latter operations.
+
+The `accepted` frontmatter records owner-authorized acceptance preparation on this candidate branch. It becomes active source-repository authority only after independent final-Head recheck and merge into `main`. The [owner authorization and transmitted independent review](https://github.com/mayf3/agent-development-governance/pull/16#issuecomment-5682621961) bind the original reviewed Head; final-Head verification is recorded separately in PR #16. Historical State and Observations below retain their original coordinates.
 
 ## 4. Current State
 
@@ -99,28 +101,28 @@ The proposal does not activate rules in `.agents/**`. Acceptance, distribution i
 
 ### DEC-CONV-001 — Distinguish obsolete duplication from legitimate multiplicity
 
-- Decision owner: repository owner, proposed for acceptance.
+- Decision owner: repository owner.
 - Decision: investigate the affected semantic boundary and its current owner before deciding what to retire; preserve distinct responsibilities and valid support obligations.
 - Rejected alternative: classify every old name or multiple-ID relationship as a defect.
 - Reason: historical duplicates and deliberately different entities need different treatment.
 
 ### DEC-CONV-002 — Prefer subtraction and require a compatibility exit
 
-- Decision owner: repository owner, proposed for acceptance.
-- Decision: prefer deleting unused paths, migrating real consumers and removing replacements, and consolidating duplicate logic over adding permanent fallback. Temporary bridges have explicit retirement conditions.
+- Decision owner: repository owner.
+- Decision: prefer deleting unused paths, migrating real consumers and removing the replaced legacy paths, and consolidating duplicate logic over adding permanent fallback. Temporary bridges have explicit retirement conditions.
 - Rejected alternative: make every historical representation permanently executable.
 - Reason: fixing one request must not indefinitely multiply normal execution paths.
 
 ### DEC-CONV-003 — Retirement includes runtime closure without erasing history
 
-- Decision owner: repository owner, proposed for acceptance.
+- Decision owner: repository owner.
 - Decision: verify the current path, retired-path exclusion, and applicable restart/recovery behavior; preserve historical evidence and existing mutation safeguards.
 - Rejected alternatives: declare completion after one successful request; delete records merely because their names look old.
 - Reason: runtime eligibility and historical explainability are separate concerns.
 
 ### DEC-CONV-004 — Integrate into existing work rather than create another workflow
 
-- Decision owner: repository owner, proposed for acceptance.
+- Decision owner: repository owner.
 - Decision: place bounded convergence questions in the existing grammar, PREFLIGHT, review mode, and templates after acceptance; keep consumer adoption local and exact-revision-bound.
 - Rejected alternatives: an isolated essay with no development hook; a new governance platform or approval round for routine cleanup.
 - Reason: the standard should reduce maintenance work, not generate another permanent process.
@@ -259,4 +261,4 @@ Consumers then explicitly adopt the exact distribution revision. Apply the rule 
 
 ## 13. Open questions
 
-No unresolved normative placeholders are intentionally deferred. Owner acceptance and independent exact-candidate review are pending procedural steps, not completed results. Consumer-specific identity mappings, data-retention choices, and production operations remain outside this standard and must be resolved in their owning tasks.
+No unresolved normative placeholders are intentionally deferred. The original semantic review, owner acceptance preparation, and final exact-Head recheck are recorded separately in PR #16. Preparation on a branch is not activation on `main`, and author or CI checks do not substitute for independent final-Head verification. Consumer-specific identity mappings, data-retention choices, and production operations remain outside this standard and must be resolved in their owning tasks.
