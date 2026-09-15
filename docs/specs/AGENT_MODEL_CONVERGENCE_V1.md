@@ -261,4 +261,11 @@ Consumers then explicitly adopt the exact distribution revision. Apply the rule 
 
 ## 13. Open questions
 
+```text
+OPEN_OWNER_DECISIONS = NONE
+NORMATIVE_TBD = NONE
+UNRESOLVED_AUTHORITY_CONFLICT = NONE
+PARTIAL_SUPERSESSION = NONE
+```
+
 No unresolved normative placeholders are intentionally deferred. The original semantic review, owner acceptance preparation, and final exact-Head recheck are recorded separately in PR #16. Preparation on a branch is not activation on `main`, and author or CI checks do not substitute for independent final-Head verification. Consumer-specific identity mappings, data-retention choices, and production operations remain outside this standard and must be resolved in their owning tasks.
