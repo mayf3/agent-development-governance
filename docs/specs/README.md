@@ -35,3 +35,11 @@ The `accepted` Governance V1 and `superseded` V0 rows describe the authority cur
 ## Bootstrap note
 
 The one-time bootstrap exception is historical and ended when `AGENT_DEVELOPMENT_GOVERNANCE_BOOTSTRAP_V0` became accepted on `main`. It must not be reused for this or any later governance change.
+
+## Proposed release and recovery assurance
+
+| Spec ID | Status | Kind | Implementation authority | Purpose |
+|---|---|---|---|---|
+| [`AGENT_RELEASE_RECOVERY_ASSURANCE_V1`](AGENT_RELEASE_RECOVERY_ASSURANCE_V1.md) | proposed | implementation | contracts | Define bounded release-artifact, object-role, failure-prestate, test-dimension and recovery-evidence obligations |
+
+This independent docs-only proposal has [source excerpts and mappings](../rationale/release-recovery/SOURCE_MAPPING.md) and [non-authoritative author scenarios](../rationale/release-recovery/SCENARIO_REVIEW.md). It reuses accepted model-convergence obligations without editing them, and does not depend on or modify PR #17. Proposal, source acceptance, distribution implementation/release, consumer-local adoption, and real deployment/recovery verification remain separate. No distribution, consumer, or production behavior is activated by this authoring change.
