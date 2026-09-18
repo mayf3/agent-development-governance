@@ -102,3 +102,7 @@ Consumers vendor an exact source commit and record preparation separately from l
 The distribution identifier remains stable for compatibility; exact source commit and version carry revision identity.
 
 The current release candidate is `v1.0.3`. After publication, consumers should pin its exact tag commit and still complete repository-local verification, independent review, and Owner acceptance; an upstream release never changes a consumer automatically. `v1.0.0`, `v1.0.1`, and `v1.0.2` remain immutable. `v1.0.1` contains the transition-validator preparation-state fix, `v1.0.2` closed the v1.0.1 publication-record gap, and `v1.0.3` extends the transition validator to raw multi-generation successor chains and legacy historical records. `AGENT_OPERATIONAL_LAYER_V1` remains accepted but is not implemented by this release.
+
+## Practical references
+
+[Evidence-led simplification and refactoring](docs/guides/EVIDENCE_LED_REFACTORING.md) provides optional discovery, bounded implementation, and integration recipes distilled from DeepSeek Harness and Hermes. Read the [pinned source comparison and transfer limits](docs/rationale/deepseek-hermes/SOURCE_REVIEW.md) for provenance and the [author scenarios](docs/rationale/deepseek-hermes/SCENARIO_REVIEW.md) for counterexamples. These are non-normative references, not newly accepted Contracts, automatically invoked Skills, or a distributed-policy release.
