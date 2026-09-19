@@ -16,9 +16,11 @@ It is not a central product authority. A consumer adopts an exact immutable sour
 ## Current status
 
 ```text
-DISTRIBUTION_VERSION = 1.0.3
+DISTRIBUTION_VERSION = 1.1.0
 GOVERNANCE_V1_SPEC_STATUS = accepted
 GOVERNANCE_V1_ACTIVE_ON_MAIN = yes
+MODEL_CONVERGENCE_SPEC_STATUS = accepted
+MODEL_CONVERGENCE_DISTRIBUTED = yes
 BOOTSTRAP_V0_STATUS = superseded
 OPERATIONAL_LAYER_SPEC_STATUS = accepted
 OPERATIONAL_LAYER_IMPLEMENTATION = not_started
@@ -26,7 +28,7 @@ ENFORCEMENT_LEVEL = manual_policy_plus_deterministic_integrity
 SEMANTIC_SPEC_VERIFIER = not_implemented
 SPEC_TRANSITION_VALIDATOR = implemented
 ROUTE_CONSISTENCY_VALIDATOR = implemented
-STABLE_RELEASE = v1.0.3
+STABLE_RELEASE = v1.1.0
 ```
 
 Governance V1 separates:
@@ -94,14 +96,14 @@ Consumers vendor an exact source commit and record preparation separately from l
   "source_repository": "mayf3/agent-development-governance",
   "source_commit": "<40-hex commit>",
   "distribution": "development-governance-v0",
-  "version": "1.0.3",
+  "version": "1.1.0",
   "adoption": {"status": "proposed | accepted"}
 }
 ```
 
 The distribution identifier remains stable for compatibility; exact source commit and version carry revision identity.
 
-The current release candidate is `v1.0.3`. After publication, consumers should pin its exact tag commit and still complete repository-local verification, independent review, and Owner acceptance; an upstream release never changes a consumer automatically. `v1.0.0`, `v1.0.1`, and `v1.0.2` remain immutable. `v1.0.1` contains the transition-validator preparation-state fix, `v1.0.2` closed the v1.0.1 publication-record gap, and `v1.0.3` extends the transition validator to raw multi-generation successor chains and legacy historical records. `AGENT_OPERATIONAL_LAYER_V1` remains accepted but is not implemented by this release.
+The current release candidate is `v1.1.0`. After publication, consumers should pin its exact tag commit and still complete repository-local verification, independent review, and Owner acceptance; an upstream release never changes a consumer automatically. `v1.0.0`, `v1.0.1`, `v1.0.2`, and `v1.0.3` remain immutable. `v1.0.1` contains the transition-validator preparation-state fix, `v1.0.2` closed the v1.0.1 publication-record gap, `v1.0.3` extends the transition validator to raw multi-generation successor chains and legacy historical records, and `v1.1.0` distributes the accepted `AGENT_MODEL_CONVERGENCE_V1` development obligation into the vendored grammar. `AGENT_OPERATIONAL_LAYER_V1` remains accepted but is not implemented by this release.
 
 ## Practical references
 
