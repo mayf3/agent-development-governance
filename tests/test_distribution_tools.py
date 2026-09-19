@@ -323,6 +323,60 @@ class DistributionToolsTest(unittest.TestCase):
         ):
             self.assertIn(version, (ROOT / relative).read_text(encoding="utf-8"))
 
+    def test_vendored_surface_is_self_contained(self) -> None:
+        """Distributed files must not depend on source-only authority paths."""
+        forbidden = ("docs/specs/AGENT_", "docs/guides/")
+        for entry in build_manifest.build_manifest(ROOT)["files"]:
+            text = (ROOT / entry["path"]).read_text(encoding="utf-8")
+            for marker in forbidden:
+                self.assertNotIn(
+                    marker,
+                    text,
+                    f"{entry['path']} references source-only path {marker}; the "
+                    "vendored surface must stay self-contained",
+                )
+
+    def test_model_convergence_surface_is_distributed_and_conditional(self) -> None:
+        """The convergence obligation ships in the vendored surface, applied conditionally."""
+        grammar = (ROOT / ".agents/README.md").read_text(encoding="utf-8")
+        preflight = (
+            ROOT / ".agents/skills/spec-governance/modes/PREFLIGHT.md"
+        ).read_text(encoding="utf-8")
+        review = (
+            ROOT / ".agents/skills/spec-governance/modes/REVIEW.md"
+        ).read_text(encoding="utf-8")
+        for name, text in (
+            ("grammar", grammar),
+            ("PREFLIGHT", preflight),
+            ("REVIEW", review),
+        ):
+            self.assertIn("TEMPORARY_BRIDGE", text, f"{name} lacks dispositions")
+            self.assertIn("exit condition", text, f"{name} lacks bridge exits")
+        for name, text in (("grammar", grammar), ("PREFLIGHT", preflight)):
+            self.assertIn(
+                "legacy state stores", text, f"{name} lacks the trigger set"
+            )
+        self.assertIn("multiple independently maintained executable models", grammar)
+        self.assertIn("no global census", preflight)
+        self.assertIn("OLD_EXECUTION_PATH_RETIRED", review)
+        self.assertIn("RECOVERY_DOES_NOT_REVIVE_OLD_PATH", review)
+        conditional = (
+            "# Remaining fields are required only when MODEL_CONVERGENCE_APPLICABLE = YES"
+        )
+        for name, relative in (
+            ("Change Brief", ".agents/templates/CHANGE_BRIEF_TEMPLATE.md"),
+            ("Review Record", ".agents/templates/REVIEW_RECORD_TEMPLATE.md"),
+        ):
+            text = (ROOT / relative).read_text(encoding="utf-8")
+            self.assertIn("MODEL_CONVERGENCE_APPLICABLE = YES | NO", text)
+            self.assertIn(conditional, text, f"{name} fields are not conditional")
+        self.assertIn(
+            "RETIRE", (ROOT / ".agents/templates/CHANGE_BRIEF_TEMPLATE.md").read_text(encoding="utf-8")
+        )
+        record = (ROOT / ".agents/templates/REVIEW_RECORD_TEMPLATE.md").read_text(encoding="utf-8")
+        self.assertIn("NEW_PATH_USABLE", record)
+        self.assertIn("NON_REVIVAL_EVIDENCE", record)
+
 
 if __name__ == "__main__":
     unittest.main()

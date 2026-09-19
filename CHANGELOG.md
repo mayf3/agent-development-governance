@@ -4,6 +4,41 @@
 
 - No changes yet.
 
+## 1.1.0 — 2026-09-19
+
+- distribute the accepted `AGENT_MODEL_CONVERGENCE_V1` development obligation
+  into the vendored grammar for the first time (REUSE implementation of its
+  distribution Contracts; accepted Spec bytes unchanged):
+  - `.agents/README.md` gains a self-contained model-convergence and
+    retirement section: affected-work trigger, the same-responsibility
+    duplication test, preserved distinct entities, RETAIN / RETIRE / MIGRATE /
+    TEMPORARY_BRIDGE dispositions, subtraction-first preference, stable
+    supported public facade versus temporary migration bridge, and retirement
+    without historical-evidence deletion;
+  - PREFLIGHT mode gains a conditional affected-work convergence probe with
+    six bounded questions; unrelated tasks keep the short route with no
+    global census, empty matrix, or new approval;
+  - REVIEW mode gains a conditional convergence-exit review: new path usable,
+    retired executable path excluded from normal/fallback/recovery routes,
+    recovery non-revival, unknown coverage stays unknown, and retirement is
+    not historical-evidence deletion;
+  - Change Brief and Review Record templates gain conditional convergence
+    fields that are skipped when `MODEL_CONVERGENCE_APPLICABLE = NO`;
+- parallel or multi-Agent work remains optional; actual writes still follow
+  the existing attributable-authorization and isolated-write-surface rules;
+  no new ledger, mandatory Agent role, scoring service, approval workflow, or
+  blocker class is introduced, and no proposed authority
+  (`AGENT_RELEASE_RECOVERY_ASSURANCE_V1`, `AGENT_REPOSITORY_QUALITY_V1`,
+  GitHub enforcement) or the non-normative evidence-led refactoring guide is
+  activated;
+- add distribution-tool regressions for vendored-surface self-containment
+  (no source-only authority-path references) and convergence-surface
+  presence; six distribution canary decisions recorded under
+  `docs/rationale/model-convergence/DISTRIBUTION_CANARIES.md`;
+- version surfaces 1.0.3 -> 1.1.0 (MINOR: backward-compatible additive
+  guidance and template fields per `docs/releases/VERSIONING.md`); release
+  doc added; manifest rebuilt.
+
 ## 1.0.3 — 2026-09-05
 
 - extend the transition validator to raw, unnormalized whole-authority
