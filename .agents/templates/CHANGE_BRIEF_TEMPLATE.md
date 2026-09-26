@@ -27,6 +27,22 @@ ALLOWED_EFFECTS =
 FORBIDDEN_EFFECTS =
 ```
 
+## Delivery continuity (only for release/recovery or expanding work)
+
+Reuse this Brief, task, PR, or existing release record; do not create a second authority tree.
+
+```text
+DELIVERY_ID = <original business outcome; retain across candidate/packet renames>
+FROZEN_ACCEPTANCE = <accepted scope and Done-When references, not new product law>
+APPLICABLE_GATES = <finite operation/release gate references and status>
+VALID_BLOCKERS = <all current valid blockers; do not hide secondary ones>
+PRIMARY_BLOCKER = <current execution priority, or NONE>
+REVIEW_REPAIR_ROUNDS = <cumulative unsuccessful rounds for this delivery>
+LAST_REAL_ACTION = <executed action and result, or explicit waiting state>
+```
+
+At three unsuccessful rounds, record the scope/split/authority/abandon decision. No new report resets the count. Gates satisfied plus valid authorization means perform the next real action. Fresh production preconditions, genuine risks, and required evidence still apply; the record itself grants no permission.
+
 ## Relevant knowledge
 
 ```text

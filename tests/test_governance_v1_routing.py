@@ -206,6 +206,17 @@ def record(
         },
         "findings": findings or [],
     }
+    # Synthetic missing-decision evidence, not a real execution receipt.
+    if spec_gap == "LOAD_BEARING":
+        value["spec_gap_detail"] = {
+            "affected_action": "Implement the fixture's new public operation",
+            "missing_decision": "Who may invoke it and which lifecycle changes it permits",
+            "authority_search": "Fixture accepted authority inventory: no owner for this operation",
+            "counterexample": "The new public entrypoint otherwise permits an undecided principal",
+            "impact": "Unaccepted public permission or lifecycle behavior",
+            "minimal_closure": "Have the owning authority decide the missing behavior",
+            "avoidance_analysis": "Removing the new operation avoids the dependency; do not expand it",
+        }
     if scenario is not None:
         value["scenario"] = scenario
     return value
@@ -863,7 +874,8 @@ class GovernanceV1RoutingTest(unittest.TestCase):
             "accepted obligation is violated",
             "repair the bounded path",
         )
-        self.assert_valid(record(findings=[legal]))
+        self.assert_valid(record(findings=[legal], implementation_allowed="NO",
+                                 merge_ready="NO", operation_allowed="NO"))
         illegal = copy.deepcopy(legal)
         illegal["source_type"] = "INVESTIGATION"
         self.assert_invalid(

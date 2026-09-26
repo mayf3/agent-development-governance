@@ -347,6 +347,14 @@ def validate_route(record: Any) -> list[str]:
     if spec_gap not in {"NONE", "NON_LOAD_BEARING", "LOAD_BEARING"}:
         errors.append("spec_gap_dependency is invalid")
     if spec_gap == "LOAD_BEARING":
+        detail = _mapping(record.get("spec_gap_detail"), "spec_gap_detail", errors)
+        for field in (
+            "affected_action", "missing_decision", "authority_search",
+            "counterexample", "impact", "minimal_closure", "avoidance_analysis",
+        ):
+            if not isinstance(detail.get(field), str) or not detail[field].strip():
+                errors.append(f"spec_gap_detail.{field} must be non-empty text")
+        # An invalid diagnosis never authorizes proceeding. The dependency still stops work.
         readiness_values = [
             readiness.get("implementation_allowed"),
             readiness.get("merge_ready"),
@@ -460,10 +468,37 @@ def validate_route(record: Any) -> list[str]:
         for value in (target_changed, relevant_impact, full_rereview)
     ):
         errors.append("review movement flags must be booleans")
-    elif full_rereview != (target_changed or relevant_impact):
-        errors.append(
-            "review.full_rereview_required must reflect target or relevant Base impact"
-        )
+    else:
+        # Coordinate movement requires re-binding, not automatically a full review.
+        # Legacy unchanged records remain valid; changed coordinates need an explicit scope.
+        scope = review.get("scope")
+        movement = target_changed or relevant_impact
+        if "scope" not in review and not movement and not full_rereview:
+            pass
+        elif not isinstance(scope, str) or scope not in {"NONE", "DELTA", "FULL"}:
+            errors.append(
+                "review.scope must be NONE, DELTA, or FULL to justify movement or "
+                "full_rereview_required"
+            )
+        else:
+            if movement and scope == "NONE":
+                errors.append("review movement requires DELTA or FULL final-head recheck")
+            if full_rereview != (scope == "FULL"):
+                errors.append("review.full_rereview_required must match review.scope=FULL")
+            if scope != "NONE":
+                for field in ("scope_reason", "impact_evidence"):
+                    if not isinstance(review.get(field), str) or not review[field].strip():
+                        errors.append(f"review.{field} must be non-empty text")
+            basis = review.get("full_review_basis")
+            if scope == "FULL" and (
+                not isinstance(basis, str) or basis not in {
+                    "INITIAL_REVIEW", "ACCEPTED_FULL_GATE", "UNBOUNDED_IMPACT",
+                }
+            ):
+                errors.append(
+                    "review.full_review_basis must identify INITIAL_REVIEW, "
+                    "ACCEPTED_FULL_GATE, or UNBOUNDED_IMPACT"
+                )
 
     if stop.get("next_action") not in NEXT_ACTIONS:
         errors.append("stop.next_action is invalid")
@@ -495,6 +530,19 @@ def validate_route(record: Any) -> list[str]:
             finding = _mapping(value, f"findings[{index}]", errors)
             kind = finding.get("kind")
             if kind == "BLOCKER":
+                affected = finding.get("affected_readiness", [
+                    "implementation_allowed", "merge_ready", "operation_allowed",
+                ])
+                boundaries = {"implementation_allowed", "merge_ready", "operation_allowed"}
+                if (not isinstance(affected, list) or not affected
+                        or any(not isinstance(item, str) or item not in boundaries
+                               for item in affected)):
+                    errors.append(f"findings[{index}].affected_readiness must name readiness boundaries")
+                else:
+                    if any(readiness.get(field) == "YES" for field in affected):
+                        errors.append(f"findings[{index}] open Blocker forbids affected readiness=YES")
+                    if not any(readiness.get(field) == "NO" for field in affected):
+                        errors.append(f"findings[{index}] open Blocker needs a boundary explicitly NO")
                 if finding.get("blocker_class") not in BLOCKER_CLASSES:
                     errors.append(f"findings[{index}].blocker_class is invalid")
                 if finding.get("source_type") not in LEGAL_SOURCE_TYPES:
@@ -513,6 +561,14 @@ def validate_route(record: Any) -> list[str]:
                             f"findings[{index}].{field} must be non-empty"
                         )
             elif kind in NON_BLOCKER_KINDS:
+                if kind == "SPEC_GAP" and "load_bearing" in finding:
+                    if not isinstance(finding["load_bearing"], bool):
+                        errors.append(f"findings[{index}].load_bearing must be boolean")
+                    elif finding["load_bearing"] and spec_gap != "LOAD_BEARING":
+                        errors.append(
+                            f"findings[{index}] load-bearing SPEC_GAP requires "
+                            "spec_gap_dependency=LOAD_BEARING and its diagnosis"
+                        )
                 if finding.get("blocker_class") not in {None, ""}:
                     errors.append(
                         f"findings[{index}] non-Blocker must not set blocker_class"

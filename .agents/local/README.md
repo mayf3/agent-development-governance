@@ -21,10 +21,11 @@ OPERATIONAL_LAYER_ACTIVE_ON_MAIN = yes
 OPERATIONAL_LAYER_IMPLEMENTATION = not_started
 ACCEPTANCE_ACTOR = mayf3 or another explicitly authorized maintainer
 CONTROLLED_OPERATION_MANDATE_ACTOR = mayf3 or another explicitly authorized operator
-STABLE_RELEASE = none
 ```
 
 A source-repository implementation PR may implement accepted Governance V1 only within its Contracts. It does not automatically authorize consumer product changes, production writes, permissions, credentials, deployment, or Operational Layer implementation.
+
+Release status has one current entrypoint: `README.md` (Current status); `VERSION` identifies the working distribution candidate. Historical release notes and acceptance-time Spec observations are not live status declarations.
 
 ## Local precedence
 

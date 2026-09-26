@@ -20,15 +20,15 @@ Implementation progress, verification coverage, runtime state, and conformance a
 | `AGENT_OPERATIONAL_LAYER_V1` | accepted | implementation | contracts | Define bounded task Skills and a typed, non-normative repository-local Record corpus |
 | `AGENT_DEVELOPMENT_GOVERNANCE_V1` | accepted | implementation | contracts | Replace the single heavy non-mechanical route with independent Authority, Plan, and Assurance decisions while preserving V0 protections |
 | `AGENT_SIX_PACK_DELIVERY_PROFILE_V1` | accepted | implementation | contracts | Define a faithful six-role software-delivery profile with exact-commit handoffs, mutation hardening, and independent final QA |
-| `AGENT_MODEL_CONVERGENCE_V1` | accepted | implementation | contracts | Define historical-model convergence and subtraction-first refactoring; current distribution and consumer authority remain unchanged |
+| `AGENT_MODEL_CONVERGENCE_V1` | accepted | implementation | contracts | Define historical-model convergence and subtraction-first refactoring; distributed since v1.1.0, with consumer-local adoption still required |
 
-`AGENT_MODEL_CONVERGENCE_V1` is [prepared as accepted on this candidate branch](AGENT_MODEL_CONVERGENCE_V1.md), with [author scenario probes](../rationale/model-convergence/SCENARIO_REVIEW.md) and an [owner authorization / transmitted independent-review record](https://github.com/mayf3/agent-development-governance/pull/16#issuecomment-5682621961). It becomes active source-repository authority only after independent final-Head recheck and merge into `main`. It does not activate distributed rules or authorize consumer cleanup. Source acceptance, distribution implementation, local consumer adoption, and actual cleanup remain separate.
+`AGENT_MODEL_CONVERGENCE_V1` is accepted source-repository authority on `main`; its distributed implementation shipped in v1.1.0. The [author scenario probes](../rationale/model-convergence/SCENARIO_REVIEW.md) and PR #16 acceptance discussion are historical provenance, not pending activation steps. Source acceptance, distribution publication, consumer adoption, and actual cleanup remain distinct.
 
 `AGENT_OPERATIONAL_LAYER_V1` is accepted and active on `main`.
 
 Its implementation progress, verification coverage, conformance, and release state remain separate from Spec lifecycle. PR #5 does not supersede, amend, implement, or silently reparent it.
 
-`AGENT_SIX_PACK_DELIVERY_PROFILE_V1` is accepted in this candidate branch as a child profile governed by the accepted Governance V1 and Operational Layer V1. It becomes active repository authority only after independent final-Head recheck and merge. This acceptance does not activate a six-Agent runtime, change consumers, or authorize product work; runtime implementation and consumer use remain separate governed tasks.
+`AGENT_SIX_PACK_DELIVERY_PROFILE_V1` is accepted source-repository authority on `main`, governed by Governance V1 and Operational Layer V1. That source acceptance does not activate a six-Agent runtime, change consumers, or authorize consumer product work; runtime implementation and consumer use remain separate.
 
 The `accepted` Governance V1 and `superseded` V0 rows describe the authority currently active on `main`. Governance V1 supersedes only V0 and carries the compatible Operational Layer forward without changing that authority's accepted frontmatter. Future Operational Layer implementation must re-run PREFLIGHT against the exact active Governance V1 and exact accepted Operational Layer revisions; any conflict or semantic parent change requires a separate authority action.
 
