@@ -16,8 +16,9 @@
 - Remove stale current-state summaries without editing accepted Spec bytes or
   deleting historical evidence. Stable release remains v1.1.0.
 - MAJOR prerelease: stopping-gap and movement route inputs gain required detail
-  when evaluated by this candidate. Unchanged legacy routes remain accepted;
-  no historical record rewrite, consumer update, stable tag, or production change.
+  when evaluated by this candidate. Current decisions require route schema v2
+  and explicit blocker scope; v1 remains available only via --legacy-inspection,
+  never current-readiness validation. No historical rewrite or automatic activation.
 - Cross-turn delivery behavior remains policy, not an implemented scheduler or
   semantic authority verifier. Tests exercise routing and distribution only.
 

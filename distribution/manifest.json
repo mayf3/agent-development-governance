@@ -6,8 +6,8 @@
   "files": [
     {
       "path": ".agents/README.md",
-      "sha256": "7114940ab2ddf35b40a6e7abbfafd11f1c35d4800fb7c0df4f059aad9a99e8a6",
-      "size": 19909
+      "sha256": "b1eca5b821611fc3cbe5e60cc262cb5c9b25fe3694f8cf3914703102dd72d17d",
+      "size": 20078
     },
     {
       "path": ".agents/protocol/SPEC_GOVERNANCE_V0.md",
@@ -16,8 +16,8 @@
     },
     {
       "path": ".agents/protocol/SPEC_GOVERNANCE_V1.md",
-      "sha256": "8de7893bea6815e6d03300403504dab22f6f45bc7668a8c6fd7766ccb9960d33",
-      "size": 16378
+      "sha256": "2955ad3a25eae4008cc12a607cd6f64f4c906ef8b0598ef3047e009bdc62921b",
+      "size": 16477
     },
     {
       "path": ".agents/protocol/SPEC_FORMAT_V0.md",
@@ -61,8 +61,8 @@
     },
     {
       "path": ".agents/tools/validate_governance_route.py",
-      "sha256": "607a71d1449f6c2c2aa70ec1225c2ce559f7b7d8ea71f5e6fddbc708beedc7e8",
-      "size": 26323
+      "sha256": "f7d78923b94d3593e48f229e19e8a549a592b07b8d820567e21c6691671787f5",
+      "size": 27448
     },
     {
       "path": ".agents/schemas/distribution-manifest.schema.json",
@@ -81,8 +81,8 @@
     },
     {
       "path": ".agents/schemas/governance-route.schema.json",
-      "sha256": "a86347589df7d5705ccfa8b43cabf79fed2f8313cad387723a187c6b19d2e922",
-      "size": 18236
+      "sha256": "92fa23576d27f9ace1755169c5120f9f1f50a3547762cebc2c738877cba425b4",
+      "size": 18274
     },
     {
       "path": ".agents/templates/SPEC_TEMPLATE.md",
@@ -96,8 +96,8 @@
     },
     {
       "path": ".agents/templates/CHANGE_BRIEF_TEMPLATE.md",
-      "sha256": "40a1a3b3bec5f1e5742f0900ca87677b26e18de72d99de4604742c74ef22c956",
-      "size": 3314
+      "sha256": "bf4d33db4329df6908936f405eed23b53bdc47407bf3b9266ca069c3fffac3aa",
+      "size": 3410
     },
     {
       "path": ".agents/templates/EXEC_PLAN_TEMPLATE.md",
@@ -116,8 +116,8 @@
     },
     {
       "path": ".agents/templates/REVIEW_RECORD_TEMPLATE.md",
-      "sha256": "23cc26692bfc647fc19b5935474474be656d376a16837f48855b70e2e99c7035",
-      "size": 3807
+      "sha256": "182bad8ac113b94056996b68919d68b1510045fc47b81bc20f1f0101e4d61934",
+      "size": 3903
     },
     {
       "path": ".agents/templates/CONFORMANCE_RECORD_TEMPLATE.md",

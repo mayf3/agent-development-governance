@@ -246,7 +246,7 @@ Every Blocker records `SOURCE`, `COUNTEREXAMPLE`, `IMPACT`, and `MINIMAL_CLOSURE
 
 `SPEC_GAP`, `FOLLOW_UP`, and `TOOLING_DEBT` are non-Blocker finding kinds, though a load-bearing gap still makes readiness false and needs the dependency diagnosis above. A `SPEC_GAP` finding marked `load_bearing: true` must agree with the top-level dependency classification.
 
-For current decisions, name dependent boundaries in `affected_readiness`: none may be `YES` and at least one must be `NO`; an empty, malformed, or N/A-only explicit scope is invalid. Historical schema-v1 findings that omit the field retain their prior structural validation. Omission does not mean all three boundaries are blocked and does not certify any of them ready. Reusing a historical finding for a current decision requires determining its actual affected scope under the applicable authority; the syntax validator neither infers that scope nor grants permission.
+Current and resumed decisions use route schema v2. Every open Blocker must name dependent boundaries in `affected_readiness`: none may be `YES` and at least one must be `NO`; absent, empty, malformed, or N/A-only scope is invalid. The default validator and current JSON Schema require v2. Historical v1 records are inspected only through `validate_route(record, legacy_inspection=True)` or CLI `--legacy-inspection`, with output explicitly not valid for current readiness. This invocation option is not a record-supplied provenance flag. It neither rewrites history nor grants permission; a resumed decision creates a current v2 record with real scope and authorization.
 
 ## Candidate, Base, and acceptance
 

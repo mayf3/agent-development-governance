@@ -42,12 +42,14 @@ Run the complete CI commands on the final candidate; the PR records actual resul
 All examples are synthetic fixtures, never claims about HR or production recovery.
 
 `2.0.0-rc.1` identifies a candidate with a tightened structured-input contract.
-Existing unchanged route inputs still work. Resumed movement/gap records add the
-new fields; old history is not rewritten, and pinned consumers are unaffected.
+Current/resumed route records use schema v2 and explicit blocker scope. Historical
+v1 records retain an explicit inspection-only path; no history is rewritten and
+pinned consumers are unaffected until adoption.
 The validator cannot prove semantic truth or cross-turn progress. There is no
 universal numeric repair cutoff. Repeated-work guidance is diagnostic, not a new
 stop gate or runtime enforcement claim. Omitted historical blocker scope keeps
-schema-v1 structural semantics; current decisions state scope explicitly. Existing
+v1 structural semantics only through explicit legacy inspection; current default
+validation requires v2 and scope, so new records cannot impersonate old records. Existing
 mandate, authority and evidence checks still apply. The two review regressions
 were reproduced before repair; current verification is recorded in PR #21.
 

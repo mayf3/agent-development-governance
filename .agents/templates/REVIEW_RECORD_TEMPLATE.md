@@ -1,5 +1,7 @@
 # Review Record
 
+Current structured decisions use route schema v2; legacy inspection is not a readiness result.
+
 ## Coordinates
 
 ```text

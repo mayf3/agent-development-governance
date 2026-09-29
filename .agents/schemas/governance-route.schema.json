@@ -1,7 +1,7 @@
 {
   "$schema": "https://json-schema.org/draft/2020-12/schema",
-  "$id": "urn:mayf3:agent-development-governance:route:v1",
-  "title": "Governance V1 route record",
+  "$id": "urn:mayf3:agent-development-governance:route:v2",
+  "title": "Current Governance route record v2",
   "type": "object",
   "additionalProperties": true,
   "required": [
@@ -29,7 +29,7 @@
   ],
   "properties": {
     "schema_version": {
-      "const": 1
+      "const": 2
     },
     "task_id": {
       "type": "string",
@@ -659,7 +659,7 @@
                 "operation_allowed"
               ]
             },
-            "description": "Explicit dependent readiness boundaries for current decisions. Historical schema-v1 omission retains structural validation only; it neither implies all boundaries nor proves executable readiness."
+            "description": "Required for every current open Blocker; explicit dependent readiness boundaries. Historical schema-v1 records use a separate inspection-only invocation, not current readiness validation."
           }
         },
         "allOf": [
@@ -681,7 +681,8 @@
                 "source",
                 "counterexample",
                 "impact",
-                "minimal_closure"
+                "minimal_closure",
+                "affected_readiness"
               ],
               "properties": {
                 "blocker_class": {

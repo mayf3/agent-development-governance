@@ -132,7 +132,7 @@ def record(
         isolated_write_surface = mutation_allowed
 
     value: dict[str, object] = {
-        "schema_version": 1,
+        "schema_version": 2,
         "task_id": "case",
         "goal": "close the real gap",
         "current_gap": "declared behavior is not yet complete",
@@ -232,6 +232,7 @@ def blocker(
 ) -> dict[str, object]:
     return {
         "kind": "BLOCKER",
+        "affected_readiness": ["implementation_allowed", "merge_ready", "operation_allowed"],
         "blocker_class": blocker_class,
         "source_type": source_type,
         "source": source,

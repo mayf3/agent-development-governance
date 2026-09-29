@@ -1,5 +1,7 @@
 # Change Brief
 
+Current structured decisions use route schema v2; legacy inspection is not a readiness result.
+
 ```text
 TASK_ID =
 TARGET_REPOSITORY =

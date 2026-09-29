@@ -246,7 +246,7 @@ REQUIRED_GATE_FAILURE
 
 Every Blocker states `SOURCE`, `COUNTEREXAMPLE`, `IMPACT`, and `MINIMAL_CLOSURE`. Name the affected readiness boundaries; an open Blocker requires at least one of them to be `NO` and none to be `YES`. Unrelated authorized work may continue. A load-bearing `SPEC_GAP` is a separate finding type but not an exemption from justifying a stop. Legal sources are active accepted Product Authority, accepted local governance/invariant authority, a pre-existing active machine gate, or a valid Execution Mandate. Investigation, proposed tests, task product prose, Reviewer preference, and Review comments are not Product-Contract sources.
 
-Historical schema-v1 findings may omit `affected_readiness`; their original structural validation is preserved, without inventing a global stop. That omission is not evidence of executable readiness: current decisions must identify the actual affected scope and satisfy applicable authority and gates.
+Current or resumed decisions use route `schema_version: 2` and every open Blocker names `affected_readiness`. The default validator rejects schema-v1 input. Historical schema-v1 findings may be viewed with the explicit `--legacy-inspection` mode, which preserves their structural semantics without inventing a global stop and never certifies current readiness. History is not rewritten; a current decision is a new v2 record with its real scope and applicable authority.
 
 Other findings are `SPEC_GAP`, `FOLLOW_UP`, or `TOOLING_DEBT`. Tooling debt blocks a product only when it causes false pass, harms non-test data, hides a concrete security/data-loss failure, or is itself an accepted deliverable.
 

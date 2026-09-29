@@ -131,12 +131,14 @@ def mandate_is_controlled(mandate: dict[str, Any]) -> bool:
     )
 
 
-def validate_route(record: Any) -> list[str]:
+def validate_route(record: Any, *, legacy_inspection: bool = False) -> list[str]:
     errors: list[str] = []
     if not isinstance(record, dict):
         return ["route record must be an object"]
-    if record.get("schema_version") != 1:
-        errors.append("schema_version must be 1")
+    expected_schema = 1 if legacy_inspection else 2
+    if record.get("schema_version") != expected_schema:
+        purpose = "historical inspection" if legacy_inspection else "current decisions"
+        errors.append(f"schema_version must be {expected_schema} for {purpose}")
     for field in ("task_id", "goal", "current_gap", "done_when"):
         _required_text(record, field, errors)
 
@@ -347,14 +349,15 @@ def validate_route(record: Any) -> list[str]:
     if spec_gap not in {"NONE", "NON_LOAD_BEARING", "LOAD_BEARING"}:
         errors.append("spec_gap_dependency is invalid")
     if spec_gap == "LOAD_BEARING":
-        detail = _mapping(record.get("spec_gap_detail"), "spec_gap_detail", errors)
-        for field in (
-            "affected_action", "missing_decision", "authority_search",
-            "counterexample", "impact", "minimal_closure", "avoidance_analysis",
-        ):
-            if not isinstance(detail.get(field), str) or not detail[field].strip():
-                errors.append(f"spec_gap_detail.{field} must be non-empty text")
-        # An invalid diagnosis never authorizes proceeding. The dependency still stops work.
+        if not legacy_inspection or "spec_gap_detail" in record:
+            detail = _mapping(record.get("spec_gap_detail"), "spec_gap_detail", errors)
+            for field in (
+                "affected_action", "missing_decision", "authority_search",
+                "counterexample", "impact", "minimal_closure", "avoidance_analysis",
+            ):
+                if not isinstance(detail.get(field), str) or not detail[field].strip():
+                    errors.append(f"spec_gap_detail.{field} must be non-empty text")
+            # An invalid diagnosis never authorizes proceeding. The dependency still stops work.
         readiness_values = [
             readiness.get("implementation_allowed"),
             readiness.get("merge_ready"),
@@ -468,6 +471,9 @@ def validate_route(record: Any) -> list[str]:
         for value in (target_changed, relevant_impact, full_rereview)
     ):
         errors.append("review movement flags must be booleans")
+    elif legacy_inspection and "scope" not in review:
+        if full_rereview != (target_changed or relevant_impact):
+            errors.append("legacy review flags must preserve their recorded movement relation")
     else:
         # Coordinate movement requires re-binding, not automatically a full review.
         # Legacy unchanged records remain valid; changed coordinates need an explicit scope.
@@ -535,6 +541,8 @@ def validate_route(record: Any) -> list[str]:
                 # cannot prove either global blockage or executable readiness.
                 # Current producers name the scope explicitly. An explicit but
                 # malformed value must never fall back to legacy behavior.
+                if not legacy_inspection and "affected_readiness" not in finding:
+                    errors.append(f"findings[{index}].affected_readiness is required for current decisions")
                 if "affected_readiness" in finding:
                     affected = finding["affected_readiness"]
                     boundaries = {"implementation_allowed", "merge_ready", "operation_allowed"}
@@ -585,19 +593,24 @@ def validate_route(record: Any) -> list[str]:
 def main(argv: list[str] | None = None) -> int:
     parser = argparse.ArgumentParser()
     parser.add_argument("record", type=Path)
+    parser.add_argument("--legacy-inspection", action="store_true",
+                        help="Inspect historical schema-v1 records only; never current readiness")
     args = parser.parse_args(argv)
     try:
         record = json.loads(args.record.read_text(encoding="utf-8"))
     except (OSError, json.JSONDecodeError) as exc:
         print(f"cannot read route record: {exc}", file=sys.stderr)
         return 2
-    errors = validate_route(record)
+    errors = validate_route(record, legacy_inspection=args.legacy_inspection)
     if errors:
         print("Governance V1 route validation failed:", file=sys.stderr)
         for error in errors:
             print(f"  - {error}", file=sys.stderr)
         return 1
-    print("Governance V1 route is internally consistent")
+    if args.legacy_inspection:
+        print("Historical schema-v1 record structurally inspected; not current readiness or execution authorization")
+    else:
+        print("Governance route v2 is internally consistent; not execution authorization")
     return 0
 
 
