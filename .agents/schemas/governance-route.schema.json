@@ -658,7 +658,8 @@
                 "merge_ready",
                 "operation_allowed"
               ]
-            }
+            },
+            "description": "Explicit dependent readiness boundaries for current decisions. Historical schema-v1 omission retains structural validation only; it neither implies all boundaries nor proves executable readiness."
           }
         },
         "allOf": [

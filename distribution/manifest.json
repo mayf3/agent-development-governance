@@ -6,8 +6,8 @@
   "files": [
     {
       "path": ".agents/README.md",
-      "sha256": "9d29372129166ea41f77d1373dda69ea131eea909f6b782b76433f0d20f900d4",
-      "size": 19519
+      "sha256": "7114940ab2ddf35b40a6e7abbfafd11f1c35d4800fb7c0df4f059aad9a99e8a6",
+      "size": 19909
     },
     {
       "path": ".agents/protocol/SPEC_GOVERNANCE_V0.md",
@@ -16,8 +16,8 @@
     },
     {
       "path": ".agents/protocol/SPEC_GOVERNANCE_V1.md",
-      "sha256": "9141331715b35b3c4380dbaceb968a0d77903793be45dcd3dc6cf196e1f196ea",
-      "size": 16106
+      "sha256": "8de7893bea6815e6d03300403504dab22f6f45bc7668a8c6fd7766ccb9960d33",
+      "size": 16378
     },
     {
       "path": ".agents/protocol/SPEC_FORMAT_V0.md",
@@ -61,8 +61,8 @@
     },
     {
       "path": ".agents/tools/validate_governance_route.py",
-      "sha256": "5a3729e29269bb22f944a0aaa52168b875653164bdcf084d86a1eba91844d444",
-      "size": 25939
+      "sha256": "607a71d1449f6c2c2aa70ec1225c2ce559f7b7d8ea71f5e6fddbc708beedc7e8",
+      "size": 26323
     },
     {
       "path": ".agents/schemas/distribution-manifest.schema.json",
@@ -81,8 +81,8 @@
     },
     {
       "path": ".agents/schemas/governance-route.schema.json",
-      "sha256": "09763ccb09155334a0b2ab6ab1968c61e296d1ad37cb5ff97db9923f767498a5",
-      "size": 18010
+      "sha256": "a86347589df7d5705ccfa8b43cabf79fed2f8313cad387723a187c6b19d2e922",
+      "size": 18236
     },
     {
       "path": ".agents/templates/SPEC_TEMPLATE.md",
@@ -96,8 +96,8 @@
     },
     {
       "path": ".agents/templates/CHANGE_BRIEF_TEMPLATE.md",
-      "sha256": "d1ec8c0e36a6d5a14796c79ec8a6296076668274931488d30cb6802bdb6905ca",
-      "size": 3197
+      "sha256": "40a1a3b3bec5f1e5742f0900ca87677b26e18de72d99de4604742c74ef22c956",
+      "size": 3314
     },
     {
       "path": ".agents/templates/EXEC_PLAN_TEMPLATE.md",

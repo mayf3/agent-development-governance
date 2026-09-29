@@ -16,6 +16,14 @@ Existing governing Contracts: `CTR-GOV1-011` (dependent gap stop),
 `CTR-GOV1-020` (goal/stop controls). Accepted Specs are byte-unchanged.
 This is an implementation/change record, not a replacement Product Authority.
 
+## Review follow-up authorized 2026-09-29
+
+Owner approved the preceding bounded repair plan: "那你帮忙直接github上操作吧".
+Continue PR #21 from `26591677c4dc34a77797007af88e10cc98bab355`: remove the
+unaccepted numeric cutoff and preserve legacy omitted blocker scope. Use the
+isolated PR branch, regression tests and incremental review; no production,
+credential or accepted Product-Spec mutation, and no automatic consumer activation.
+
 ## Changes
 
 - Separate review scope from raw Head movement; require evidence for DELTA/FULL.
@@ -36,9 +44,12 @@ All examples are synthetic fixtures, never claims about HR or production recover
 `2.0.0-rc.1` identifies a candidate with a tightened structured-input contract.
 Existing unchanged route inputs still work. Resumed movement/gap records add the
 new fields; old history is not rewritten, and pinned consumers are unaffected.
-The validator cannot prove semantic truth or cross-turn progress. The three-round
-convergence guard and execute-next behavior are explicit Agent policy, not a new
-runtime enforcement claim. Owner acceptance and independent review remain separate.
+The validator cannot prove semantic truth or cross-turn progress. There is no
+universal numeric repair cutoff. Repeated-work guidance is diagnostic, not a new
+stop gate or runtime enforcement claim. Omitted historical blocker scope keeps
+schema-v1 structural semantics; current decisions state scope explicitly. Existing
+mandate, authority and evidence checks still apply. The two review regressions
+were reproduced before repair; current verification is recorded in PR #21.
 
 Done when: regression and existing CI checks pass, manifest is deterministic,
 accepted Specs are unchanged, and this bounded change is committed in a PR.

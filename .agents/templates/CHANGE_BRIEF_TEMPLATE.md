@@ -41,7 +41,7 @@ REVIEW_REPAIR_ROUNDS = <cumulative unsuccessful rounds for this delivery>
 LAST_REAL_ACTION = <executed action and result, or explicit waiting state>
 ```
 
-At three unsuccessful rounds, record the scope/split/authority/abandon decision. No new report resets the count. Gates satisfied plus valid authorization means perform the next real action. Fresh production preconditions, genuine risks, and required evidence still apply; the record itself grants no permission.
+Use the cumulative history to spot repeated work without new evidence and consider a smaller scope or simpler authorized path. This template sets no numeric cutoff or new gate; task-specific budgets need applicable authorization. Gates satisfied plus valid authorization means perform the next real action. Fresh production preconditions, genuine risks, and required evidence still apply; the record itself grants no permission.
 
 ## Relevant knowledge
 

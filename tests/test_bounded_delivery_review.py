@@ -148,6 +148,7 @@ class BoundedDeliveryReviewTest(unittest.TestCase):
         finding = blocker("SECURITY_OR_DATA_LOSS", "ACCEPTED_PRODUCT_AUTHORITY",
                           "Fixture permission invariant", "Unauthorized principal gets access",
                           "Privilege escalation", "Reject the unauthorized principal")
+        finding["affected_readiness"] = ["implementation_allowed", "merge_ready"]
         self.assert_invalid(record(findings=[finding]), "open Blocker")
 
     def test_real_blocker_remains_valid_when_dependent_work_is_stopped(self):

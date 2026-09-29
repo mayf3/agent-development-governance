@@ -246,7 +246,7 @@ Every Blocker records `SOURCE`, `COUNTEREXAMPLE`, `IMPACT`, and `MINIMAL_CLOSURE
 
 `SPEC_GAP`, `FOLLOW_UP`, and `TOOLING_DEBT` are non-Blocker finding kinds, though a load-bearing gap still makes readiness false and needs the dependency diagnosis above. A `SPEC_GAP` finding marked `load_bearing: true` must agree with the top-level dependency classification.
 
-An open Blocker cannot coexist with `YES` on an affected readiness boundary. `affected_readiness` may restrict the stop to named dependent boundaries; when omitted it covers all three. At least one affected boundary must be explicitly `NO`; an empty list or only `NOT_APPLICABLE` cannot hide a stop.
+For current decisions, name dependent boundaries in `affected_readiness`: none may be `YES` and at least one must be `NO`; an empty, malformed, or N/A-only explicit scope is invalid. Historical schema-v1 findings that omit the field retain their prior structural validation. Omission does not mean all three boundaries are blocked and does not certify any of them ready. Reusing a historical finding for a current decision requires determining its actual affected scope under the applicable authority; the syntax validator neither infers that scope nor grants permission.
 
 ## Candidate, Base, and acceptance
 

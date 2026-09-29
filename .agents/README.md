@@ -246,6 +246,8 @@ REQUIRED_GATE_FAILURE
 
 Every Blocker states `SOURCE`, `COUNTEREXAMPLE`, `IMPACT`, and `MINIMAL_CLOSURE`. Name the affected readiness boundaries; an open Blocker requires at least one of them to be `NO` and none to be `YES`. Unrelated authorized work may continue. A load-bearing `SPEC_GAP` is a separate finding type but not an exemption from justifying a stop. Legal sources are active accepted Product Authority, accepted local governance/invariant authority, a pre-existing active machine gate, or a valid Execution Mandate. Investigation, proposed tests, task product prose, Reviewer preference, and Review comments are not Product-Contract sources.
 
+Historical schema-v1 findings may omit `affected_readiness`; their original structural validation is preserved, without inventing a global stop. That omission is not evidence of executable readiness: current decisions must identify the actual affected scope and satisfy applicable authority and gates.
+
 Other findings are `SPEC_GAP`, `FOLLOW_UP`, or `TOOLING_DEBT`. Tooling debt blocks a product only when it causes false pass, harms non-test data, hides a concrete security/data-loss failure, or is itself an accepted deliverable.
 
 ## Goal and stop controls
@@ -285,7 +287,7 @@ Use one current Brief, task, PR, or release record, not a new control-plane docu
 
 Freeze the acceptance scope and applicable gates for that delivery. Reviewers may expose violations and genuinely missing dependencies, not silently add product requirements. Newly discovered concrete security/data-loss risks, missing authority, false Evidence, required-gate failures, and business/runtime canary failures still stop affected work. Optional hardening remains follow-up debt. Changing the accepted scope or gates needs the owning authority's explicit disposition, not a review preference.
 
-Track review/repair rounds against the original business outcome, not proposal filenames or candidate names. The default is one initial review, a consolidated repair pass, then affected delta review. At three unsuccessful review/repair rounds, choose a smaller independently useful slice, split optional work, resolve a genuinely missing authority decision, or abandon the candidate; do not silently start a fourth expansion under a new name. This is a convergence decision, never a waiver of a valid Blocker.
+Retain review/repair history against the original business outcome, not proposal filenames or candidate names. Suggested working pattern: one initial review, a consolidated repair pass, then affected delta review. Repeated work without new evidence is a reason to reassess scope, split optional work, or try a simpler authorized path. This is diagnostic guidance, not a numeric cutoff, new acceptance gate, or reason to forbid an otherwise authorized repair. Any task-specific budget comes from its applicable authorization; existing Blockers, Done When, and Expansion Trigger remain controlling.
 
 When the next action is within current authorization and its required gates pass, perform it rather than producing another unchanged ready packet. If it is blocked, report that action, the failed prerequisite, its owner, and the minimum fix. Do not try a known unsafe or unauthorized action merely to obtain an error. No new observation means no new recursive review or authority-reconciliation cycle. Report real waiting states as waiting; a child review task's completion is not delivery of the business outcome.
 

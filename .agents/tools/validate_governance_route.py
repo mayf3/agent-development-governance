@@ -530,19 +530,23 @@ def validate_route(record: Any) -> list[str]:
             finding = _mapping(value, f"findings[{index}]", errors)
             kind = finding.get("kind")
             if kind == "BLOCKER":
-                affected = finding.get("affected_readiness", [
-                    "implementation_allowed", "merge_ready", "operation_allowed",
-                ])
-                boundaries = {"implementation_allowed", "merge_ready", "operation_allowed"}
-                if (not isinstance(affected, list) or not affected
-                        or any(not isinstance(item, str) or item not in boundaries
-                               for item in affected)):
-                    errors.append(f"findings[{index}].affected_readiness must name readiness boundaries")
-                else:
-                    if any(readiness.get(field) == "YES" for field in affected):
-                        errors.append(f"findings[{index}] open Blocker forbids affected readiness=YES")
-                    if not any(readiness.get(field) == "NO" for field in affected):
-                        errors.append(f"findings[{index}] open Blocker needs a boundary explicitly NO")
+                # Schema-v1 historical findings did not declare machine-readable
+                # scope. Preserve their original structural validation; omission
+                # cannot prove either global blockage or executable readiness.
+                # Current producers name the scope explicitly. An explicit but
+                # malformed value must never fall back to legacy behavior.
+                if "affected_readiness" in finding:
+                    affected = finding["affected_readiness"]
+                    boundaries = {"implementation_allowed", "merge_ready", "operation_allowed"}
+                    if (not isinstance(affected, list) or not affected
+                            or any(not isinstance(item, str) or item not in boundaries
+                                   for item in affected)):
+                        errors.append(f"findings[{index}].affected_readiness must name readiness boundaries")
+                    else:
+                        if any(readiness.get(field) == "YES" for field in affected):
+                            errors.append(f"findings[{index}] open Blocker forbids affected readiness=YES")
+                        if not any(readiness.get(field) == "NO" for field in affected):
+                            errors.append(f"findings[{index}] open Blocker needs a boundary explicitly NO")
                 if finding.get("blocker_class") not in BLOCKER_CLASSES:
                     errors.append(f"findings[{index}].blocker_class is invalid")
                 if finding.get("source_type") not in LEGAL_SOURCE_TYPES:
