@@ -1,8 +1,26 @@
 # Changelog
 
-## Unreleased
+## Unreleased — 2.0.0-rc.1
 
-- No changes yet.
+- Correct `validate_governance_route.py`: Head/Base movement requires explicit
+  DELTA or FULL scope, not automatic full re-review; preserve final-Head checks.
+- Require bounded scope reasons and impact evidence; FULL identifies initial
+  review, an accepted full-review gate, or genuinely unbounded impact.
+- Require a concrete dependency diagnosis for stopping load-bearing Spec gaps;
+  invalid/incomplete diagnosis never authorizes unsafe work.
+- Reject open Blockers with YES on affected readiness; permit unrelated work
+  when the blocked boundaries are explicit, never an empty/N/A-only escape.
+- Synchronize grammar, protocol, modes, schema, and existing templates. Freeze
+  delivery scope/gates, retain real-risk stops, count rounds by original outcome,
+  reuse current records, and separate authorized recovery from optional redesign.
+- Remove stale current-state summaries without editing accepted Spec bytes or
+  deleting historical evidence. Stable release remains v1.1.0.
+- MAJOR prerelease: stopping-gap and movement route inputs gain required detail
+  when evaluated by this candidate. Current decisions require route schema v2
+  and explicit blocker scope; v1 remains available only via --legacy-inspection,
+  never current-readiness validation. No historical rewrite or automatic activation.
+- Cross-turn delivery behavior remains policy, not an implemented scheduler or
+  semantic authority verifier. Tests exercise routing and distribution only.
 
 ## 1.1.0 — 2026-09-19
 

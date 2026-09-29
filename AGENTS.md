@@ -16,7 +16,9 @@ Hard rules:
 - a load-bearing `SPEC_GAP` stops dependent implementation, merge, or operation and returns to PREFLIGHT;
 - controlled work needs a valid mandate, runbook, receipt, and independent post-state verification, not automatically a new Spec or platform;
 - accepted Decision and Contract meaning is immutable under the same stable ID;
-- unrelated `main` movement is not candidate-Head drift;
+- unrelated `main` movement is not candidate-Head drift; changed Head alone does not require full review;
+- a stopping `SPEC_GAP` needs a concrete dependency diagnosis, not just a label;
+- keep one current delivery record; advance authorized work instead of recreating unchanged review packets;
 - when `DONE_WHEN` is satisfied and no `EXPANSION_TRIGGER` fired, stop.
 
 Current enforcement is manual semantic policy plus deterministic integrity and route-consistency checks. Tools do not perform semantic acceptance.
