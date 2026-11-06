@@ -1,0 +1,28 @@
+command: python3 -m unittest test_format_correction_r2.MalformedListFormatCorrectionTest.test_registered_list_of_objects_to_empty_passes -v
+PYTHONPATH=tests
+implementation: base 9d4d0e3a4cf57f95f8078982b1b41fa5aaecff02
+expected_rc: 1 (reported defect)
+actual_rc: 1
+test_registered_list_of_objects_to_empty_passes (test_format_correction_r2.MalformedListFormatCorrectionTest.test_registered_list_of_objects_to_empty_passes) ... FAIL
+
+======================================================================
+FAIL: test_registered_list_of_objects_to_empty_passes (test_format_correction_r2.MalformedListFormatCorrectionTest.test_registered_list_of_objects_to_empty_passes)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/private/tmp/adg-fmt-r2-rc3/tests/test_format_correction_r2.py", line 44, in test_registered_list_of_objects_to_empty_passes
+    self.assertEqual([], self.validate([{"authority": "OLD_V1"}], []))
+    ~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+AssertionError: Lists differ: [] != ['CODE_STRUCTURE_GUARDRAILS_V3_TRANSITION_[46 chars]ata']
+
+Second list contains 1 additional elements.
+First extra element 0:
+'CODE_STRUCTURE_GUARDRAILS_V3_TRANSITION_EXCEPTION_V1 mutates accepted supersedes metadata'
+
+- []
++ ['CODE_STRUCTURE_GUARDRAILS_V3_TRANSITION_EXCEPTION_V1 mutates accepted '
++  'supersedes metadata']
+
+----------------------------------------------------------------------
+Ran 1 test in 0.000s
+
+FAILED (failures=1)

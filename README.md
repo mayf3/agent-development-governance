@@ -16,7 +16,7 @@ It is not a central product authority. A consumer adopts an exact immutable sour
 ## Current status
 
 ```text
-DISTRIBUTION_VERSION = 2.0.0-rc.1
+DISTRIBUTION_VERSION = 2.0.0-rc.3
 GOVERNANCE_V1_SPEC_STATUS = accepted
 GOVERNANCE_V1_ACTIVE_ON_MAIN = yes
 MODEL_CONVERGENCE_SPEC_STATUS = accepted
@@ -29,7 +29,7 @@ SEMANTIC_SPEC_VERIFIER = not_implemented
 SPEC_TRANSITION_VALIDATOR = implemented
 ROUTE_CONSISTENCY_VALIDATOR = implemented
 STABLE_RELEASE = v1.1.0
-WORKING_CANDIDATE = 2.0.0-rc.1
+WORKING_CANDIDATE = 2.0.0-rc.3
 WORKING_CANDIDATE_STABLE_PUBLICATION = NO
 ```
 
