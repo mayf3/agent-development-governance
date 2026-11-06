@@ -1,5 +1,17 @@
 # Changelog
 
+## Unreleased — 2.0.0-rc.3
+
+- Extend registered historical `supersedes` format correction from dict to
+  lists containing illegal whole-authority references, including list[dict].
+  Only correction to precisely `[]` is eligible; unresolved candidate defects,
+  nonempty replacements, unregistered changes and ordinary immutable metadata
+  changes remain rejected. Keep legal legacy retirement references immutable.
+- Expose dedicated record candidate markers and successful FORMAT_CORRECTION
+  output; preserve backlink, lifecycle and all other validation gates.
+- Rebuild the deterministic distribution manifest. This remains a prerelease
+  candidate requiring upstream review and explicit consumer adoption.
+
 ## Unreleased — 2.0.0-rc.1
 
 - Correct `validate_governance_route.py`: Head/Base movement requires explicit
