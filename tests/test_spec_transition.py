@@ -435,3 +435,101 @@ class MultiGenerationChainTest(unittest.TestCase):
 
 if __name__ == "__main__":
     unittest.main()
+
+
+class HistoricalFormatCorrectionTest(unittest.TestCase):
+    """OWNER FORMAT-CORRECTION AUTHORIZATION 2026-11-07 (narrow classification).
+
+    An accepted/superseded record whose supersedes was illegally written as an
+    object (violating the array requirement) may be corrected to the legal empty
+    array exactly when (a) the spec id is registered via format_correction_specs,
+    (b) the old value is a dict, and (c) the new value is precisely []. Every
+    other change still fails closed.
+    """
+
+    def well_formed(self, spec_id, supersedes):
+        return {
+            "spec_id": spec_id,
+            "status": "accepted",
+            "spec_kind": "implementation",
+            "authority_level": "governing_spec",
+            "implementation_authority": "contracts",
+            "scope": ["historical format transition"],
+            "governed_by": [],
+            "external_authorities": [],
+            "supersedes": supersedes,
+            "superseded_by": None,
+            "owners": ["fixture-owner"],
+        }
+
+    def setUp(self) -> None:
+        # legacy-form id (non-strict) carrying the illegal object supersedes,
+        # mirroring the real TE_V1 shape on main
+        self.base = [
+            self.well_formed(
+                "SOME_TRANSITION_EXCEPTION_V1",
+                {"illegal": "object-form", "scope": "everything"},
+            ),
+            self.well_formed("SOME_OTHER_V1", []),
+        ]
+
+    def run_validate(self, candidate, registered=()):
+        return transition.validate_transition(
+            copy.deepcopy(self.base),
+            candidate,
+            format_correction_specs=frozenset(registered),
+        )
+
+    def candidate_with(self, spec_id, supersedes):
+        candidate = copy.deepcopy(self.base)
+        for record in candidate:
+            if record["spec_id"] == spec_id:
+                record["supersedes"] = supersedes
+        return candidate
+
+    def has_mutation_error(self, errors, spec_id):
+        return any(
+            spec_id in e and "mutates accepted supersedes metadata" in e
+            for e in errors
+        )
+
+    def test_unregistered_correction_still_fails_closed(self):
+        candidate = self.candidate_with("SOME_TRANSITION_EXCEPTION_V1", [])
+        errors = self.run_validate(candidate, registered=())
+        self.assertTrue(
+            self.has_mutation_error(errors, "SOME_TRANSITION_EXCEPTION_V1")
+        )
+
+    def test_registered_correction_passes(self):
+        candidate = self.candidate_with("SOME_TRANSITION_EXCEPTION_V1", [])
+        errors = self.run_validate(
+            candidate, registered=("SOME_TRANSITION_EXCEPTION_V1",)
+        )
+        self.assertEqual(errors, [])
+
+    def test_registered_correction_to_nonempty_list_still_fails(self):
+        candidate = self.candidate_with(
+            "SOME_TRANSITION_EXCEPTION_V1", ["SOME_OTHER_V1"]
+        )
+        errors = self.run_validate(
+            candidate, registered=("SOME_TRANSITION_EXCEPTION_V1",)
+        )
+        self.assertTrue(
+            self.has_mutation_error(errors, "SOME_TRANSITION_EXCEPTION_V1")
+        )
+
+    def test_registered_correction_keeps_object_form_still_fails(self):
+        candidate = self.candidate_with(
+            "SOME_TRANSITION_EXCEPTION_V1", {"illegal": "still-object"}
+        )
+        errors = self.run_validate(
+            candidate, registered=("SOME_TRANSITION_EXCEPTION_V1",)
+        )
+        self.assertTrue(
+            self.has_mutation_error(errors, "SOME_TRANSITION_EXCEPTION_V1")
+        )
+
+    def test_registered_id_without_object_base_gets_no_exemption(self):
+        candidate = self.candidate_with("SOME_OTHER_V1", ["NEW_V1"])
+        errors = self.run_validate(candidate, registered=("SOME_OTHER_V1",))
+        self.assertTrue(self.has_mutation_error(errors, "SOME_OTHER_V1"))
