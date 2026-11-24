@@ -43,3 +43,16 @@ The one-time bootstrap exception is historical and ended when `AGENT_DEVELOPMENT
 | [`AGENT_RELEASE_RECOVERY_ASSURANCE_V1`](AGENT_RELEASE_RECOVERY_ASSURANCE_V1.md) | proposed | implementation | contracts | Define bounded release-artifact, object-role, failure-prestate, test-dimension and recovery-evidence obligations |
 
 This independent docs-only proposal has [source excerpts and mappings](../rationale/release-recovery/SOURCE_MAPPING.md) and [non-authoritative author scenarios](../rationale/release-recovery/SCENARIO_REVIEW.md). It reuses accepted model-convergence obligations without editing them, and does not depend on or modify PR #17. Proposal, source acceptance, distribution implementation/release, consumer-local adoption, and real deployment/recovery verification remain separate. No distribution, consumer, or production behavior is activated by this authoring change.
+
+## Model-guided development
+
+| Spec ID | Status | Kind | Implementation authority | Purpose |
+|---|---|---|---|---|
+| [`AGENT_MODEL_GUIDED_DEVELOPMENT_V1`](AGENT_MODEL_GUIDED_DEVELOPMENT_V1.md) | accepted | implementation | contracts | Make proportional mathematical modeling, active reuse, suitable formal verification, implementation mapping, and counterexample feedback a continuing development practice |
+
+This independently reviewed docs-only authority preserves existing accepted authority and
+uses the [current delivery record](../changes/MODEL_GUIDED_DEVELOPMENT.md).
+It defines a development practice, not a new mathematical-primitive taxonomy or
+platform. Accepted content activates only when merged to `main`.
+Distribution implementation follows source acceptance in a later
+change; existing consumer pins, product requirements, and runtime remain unchanged.
