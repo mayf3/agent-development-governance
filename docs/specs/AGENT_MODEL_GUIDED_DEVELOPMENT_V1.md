@@ -1,6 +1,6 @@
 ---
 spec_id: AGENT_MODEL_GUIDED_DEVELOPMENT_V1
-status: proposed
+status: accepted
 spec_kind: implementation
 authority_level: governing_spec
 implementation_authority: contracts
@@ -405,7 +405,12 @@ NORMATIVE_TBD = NONE
 UNRESOLVED_AUTHORITY_CONFLICT = NONE
 PARTIAL_SUPERSESSION = NONE
 AUTHORING_READY_FOR_REVIEW = YES
-READY_TO_MARK_ACCEPTED = NO; independent exact-candidate review pending
+SOURCE_REVIEW = ACCEPT; independent review of tree 00145cca0393ed1cb9db7e74eb92c45bc20090d2
+REVIEWED_SOURCE_COMMIT = 993f789d5ed870a828a6562bdf27a106a953e218
+ACCEPTANCE_ACTOR = coordinator executing mayf3's explicit PR-and-merge authorization
+ACCEPTED_AT = 2026-11-25
+ACCEPTANCE_EFFECT = active only when this exact accepted content is merged to main
+READY_TO_MARK_ACCEPTED = YES; source review and owner-authorized acceptance preparation complete
 DISTRIBUTION_IMPLEMENTED = NO
 CONSUMERS_CHANGED = NO
 ```

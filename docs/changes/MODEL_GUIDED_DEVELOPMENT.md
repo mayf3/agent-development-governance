@@ -14,7 +14,7 @@ proof of product acceptance.
 Authorized scope: add the bounded governance principle, make it discoverable
 in the existing distribution after source acceptance, and align the shared
 method guide in `mayf3/primitives`. Consumer adoption, product modifications,
-runtime operations, new platforms, stable release tags, and publication are not
+runtime operations, new platforms, stable release tags, and stable release publication are not
 part of this record. The parent coordinator owns commit, push, PR, and merge.
 
 ## Current route — source authority authoring
@@ -111,5 +111,36 @@ Executed against the authoring working tree on 2026-11-25:
 
 These are structural/integrity observations on the authoring candidate, not
 independent semantic acceptance, a mathematical proof, or consumer conformance.
-Independent review, exact committed Head, source merge, and later distribution
-checks remain pending. Record their receipts only after the corresponding actions.
+## Independent source review and acceptance preparation
+
+The independent reviewer `/root/formal_model_challenge` reviewed local commit
+`13983d0cd3b72a28ed9fd89fdfd1680a71142050`, base
+`c1fad8976e50e96adb27a4c7e2dd4f97bf2e899e`, on 2026-11-25 and returned
+`SPEC_REVIEW = ACCEPT`, `AUTHOR_INDEPENDENCE = PASS`, zero blockers and zero
+Spec gaps. Its exact tree `00145cca0393ed1cb9db7e74eb92c45bc20090d2` was also
+published as GitHub commit `993f789d5ed870a828a6562bdf27a106a953e218`;
+the trees are byte-identical. Both coordinates identify the reviewed content.
+
+Executed source-level scenario decisions:
+
+| Scenario | Observed decision from reading the proposed Contracts | Result |
+|---|---|---|
+| ACC-MGD-001 | A two-line retry change still triggers modeling; spelling edits stay short; behavior-preserving refactors check their mapping. | PASS |
+| ACC-MGD-002 | Effect-before-receipt crash cannot be treated as an unexplained atomic step; unknown effects and actual boundaries remain explicit. | PASS |
+| ACC-MGD-003 | A project without downstream idempotency cannot inherit another project's guarantee; unavailable upstream permits an honest local model. | PASS |
+| ACC-MGD-004 | Assuming unique ownership does not independently prove it; bounded exploration keeps its bounds; deferred proof retains responsibility and a trigger. | PASS |
+| ACC-MGD-005 | Abstract proof without mapping and rendered media without required review cannot become implementation or product acceptance. | PASS |
+| ACC-MGD-006 | Weakening no-duplicate-effects to no-duplicate-receipts cannot close the original failed task. | PASS |
+| ACC-MGD-007 | Optional generalization does not block an independent authorized repair; an already required proof gate remains binding. | PASS |
+
+These observations establish source-level semantic review, not execution of a
+consumer, a new theorem, or distribution acceptance. ACC-MGD-008 remains for
+the implementation phase.
+
+The coordinator prepares `accepted` lifecycle under mayf3's explicit current
+PR-and-merge authorization; this does not claim an additional human review.
+The preparation changes only lifecycle status, the Spec index, and this real
+review receipt. Decisions, Contracts, Acceptance scenarios and scope are
+unchanged. Source activation occurs only on merge of that accepted content;
+final-Head delta review and merge receipts are recorded in the PR to avoid
+changing the reviewed candidate merely to record its own SHA.
