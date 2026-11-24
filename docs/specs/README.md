@@ -53,6 +53,8 @@ This independent docs-only proposal has [source excerpts and mappings](../ration
 This independently reviewed docs-only authority preserves existing accepted authority and
 uses the [current delivery record](../changes/MODEL_GUIDED_DEVELOPMENT.md).
 It defines a development practice, not a new mathematical-primitive taxonomy or
-platform. Accepted content activates only when merged to `main`.
-Distribution implementation follows source acceptance in a later
-change; existing consumer pins, product requirements, and runtime remain unchanged.
+platform. Source acceptance is active on `main` since [PR #24](https://github.com/mayf3/agent-development-governance/pull/24),
+commit `fe778fdfb833c7e9575769ee536865d6a35701ce`. The `2.0.0-rc.4` working
+candidate carries its self-contained distribution implementation; stable
+publication and consumer-local adoption remain separate. Existing consumer pins,
+product requirements, and runtime remain unchanged.

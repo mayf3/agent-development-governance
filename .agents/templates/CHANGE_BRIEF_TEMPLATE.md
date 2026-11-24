@@ -55,6 +55,27 @@ EVIDENCE_NEEDED =
 
 Each Evidence item states which decision or acceptance result it can change.
 
+## Modeling and verification (affected behavior only)
+
+Assess each behavior change under the grammar's Model-guided development rule.
+Use one sentence or references when sufficient; use only the applicable fields
+below. Unchanged behavior checks its existing assumptions/mapping. Editorial or
+cosmetic work skips this section rather than filling an empty form.
+
+```text
+AFFECTED_BEHAVIOR_AND_PROPERTY = <original outcome and properties at risk>
+MODEL_CHOICE = <exact existing model/property revision | minimum new/repaired model | no critical mechanism, with reason>
+MODEL_BOUNDARY = <entities/state/transitions/assumptions/reachable examples and counterexamples, or reference>
+VERIFICATION_CHOICE = <reuse proof | formalize now | defer with reason, gap, controls, owner and trigger | not applicable with reason>
+IMPLEMENTATION_MAPPING = <code/input revision, concrete-to-model mapping and supported premises>
+EVIDENCE_LAYERS = <model result / implementation evidence / original acceptance; retain unknown or unexecuted parts>
+SHARED_FOLLOW_UP = <reusable correction with owner and link, or NONE>
+```
+
+Critical mechanisms need a reviewable model before dependent implementation.
+Proof deferral cannot waive an existing proof gate. Upstream model work and
+unrelated formalization do not automatically block a bounded authorized repair.
+
 ## Model convergence (conditional)
 
 ```text

@@ -1,5 +1,24 @@
 # Changelog
 
+## Unreleased — 2.0.0-rc.4
+
+- Implement accepted `AGENT_MODEL_GUIDED_DEVELOPMENT_V1` as a continuing
+  development practice in the self-contained `.agents/README.md`, root Agent
+  entrypoint, and existing Change Brief, Review Record, and Conformance Record.
+- Assess behavior changes proportionally; require explicit models for critical
+  mechanisms; actively reuse shared knowledge and prioritize suitable formal
+  verification for stable high-value properties. Keep model, implementation,
+  and original-outcome evidence distinct, with owned and triggered proof deferral.
+- Feed counterexamples back without weakening original acceptance; preserve
+  bounded authorized repairs and all existing authority/proof gates.
+- Pin the supplemental primitives method guide; keep the distributed rule usable
+  without external access. No new platform, schema, validator, skill, or automatic
+  consumer upgrade is introduced; all accepted Spec bytes remain unchanged.
+- Advance the existing major prerelease candidate and rebuild its manifest.
+  The addition is a backward-compatible guidance/template extension within the
+  2.0.0 candidate series. Stable publication remains v1.1.0; consumer-local
+  exact-revision adoption and real project application remain separate.
+
 ## Unreleased — 2.0.0-rc.3
 
 - Extend registered historical `supersedes` format correction from dict to
