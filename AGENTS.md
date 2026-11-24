@@ -10,6 +10,7 @@ Before non-trivial work in this repository:
 Hard rules:
 
 - classify Authority, Plan, and Assurance independently;
+- apply the model-guided development section in `.agents/README.md`: assess behavior changes, explicitly model critical mechanisms, and prioritize suitable formal verification with model, implementation, and real-outcome evidence kept distinct;
 - only active accepted Product Authority creates long-lived obligations;
 - a Task, Brief, Investigation, test, runtime fact, or Review comment cannot become Product Authority;
 - an Execution Mandate may constrain one operation but cannot change Product Contracts;

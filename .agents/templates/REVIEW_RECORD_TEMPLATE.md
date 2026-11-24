@@ -94,6 +94,28 @@ NON_REVIVAL_EVIDENCE =
 
 Each proof binds scope, revision, environment, and observation time. Historical evidence, audits, receipts, and migration records remain valid retention and are not convergence debts; a stable supported public facade is not required to retire. A remaining temporary bridge needs a real consumer and an exit condition, and marks the result a bounded stage, not final convergence.
 
+## Model-guided review (affected behavior only)
+
+For behavior changes, review the modeling assessment proportionally; skip empty
+forms for editorial/cosmetic work. Reference existing records where sufficient:
+
+- affected behavior, model/property revision and critical-mechanism coverage;
+- assumptions, reachable normal/failure cases, actual atomicity and external
+  effects; no target guarantee hidden as an unverified premise;
+- verification choice and actual scope; deferred proof retains its reason,
+  gap, controls, owner and completion/reassessment trigger, and cannot waive an
+  already required proof;
+- concrete implementation mapping and supporting premises, with tests/traces
+  distinguished from a complete refinement proof;
+- separate model, implementation, and original acceptance evidence; missing,
+  conditional and unexecuted claims remain visible;
+- counterexample repair preserves the original outcome and links affected
+  shared knowledge/consumers; a model-only fix does not close product acceptance.
+
+Use existing Blocker classes, legal sources, and affected-readiness rules.
+Unrelated proofs, optional generality, or a preferred tool are not new gates.
+An authorized repair independent of a disputed assumption keeps its normal route.
+
 ## Final accepted-Head binding
 
 ```text

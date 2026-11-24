@@ -32,6 +32,25 @@ RECEIPT = <reference | NOT_APPLICABLE>
 
 Every `NOT_APPLICABLE` result requires a Contract-derived reason.
 
+## Model, implementation, and original acceptance evidence (when applicable)
+
+When an assurance claim relies on a model, reference each layer separately.
+Use only the affected scope; this table adds no approval stage or product gate.
+Editorial/cosmetic work does not require an empty model-evidence table.
+
+| Layer | Bound target and evidence | Actual result, scope and limitations |
+|---|---|---|
+| Model | Exact model/property revision; theorem/checker/toolchain; assumptions, axioms and excluded obligations | Proven, bounded, conditional, deferred or unexecuted, with its actual evidence |
+| Implementation mapping | Code/input revision; state/action/observation mapping; premise evidence and failure-boundary checks | Formal refinement or scoped tests/traces, without conflating them |
+| Original acceptance | Original task/Contract, environment, input and artifact/run coordinates; applicable executed acceptance | Actual required outcome and remaining unknowns, including required human evaluation |
+
+A model proof alone cannot promote the aggregate to product acceptance. Deferred
+proof records retain reason, remaining gap, controls, owner and an explicit
+completion/reassessment trigger; an accepted proof gate remains binding.
+For counterexample repairs, retain the original issue and acceptance, identify
+which layer changed, and record the original acceptance result after repair.
+Reused evidence requires an affected-coordinate impact check.
+
 ## Aggregate
 
 ```text

@@ -2,12 +2,12 @@
   "$schema": "urn:mayf3:agent-development-governance:distribution-manifest:v0",
   "schema_version": 1,
   "distribution": "development-governance-v0",
-  "version": "2.0.0-rc.3",
+  "version": "2.0.0-rc.4",
   "files": [
     {
       "path": ".agents/README.md",
-      "sha256": "18d2ee74877c9871b7a086bbc8ec02ae8219146c61e6ecfc4f33038b881c98e2",
-      "size": 20078
+      "sha256": "ad79c767a73d7260142d3dc3a2aee2440d7197c093b2cd7f121dcbf1ea726346",
+      "size": 26382
     },
     {
       "path": ".agents/protocol/SPEC_GOVERNANCE_V0.md",
@@ -96,8 +96,8 @@
     },
     {
       "path": ".agents/templates/CHANGE_BRIEF_TEMPLATE.md",
-      "sha256": "bf4d33db4329df6908936f405eed23b53bdc47407bf3b9266ca069c3fffac3aa",
-      "size": 3410
+      "sha256": "f5e2718c5a059aaaf3c7890f8e15a6f566c12e84f2e900f936c8480a51192572",
+      "size": 4746
     },
     {
       "path": ".agents/templates/EXEC_PLAN_TEMPLATE.md",
@@ -116,13 +116,13 @@
     },
     {
       "path": ".agents/templates/REVIEW_RECORD_TEMPLATE.md",
-      "sha256": "182bad8ac113b94056996b68919d68b1510045fc47b81bc20f1f0101e4d61934",
-      "size": 3903
+      "sha256": "7fbc2b1a6788bd671f924d250ec07adb7aac08a4e71b2a9629673b8c1330321b",
+      "size": 5162
     },
     {
       "path": ".agents/templates/CONFORMANCE_RECORD_TEMPLATE.md",
-      "sha256": "bfc491210cf0754b818a48290a3ce07639ac0f301e3c891c3eea4fc0a4b0dbdd",
-      "size": 1848
+      "sha256": "df8144bab872e614915c185c108a329823d60c45ade36130fa21ad5f1b833d87",
+      "size": 3305
     },
     {
       "path": ".agents/templates/INVESTIGATION_RECORD_TEMPLATE.md",

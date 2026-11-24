@@ -1,7 +1,7 @@
 # Development Grammar V1
 
 ```text
-GRAMMAR_VERSION = 2.0.0-rc.3
+GRAMMAR_VERSION = 2.0.0-rc.4
 GOVERNING_AUTHORITY = AGENT_DEVELOPMENT_GOVERNANCE_V1
 STATUS = accepted
 ENFORCEMENT_LEVEL = manual_policy_plus_deterministic_integrity
@@ -32,7 +32,7 @@ Do not preload every protocol, template, rationale, prior review, or example. Re
 5. Classify independently: AUTHORITY_ACTION, PLAN_LEVEL, ASSURANCE_LEVEL.
 6. Check Execution Mandate, load-bearing SPEC_GAP, Evidence reviewability,
    live authority gap, and candidate/Base movement.
-7. Select the shortest authorized route and artifact set.
+7. Select the shortest authorized route and artifact set; assess affected models for behavior changes.
 8. Execute only within accepted Contracts and the mandate.
 9. Review the affected surface with executed Evidence.
 10. DONE_WHEN met without EXPANSION_TRIGGER -> STOP.
@@ -187,6 +187,98 @@ fabricated / materially distorted / falsely claimed execution -> FALSE_EVIDENCE
 ```
 
 Secret values are not exposed to prove reviewability.
+
+## Model-guided development
+
+Actively build, reuse, and improve mathematical models to guide development.
+This practice implements `AGENT_MODEL_GUIDED_DEVELOPMENT_V1` within the existing
+authority, review, and stop rules. It adds no PREFLIGHT axis, approval stage,
+required proof tool, mathematical-primitive taxonomy, or universal state machine.
+
+**Assess each behavior change.** In the existing task, Brief, or PR, identify
+the affected behavior and whether assumptions, states, transitions, invariants,
+or verification obligations change. Consider failure consequence and interaction
+complexity, not diff size. One sentence may suffice. Unchanged behavior may reuse
+its model after checking the relevant assumptions and mapping. Editorial and
+cosmetic work needs no empty modeling form, new theorem, or additional approval.
+
+**Model critical mechanisms before dependent implementation.** Changes to
+identity/version attribution, authority or permissions, durable state,
+concurrency/ownership, retry/cancellation and external effects, recovery/handoff,
+or evidence/completion and action-determining state projections require an
+explicit reviewable model. Reuse or repair the existing model; otherwise create
+the minimum needed in the existing design/change record. This need not be a new
+Spec or separate PR. Identify entities/identities, state space, initial and
+reachable conditions, transitions, safety properties, environment assumptions,
+and observations. Include relevant failures/interleavings and progress conditions
+when eventual completion is claimed. Make load-bearing time, atomicity,
+persistence, scheduler fairness, and external-service assumptions explicit.
+
+**Reuse knowledge and preserve ownership.** Inspect applicable project models
+and the selected `mayf3/primitives` revision before independently redefining the
+same mechanism. Record exact model/property versions, applicability, and
+assumption mismatches; matching names do not establish equivalence. An unavailable
+shared source stays unavailable, not empty: an adequate local model can proceed,
+but unread models/proofs cannot be claimed as reused. Propose reusable findings
+and counterexamples through a linked change or owned follow-up; upstream closure
+is not automatically a product gate. Project requirements, code, mappings, and
+sensitive/real evidence stay with their owning project. Upstream changes require
+explicit consumer-local impact assessment and adoption.
+
+**Actively strengthen valuable properties.** For a new or materially changed
+critical model, identify stable properties whose failure matters and select a
+bounded verification approach. Prioritize machine-checked proof or model checking
+for high-value stable properties when feasible. Record the property, method,
+scope, actual result, and limitations. Deferral retains the reason, assurance gap,
+current controls, responsible owner, and a completion or reassessment trigger;
+"prove later" alone is insufficient. An already accepted proof requirement still
+binds. Lean and other proof assistants, bounded model checking, executable models,
+property tests, and simulation provide different evidence; preserve those limits.
+
+**Challenge assumptions and connect code.** Keep admissible normal executions
+for claimed success and relevant reachable failure traces. Check omitted
+transitions, boundary cases, and counterexamples that distinguish an incorrect
+model. An empty/inconsistent model or a theorem assuming its desired guarantee
+does not independently establish useful behavior. Machine-proof claims name the
+model/property revision, theorem, toolchain, trusted assumptions/axioms, and
+unfinished or excluded obligations. Show how concrete states, events, operations,
+and observations map to the model, including real persistence, atomicity,
+restart, and external-effect boundaries. Tests/traces may support this mapping;
+they are not a complete refinement proof unless they establish one. Recheck
+changed properties and necessary dependencies; rebind unaffected evidence only
+through an explicit bounded impact check.
+
+**Report three distinct evidence layers.** State what holds in the model under
+which premises, what supports the implementation mapping, and what verifies the
+original required outcome in its environment. Bind model, implementation, inputs,
+scope, and results to their actual coordinates. Missing, conditional, deferred,
+and unexecuted evidence stays visible. A proof, compile, status flag, or component
+PASS alone does not establish deployment or original task acceptance. These
+layers do not create three approval stages or invent new product gates; subjective
+quality still needs its applicable real evaluation.
+
+**Use counterexamples to close the original outcome.** Preserve the original
+task, failure description, model/implementation revisions, property or assumption,
+and affected scope in the existing issue/change workflow. Distinguish model or
+requirement error, unmet assumptions, mapping/implementation defects, and
+insufficient evidence; keep an unresolved cause unknown. Repair the responsible
+layer, link affected consumers, and repeat original acceptance. Requirement
+changes use the existing authority route. A model-only repair does not close an
+unverified product outcome.
+
+**Keep the work bounded.** Missing required models/proofs, concrete contradictions,
+or unjustified load-bearing assumptions use existing blocker/gap rules for only
+the dependent work. Unrelated proofs, optional generality, preferred tools, and
+shared-library redesign are not new blockers. An authorized repair or containment
+path independent of the disputed premise may proceed when its own contracts
+hold, without claiming the unproved guarantee or waiving acceptance, permissions,
+or an accepted proof gate. Done When and Expansion Trigger continue to control
+closure; formalization follow-up does not silently reopen a completed task.
+
+The [pinned shared method guide](https://github.com/mayf3/primitives/blob/c7161dc013214ed0d6efba48089465f8e41fdc31/MODEL_GUIDED_DEVELOPMENT.md)
+provides examples and model/implementation guidance. It is a supplemental
+reference, not a live dependency, permission source, or automatic consumer update;
+the rules above remain usable without opening it.
 
 ## Model convergence and retirement
 

@@ -15,9 +15,33 @@ Authorized scope: add the bounded governance principle, make it discoverable
 in the existing distribution after source acceptance, and align the shared
 method guide in `mayf3/primitives`. Consumer adoption, product modifications,
 runtime operations, new platforms, stable release tags, and stable release publication are not
-part of this record. The parent coordinator owns commit, push, PR, and merge.
+part of this record. The parent coordinator owns push, PR, and merge; the
+distribution author may create local candidate commits for exact-revision
+verification in the isolated clone.
 
-## Current route — source authority authoring
+## Current route — distribution implementation
+
+```text
+TARGET_REPOSITORY = mayf3/agent-development-governance
+BASE_HEAD = fe778fdfb833c7e9575769ee536865d6a35701ce
+CURRENT_BASE_HEAD = fe778fdfb833c7e9575769ee536865d6a35701ce
+ISOLATED_WRITE_SURFACE = feat/model-guided-development-distribution in dedicated clone
+AUTHORITY_ACTION = REUSE
+PRIMARY_AUTHORITY = AGENT_MODEL_GUIDED_DEVELOPMENT_V1 at BASE_HEAD
+RELATED_AUTHORITY = AGENT_DEVELOPMENT_GOVERNANCE_V1 at BASE_HEAD
+PLAN_LEVEL = BRIEF
+ASSURANCE_LEVEL = DURABLE
+ROUTE_STAGE = IMPLEMENTATION
+AUTHORITY_ACCEPTED_IN_BASE = YES
+MUTATION_AUTHORIZATION = continuing owner-authorized bounded PR/merge task
+IMPLEMENTATION_ALLOWED = YES within the accepted distribution Contracts
+OPERATION_ALLOWED = NO
+WORKING_CANDIDATE = 2.0.0-rc.4
+STABLE_PUBLICATION = NO
+CONSUMER_ADOPTION = unchanged
+```
+
+## Completed source route — authoring coordinates
 
 ```text
 TARGET_REPOSITORY = mayf3/agent-development-governance
@@ -41,7 +65,7 @@ Contracts, and frontmatter are preserved. This phase changes only the new Spec,
 the Spec index, and this record. It does not change `.agents/**`, `VERSION`,
 distribution bytes, tools, or consumer state.
 
-## Goal and gap
+## Initial goal and gap
 
 Goal: make models an active and cumulative aid to development, with explicit
 assumptions, appropriate formal verification, implementation mappings, and real
@@ -70,7 +94,7 @@ review and owner-authorized acceptance; it becomes active on merge. Final-Head
 movement receives the parent's applicable delta recheck. This record must not
 claim that review, merge, or distribution work occurred before its evidence exists.
 
-## Next phase after source merge
+## Distribution plan established during source authoring
 
 Route the distribution change as `REUSE` against the exact accepted source
 commit. Put self-contained concise guidance in `.agents/README.md` and conditional
@@ -94,7 +118,7 @@ semantic gap, or an affected integrity failure. Optional universal models,
 additional proof tools, broad consumer rollouts, and unrelated documentation
 cleanup are not expansion triggers.
 
-## Current evidence
+## Source authoring evidence
 
 Executed against the authoring working tree on 2026-11-25:
 
@@ -144,3 +168,66 @@ review receipt. Decisions, Contracts, Acceptance scenarios and scope are
 unchanged. Source activation occurs only on merge of that accepted content;
 final-Head delta review and merge receipts are recorded in the PR to avoid
 changing the reviewed candidate merely to record its own SHA.
+
+## Source and shared-guide merge receipts
+
+GitHub PR readback on 2026-11-25 confirmed:
+
+- [Governance PR #24](https://github.com/mayf3/agent-development-governance/pull/24)
+  is merged at `2026-11-24T23:00:40Z` (2026-11-25 in Asia/Shanghai), merge
+  commit `fe778fdfb833c7e9575769ee536865d6a35701ce`, accepted Head
+  `22a4bf574b8e426944276e375f489594a1647481`. Its PR records the independent
+  final delta review and checks; source authority is now active.
+- [Primitives PR #10](https://github.com/mayf3/primitives/pull/10) is merged at
+  `2026-11-24T22:57:45Z`, merge commit
+  `7f92a7059a370466fd17bded45be27e618d410bd`. The shared method guide is pinned
+  to its exact reviewed content commit
+  `c7161dc013214ed0d6efba48089465f8e41fdc31` in the distribution.
+
+## Distribution implementation and boundaries
+
+The current implementation places the complete actionable rule in
+`.agents/README.md`, with a short root `AGENTS.md` reminder and applicable prompts
+in the existing Change Brief, Review Record, and Conformance Record templates.
+Consumer entrypoints are not forcibly overwritten: their existing read of the
+adopted `.agents/README.md` reaches the self-contained rule. The external guide
+is supplemental and no source-only Spec path is required to use the distribution.
+
+All seven accepted/superseded authority files are not edited. Skill files,
+schemas, validators, application code, live
+consumers, and runtime are unchanged. The version surfaces and manifest move to
+`2.0.0-rc.4`; stable release remains `v1.1.0`. This is an additive guidance and
+template extension within the existing major prerelease, not a new stable release.
+
+Modeling assessment: this implementation maps the already accepted development
+Contracts to the daily grammar and records. It changes no critical runtime
+mechanism and introduces no mathematical theorem. Existing distribution integrity
+and adoption checks validate exact bytes and preparation/acceptance separation;
+independent semantic review validates that the guidance preserves the accepted
+meaning. Neither is consumer/product correctness evidence.
+
+## Distribution verification receipt
+
+Executed on the clean local distribution candidate
+`5ab73039626d4a589c2b57dc54f8f118282b1178`, 2026-11-25:
+
+- Existing unittest suite: 151 tests, PASS. Its source-cleanliness check rejected
+  the initial uncommitted working tree as designed; the full clean-candidate run
+  passed without changing tests or weakening the vendor check.
+- Manifest consistency, Python compilation, publish-script syntax, and diff
+  whitespace checks: PASS. Seven accepted/superseded Specs remain byte-identical
+  to `fe778fdfb833c7e9575769ee536865d6a35701ce`.
+- Real `tools/vendor.py` CLI against a disposable consumer: default dry-run
+  wrote nothing; proposed adoption applied and verified; `--require-accepted`
+  correctly returned 1 for that proposed lock; explicit synthetic accepted
+  adoption then passed `verify_governance.py --require-accepted`. The consumer
+  lock retained the full exact source commit and version `2.0.0-rc.4`.
+
+The round trip used the production CLI's clean-checkout/revision checks, with
+no verification bypass. The synthetic accepted actor exists only in the temporary
+fixture; no real consumer is declared adopted. This receipt-only follow-up leaves
+all distributed bytes and manifest unchanged. Independent exact-Head semantic
+review, remote-candidate re-verification, and this phase's merge are recorded in
+the PR when performed, rather than recursively changing a candidate to insert its
+own final SHA. Stable publication, consumer upgrades, and actual project outcomes
+remain outside this delivery.
