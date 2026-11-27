@@ -185,3 +185,88 @@ Use the existing Change Brief, Review Record and Conformance Record. Do not
 create a parallel approval workflow or block unrelated authorized work with
 optional formalization. The project's accepted Contracts and proof gates remain
 the authority for what is mandatory.
+
+
+## 9. Reference toolchain (select by assurance need)
+
+This protocol defines evidence obligations, not a universal mandated toolchain.
+The owning repository selects tools proportional to the behavior and risk.
+Pin exact tool versions, configuration, adapter revision and CI environment.
+
+| Need | Practical reference | Scope and limitation |
+|---|---|---|
+| State-machine specification and simulation | Quint; existing TLA+ models may remain TLA+ | Explicit states, actions, invariants and scenarios; model quality still needs requirement review |
+| Finite state exploration | TLC | Exhaustive only within the declared finite model/parameter scope |
+| Symbolic/bounded exploration | Apalache | Record bound, parameters and solver; bounded results are not unbounded proofs |
+| Structural satisfiability/counterexamples | Alloy 6 | Record finite scope; does not establish production code conformance |
+| Mathematical theorem proof | Lean 4 | Bind theorem to exact model/property and audit transitive axioms/toolchain |
+| Model-to-code replay | Quint Connect for Rust; project-owned adapters for other languages | Do not claim official Dart/Kotlin support unless an adapter is actually maintained and tested |
+| Stateful property testing | Hypothesis (Python), Kotest (Kotlin), proptest (Rust), fast-check (TypeScript); Dart package:test plus a project harness, with third-party stateful libraries evaluated before adoption | Record seed, replayable command sequence and shrink result; finite testing is not a general proof |
+| Runtime causal correlation | OpenTelemetry TraceId/SpanId/parent/links plus a correctness-event schema | OpenTelemetry correlates spans but sampling, drops and export gaps mean it does not prove trace completeness |
+| Evidence graph | Generated JSON/JSON Schema and deterministic checker | Derived index only; never a manually maintained second source of truth |
+
+A tool reference is not a required dependency. A project may use another tool when it supplies equivalent, reviewable evidence. In particular, Quint Connect's documented integration is Rust-oriented; other language support is a consumer-owned adapter obligation.
+
+## 10. Recommended CI sequence and typed outcomes
+
+For a critical stateful slice, a practical pipeline is:
+
+1. **Freeze coordinates** — exact Spec, model, theorem, implementation, mapping, verifier, toolchain and environment revisions.
+2. **Check traceability** — duplicate IDs, dangling links, required REQ→MODEL/ACC coverage and MODEL/PROP→THM/MAP coverage.
+3. **Check model sanity** — non-empty initial state, satisfiable constraints, required success-path witnesses, required positive and negative scenarios.
+4. **Explore the model** — TLC exhaustive finite scope or Apalache bounded/inductiveness checks; preserve bounds and counterexamples.
+5. **Check Lean proofs** — clean build, theorem/property binding, toolchain pin, transitive axiom audit and approved trust base.
+6. **Run implementation adapters** — model-generated commands/traces against the real state core; record PBT seeds and minimized counterexamples.
+7. **Validate runtime traces** — transition legality, exact revisions, causal constraints and explicit completeness/watermark status.
+8. **Check environment assumptions** — probe freshness, scope hash, failure behavior and UNKNOWN handling.
+9. **Run independent negative controls** — illegal transition must be rejected; missing event must be INCOMPLETE/UNKNOWN; stale coordinates must be STALE; expired assumption must withdraw the dependent guarantee.
+10. **Run original acceptance** — execute the original Spec/Contract acceptance in its target environment.
+
+Use typed results such as:
+
+```text
+MODEL_PROVEN
+MODEL_CHECKED_EXHAUSTIVE_WITHIN_SCOPE
+MODEL_CHECKED_BOUNDED
+PROGRAM_VERIFIED
+TRACE_CONFORMANT
+TRACE_INCOMPLETE
+TRACE_DRIFTED
+TESTED
+SIMULATED
+ASSUMPTIONS_VALID
+UNKNOWN
+STALE
+ACCEPTED
+```
+
+These are claim types, not an automatic promotion ladder. For example, `TRACE_CONFORMANT` cannot be promoted to `PROGRAM_VERIFIED`, and neither implies `ACCEPTED`.
+
+## 11. Machine-readable evidence coordinates
+
+Where the assurance claim warrants it, the Conformance Record should bind the following coordinates (reuse existing project IDs and receipts; do not require empty fields for unrelated routine work):
+
+```text
+SPEC_REVISION = <authority/spec revision>
+MODEL_REVISION = <exact model source revision>
+MODEL_CHECKER_AND_VERSION = <tool/version or NOT_APPLICABLE>
+MODEL_CHECK_SCOPE = <finite scope/bound/inductive claim>
+LEAN_TOOLCHAIN = <exact version or NOT_APPLICABLE>
+LEAN_AXIOM_AUDIT = <receipt/hash or NOT_APPLICABLE>
+IMPLEMENTATION_REVISION = <commit>
+MAPPING_REVISION = <adapter/map commit>
+PBT_FRAMEWORK_AND_VERSION = <tool/version or NOT_APPLICABLE>
+PBT_SEED_AND_REPLAY = <seed/path/corpus or NOT_APPLICABLE>
+TRACE_SCHEMA_REVISION = <schema revision>
+TRACE_VALIDATOR_REVISION = <verifier commit>
+TRACE_COMPLETENESS_RECEIPT = <close/watermark/sequence receipt>
+ASSUMPTION_PROBE_REVISION = <probe commit>
+ENVIRONMENT_SNAPSHOT_AND_TTL = <scope hash/time/expiry>
+VERIFIER_NEGATIVE_CONTROL_RECEIPT = <run/artifact>
+EVIDENCE_GRAPH_HASH = <generated graph hash or NOT_APPLICABLE>
+ORIGINAL_ACCEPTANCE_RECEIPT = <original ACC evidence>
+```
+
+A missing or inapplicable item must be stated explicitly. Do not fabricate a PASS for unavailable tools or unexecuted stages. The graph, manifest and receipts are derived evidence; the accepted Spec and project model remain their respective semantic authorities.
+
+For a detailed tool selection and adapter implementation reference, consumers may pin an exact revision of the shared [Model Engineering Toolchain guide](https://github.com/mayf3/primitives/blob/main/MODEL_ENGINEERING_TOOLCHAIN.md). The guide is supplemental engineering material, not Product Authority or a permission source.
