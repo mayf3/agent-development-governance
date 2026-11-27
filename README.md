@@ -16,7 +16,7 @@ It is not a central product authority. A consumer adopts an exact immutable sour
 ## Current status
 
 ```text
-DISTRIBUTION_VERSION = 2.0.0-rc.4
+DISTRIBUTION_VERSION = 2.0.0-rc.5
 GOVERNANCE_V1_SPEC_STATUS = accepted
 GOVERNANCE_V1_ACTIVE_ON_MAIN = yes
 MODEL_CONVERGENCE_SPEC_STATUS = accepted
@@ -31,7 +31,7 @@ SEMANTIC_SPEC_VERIFIER = not_implemented
 SPEC_TRANSITION_VALIDATOR = implemented
 ROUTE_CONSISTENCY_VALIDATOR = implemented
 STABLE_RELEASE = v1.1.0
-WORKING_CANDIDATE = 2.0.0-rc.4
+WORKING_CANDIDATE = 2.0.0-rc.5
 WORKING_CANDIDATE_STABLE_PUBLICATION = NO
 ```
 
@@ -116,7 +116,7 @@ The published stable release is `v1.1.0`. The working candidate is `2.0.0-rc.4`;
 ## Model-guided development
 
 Source authority was accepted in [PR #24](https://github.com/mayf3/agent-development-governance/pull/24).
-The current candidate makes the principle available in the ordinary Agent read
+The current candidate also makes requirement-to-model, model-to-Lean, and model-to-code traceability explicit in the Change Brief and ordinary Agent read
 path: assess each behavior change, reuse or repair a minimal model for critical
 mechanisms, actively strengthen stable valuable properties, and check the model,
 implementation mapping, and original outcome separately. Proof deferral keeps
