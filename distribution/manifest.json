@@ -6,8 +6,8 @@
   "files": [
     {
       "path": ".agents/README.md",
-      "sha256": "a9c2086ebc68e1cc7a0f4748d53c77a545afceb34d75cfe63829db5eb06a4350",
-      "size": 27852
+      "sha256": "a3ce588f67458c81046047e597d64e67e1374b50a61e9d67e1f40ed820b51908",
+      "size": 28482
     },
     {
       "path": ".agents/protocol/SPEC_GOVERNANCE_V0.md",
@@ -21,8 +21,8 @@
     },
     {
       "path": ".agents/protocol/MODEL_CODE_CONFORMANCE_V1.md",
-      "sha256": "60c525dd4744fd25a4e4543a6f58dc4b223cc5c7c416a6057544304cc89080f8",
-      "size": 9075
+      "sha256": "16c14ac193099a473dd153d49cd6afe200a069983993fbbc2fac3bcab003210c",
+      "size": 14912
     },
     {
       "path": ".agents/protocol/SPEC_FORMAT_V0.md",
@@ -126,8 +126,8 @@
     },
     {
       "path": ".agents/templates/CONFORMANCE_RECORD_TEMPLATE.md",
-      "sha256": "273e7b6e7f4981ffc49401c78d6e1200a01b23732d04abc52380f3831a554a3e",
-      "size": 4609
+      "sha256": "f282961a7c3192bebecdc26dd3d96e88b6dd63c1e6d2641764413729d1ed6e50",
+      "size": 6195
     },
     {
       "path": ".agents/templates/INVESTIGATION_RECORD_TEMPLATE.md",
