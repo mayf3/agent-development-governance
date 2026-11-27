@@ -16,7 +16,7 @@ It is not a central product authority. A consumer adopts an exact immutable sour
 ## Current status
 
 ```text
-DISTRIBUTION_VERSION = 2.0.0-rc.4
+DISTRIBUTION_VERSION = 2.0.0-rc.5
 GOVERNANCE_V1_SPEC_STATUS = accepted
 GOVERNANCE_V1_ACTIVE_ON_MAIN = yes
 MODEL_CONVERGENCE_SPEC_STATUS = accepted
@@ -31,7 +31,7 @@ SEMANTIC_SPEC_VERIFIER = not_implemented
 SPEC_TRANSITION_VALIDATOR = implemented
 ROUTE_CONSISTENCY_VALIDATOR = implemented
 STABLE_RELEASE = v1.1.0
-WORKING_CANDIDATE = 2.0.0-rc.4
+WORKING_CANDIDATE = 2.0.0-rc.5
 WORKING_CANDIDATE_STABLE_PUBLICATION = NO
 ```
 
@@ -111,12 +111,12 @@ Consumers vendor an exact source commit and record preparation separately from l
 
 The distribution identifier remains stable for compatibility; exact source commit and version carry revision identity.
 
-The published stable release is `v1.1.0`. The working candidate is `2.0.0-rc.4`; it is not a stable publication or consumer adoption. This candidate retains proportional review, concrete stopping-gap diagnosis, scoped blockers, and one current delivery record. It also distributes the accepted `AGENT_MODEL_GUIDED_DEVELOPMENT_V1` practice through the self-contained grammar and existing change/review/conformance records. The major prerelease communicates the existing tightened structured-route input contract, not a rewrite of accepted Product Authority; the model-guidance addition introduces no new route schema or validator. Unchanged legacy routes still work; movement records and load-bearing-gap records need the additional diagnosis fields when resumed with this version. Historical records are not migrated. Consumers still pin an exact reviewed commit and complete their own local acceptance. `v1.0.0`, `v1.0.1`, `v1.0.2`, and `v1.0.3` remain immutable. `v1.0.1` contains the transition-validator preparation-state fix, `v1.0.2` closed the v1.0.1 publication-record gap, `v1.0.3` extends the transition validator to raw multi-generation successor chains and legacy historical records, and `v1.1.0` distributes the accepted `AGENT_MODEL_CONVERGENCE_V1` development obligation into the vendored grammar. `AGENT_OPERATIONAL_LAYER_V1` remains accepted but is not implemented by this release.
+The published stable release is `v1.1.0`. The working candidate is `2.0.0-rc.5`; it is not a stable publication or consumer adoption. This candidate retains proportional review, concrete stopping-gap diagnosis, scoped blockers, and one current delivery record. It also distributes the accepted `AGENT_MODEL_GUIDED_DEVELOPMENT_V1` practice through the self-contained grammar and existing change/review/conformance records. The major prerelease communicates the existing tightened structured-route input contract, not a rewrite of accepted Product Authority; the model-guidance addition introduces no new route schema or validator. Unchanged legacy routes still work; movement records and load-bearing-gap records need the additional diagnosis fields when resumed with this version. Historical records are not migrated. Consumers still pin an exact reviewed commit and complete their own local acceptance. `v1.0.0`, `v1.0.1`, `v1.0.2`, and `v1.0.3` remain immutable. `v1.0.1` contains the transition-validator preparation-state fix, `v1.0.2` closed the v1.0.1 publication-record gap, `v1.0.3` extends the transition validator to raw multi-generation successor chains and legacy historical records, and `v1.1.0` distributes the accepted `AGENT_MODEL_CONVERGENCE_V1` development obligation into the vendored grammar. `AGENT_OPERATIONAL_LAYER_V1` remains accepted but is not implemented by this release.
 
 ## Model-guided development
 
 Source authority was accepted in [PR #24](https://github.com/mayf3/agent-development-governance/pull/24).
-The current candidate makes the principle available in the ordinary Agent read
+The current candidate also makes requirement-to-model, model-to-Lean, and model-to-code traceability explicit in the Change Brief and ordinary Agent read
 path: assess each behavior change, reuse or repair a minimal model for critical
 mechanisms, actively strengthen stable valuable properties, and check the model,
 implementation mapping, and original outcome separately. Proof deferral keeps

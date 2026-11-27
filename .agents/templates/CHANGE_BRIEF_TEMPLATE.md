@@ -66,9 +66,14 @@ cosmetic work skips this section rather than filling an empty form.
 AFFECTED_BEHAVIOR_AND_PROPERTY = <original outcome and properties at risk>
 MODEL_CHOICE = <exact existing model/property revision | minimum new/repaired model | no critical mechanism, with reason>
 MODEL_BOUNDARY = <entities/state/transitions/assumptions/reachable examples and counterexamples, or reference>
+REQUIREMENT_TO_MODEL = <key requirement/acceptance IDs -> model definitions, properties, or explicit empirical-only target>
+MODEL_TO_LEAN = <model property IDs -> theorem/proof revision, assumptions, toolchain and result; include unproved obligations>
+MODEL_TO_CODE = <model entities/states/transitions/observations -> implementation repository, commit, files/symbols and mapping>
+IMPLEMENTATION_REFINEMENT = <concrete-to-model relation and evidence: proof, contract tests, property tests, trace comparison, fault injection; state exact scope>
 VERIFICATION_CHOICE = <reuse proof | formalize now | defer with reason, gap, controls, owner and trigger | not applicable with reason>
 IMPLEMENTATION_MAPPING = <code/input revision, concrete-to-model mapping and supported premises>
-EVIDENCE_LAYERS = <model result / implementation evidence / original acceptance; retain unknown or unexecuted parts>
+EVIDENCE_LAYERS = <model result / implementation correspondence / original acceptance; retain unknown or unexecuted parts>
+TRACEABILITY_GAPS = <missing link, why non-blocking or blocker under existing Contracts, owner and closure trigger>
 SHARED_FOLLOW_UP = <reusable correction with owner and link, or NONE>
 ```
 

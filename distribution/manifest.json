@@ -2,11 +2,11 @@
   "$schema": "urn:mayf3:agent-development-governance:distribution-manifest:v0",
   "schema_version": 1,
   "distribution": "development-governance-v0",
-  "version": "2.0.0-rc.4",
+  "version": "2.0.0-rc.5",
   "files": [
     {
       "path": ".agents/README.md",
-      "sha256": "ad79c767a73d7260142d3dc3a2aee2440d7197c093b2cd7f121dcbf1ea726346",
+      "sha256": "00fc11bfcfa4b839009353a023e1c743a53a83e9a52ef4b8f5dbe3a4f218cd23",
       "size": 26382
     },
     {
@@ -96,8 +96,8 @@
     },
     {
       "path": ".agents/templates/CHANGE_BRIEF_TEMPLATE.md",
-      "sha256": "f5e2718c5a059aaaf3c7890f8e15a6f566c12e84f2e900f936c8480a51192572",
-      "size": 4746
+      "sha256": "b998572a59fdab0ff11536401367a31604854574e296c815b69fa41c31038e56",
+      "size": 5412
     },
     {
       "path": ".agents/templates/EXEC_PLAN_TEMPLATE.md",
