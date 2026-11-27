@@ -14,6 +14,7 @@ DISTRIBUTED_PATHS = (
     ".agents/README.md",
     ".agents/protocol/SPEC_GOVERNANCE_V0.md",
     ".agents/protocol/SPEC_GOVERNANCE_V1.md",
+    ".agents/protocol/MODEL_CODE_CONFORMANCE_V1.md",
     ".agents/protocol/SPEC_FORMAT_V0.md",
     ".agents/skills/spec-governance/SKILL.md",
     ".agents/skills/spec-governance/modes/PREFLIGHT.md",

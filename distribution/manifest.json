@@ -6,8 +6,8 @@
   "files": [
     {
       "path": ".agents/README.md",
-      "sha256": "00fc11bfcfa4b839009353a023e1c743a53a83e9a52ef4b8f5dbe3a4f218cd23",
-      "size": 26382
+      "sha256": "a9c2086ebc68e1cc7a0f4748d53c77a545afceb34d75cfe63829db5eb06a4350",
+      "size": 27852
     },
     {
       "path": ".agents/protocol/SPEC_GOVERNANCE_V0.md",
@@ -18,6 +18,11 @@
       "path": ".agents/protocol/SPEC_GOVERNANCE_V1.md",
       "sha256": "2955ad3a25eae4008cc12a607cd6f64f4c906ef8b0598ef3047e009bdc62921b",
       "size": 16477
+    },
+    {
+      "path": ".agents/protocol/MODEL_CODE_CONFORMANCE_V1.md",
+      "sha256": "60c525dd4744fd25a4e4543a6f58dc4b223cc5c7c416a6057544304cc89080f8",
+      "size": 9075
     },
     {
       "path": ".agents/protocol/SPEC_FORMAT_V0.md",
@@ -96,8 +101,8 @@
     },
     {
       "path": ".agents/templates/CHANGE_BRIEF_TEMPLATE.md",
-      "sha256": "b998572a59fdab0ff11536401367a31604854574e296c815b69fa41c31038e56",
-      "size": 5412
+      "sha256": "484067b456de50848e2bbd420777ec801c5aedab1b19d5867dce021fb0885e16",
+      "size": 6812
     },
     {
       "path": ".agents/templates/EXEC_PLAN_TEMPLATE.md",
@@ -116,13 +121,13 @@
     },
     {
       "path": ".agents/templates/REVIEW_RECORD_TEMPLATE.md",
-      "sha256": "7fbc2b1a6788bd671f924d250ec07adb7aac08a4e71b2a9629673b8c1330321b",
-      "size": 5162
+      "sha256": "319448e329501ab86f74a734d0c97c890d6f32d1f98967365dae63a5652c2b1a",
+      "size": 6320
     },
     {
       "path": ".agents/templates/CONFORMANCE_RECORD_TEMPLATE.md",
-      "sha256": "df8144bab872e614915c185c108a329823d60c45ade36130fa21ad5f1b833d87",
-      "size": 3305
+      "sha256": "273e7b6e7f4981ffc49401c78d6e1200a01b23732d04abc52380f3831a554a3e",
+      "size": 4609
     },
     {
       "path": ".agents/templates/INVESTIGATION_RECORD_TEMPLATE.md",

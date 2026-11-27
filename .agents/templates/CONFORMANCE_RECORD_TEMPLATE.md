@@ -74,3 +74,24 @@ Any drift produces aggregate `DRIFTED`; all applicable Contracts verified with s
 `VERIFIED` applies only to the exact authority/implementation/environment/time tuple. A changed coordinate does not inherit it.
 
 Each load-bearing result names `EVD-*` relations with source Observations, target Contract, relation, exact coordinates, sufficiency, limitations, and provenance.
+
+
+## Refinement and environment conformance (when applicable)
+
+| Item | Bound coordinate / evidence | Result and limitation |
+|---|---|---|
+| Concrete/abstract relation | model revision, relation ID, code mapping | |
+| Initial correspondence | concrete initial states and abstract initial states | |
+| Step simulation | proof or bounded test/trace method, exact scope | |
+| Observation mapping | event schema, projection and persisted observations | |
+| Trace validation | raw trace hash, schema, code/model revisions, validator revision | |
+| Model-based tests | oracle revision, seed, replay corpus, fault coverage | |
+| Runtime invariants | invariant IDs, enforcement behavior and observations | |
+| Assumption probes | ASM IDs, probe revision, environment snapshot, time/validity | |
+| Probe soundness | justification that positive result implies premise for that snapshot | |
+| Negative controls | illegal transition, incomplete/stale trace, UNKNOWN probe, forged coordinates | |
+| Evidence invalidation | changed coordinates, affected evidence and rerun/impact rationale | |
+
+A trace or finite property-test run is bounded evidence, not a complete
+refinement proof. A probe PASS is snapshot-scoped, not a future guarantee.
+Keep unexecuted, stale, partial, unavailable and UNKNOWN evidence visible.

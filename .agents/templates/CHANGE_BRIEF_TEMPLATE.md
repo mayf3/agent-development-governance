@@ -118,3 +118,27 @@ EXPANSION_TRIGGER = <condition | NOT_APPLICABLE>
 NEXT_REAL_ACTION = <product-facing action | NOT_APPLICABLE>
 NEXT_ACTION = CONTINUE | STOP | RE_PREFLIGHT | OWNER_DECISION
 ```
+
+
+## Refinement and environment evidence (conditional)
+
+For critical stateful behavior, use these fields when they materially help the
+change; otherwise reference an existing record or state why not applicable.
+
+```text
+CONCRETE_ABSTRACT_RELATION = <R(concrete, abstract) and state mapping>
+INITIAL_STATE_CORRESPONDENCE = <evidence or UNKNOWN>
+STEP_SIMULATION = <proof | trace/property tests with bounded scope | deferred with owner/trigger>
+OBSERVATION_MAPPING = <events/returns/persisted reads -> model observations>
+STRUCTURED_TRACE = <schema, trace IDs, code/model revisions, causal fields, or NOT_APPLICABLE>
+MODEL_ORACLE_AND_PBT = <oracle, seed/replay, fault classes and exact coverage, or NOT_APPLICABLE>
+RUNTIME_INVARIANTS = <invariants and failure behavior, or NOT_APPLICABLE>
+ENVIRONMENT_ASSUMPTIONS = <ASM IDs -> probes, timing, validity, failure behavior, blind spots>
+PROBE_EVIDENCE = <actual PASS/FAIL/UNKNOWN, environment snapshot, time and provenance>
+VERIFIER_NEGATIVE_CONTROLS = <invalid transition/stale or forged trace/UNKNOWN probe tests, or reason not applicable>
+EVIDENCE_INVALIDATION = <affected proof/test/probe evidence and recheck decision>
+```
+
+A trace/test result is bounded execution evidence, not a full refinement proof.
+A positive probe is snapshot-scoped and requires a soundness argument. Preserve
+UNKNOWN for unavailable, stale, incomplete or unexecuted evidence.
