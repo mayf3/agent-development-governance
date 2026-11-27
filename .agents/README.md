@@ -289,6 +289,9 @@ Register each load-bearing environmental assumption with its proposition, owner,
 
 Keep model proof, implementation conformance, environment evidence and original product acceptance independent. Changes to model, code, verifier, input schema or environment trigger an affected-scope evidence impact check. Validator/oracle changes require positive and negative controls. An Agent must not silently weaken both implementation and oracle to manufacture PASS. These practices are proportional and add no new approval stage or universal tool requirement.
 
+For practical tool selection and a first executable pilot, follow the supplemental [Model Engineering Toolchain reference](https://github.com/mayf3/primitives/blob/1f3d2d9a2a2fa90daf24bceca5b6ba6a4dadac86/MODEL_ENGINEERING_TOOLCHAIN.md). It compares Quint/TLA+/Alloy, TLC/Apalache, Lean, language-specific property-testing libraries, OpenTelemetry correlation and the small custom connectors still needed. It is a reference, not a mandate: consumers must pin the exact adopted source revision and record actual tool versions, commands, bounds and limitations. The consumer remains authoritative for its own Spec, business model, code and acceptance.
+
+
 ## Model convergence and retirement
 
 When the current task actually touches historical alternatives — historical IDs, duplicate models, old fields or configuration keys, old API/CLI entrypoints, legacy state stores, fallback paths, compatibility adapters, replacement dependencies, or old runtimes/recovery paths — inspect whether the same business responsibility is served by multiple independently maintained executable models. Different identifiers alone are not duplication: preserve genuinely distinct entities such as multi-credential, multi-tenant, per-service eligibility, and supported-protocol differences, and never merge on name similarity, prefixes, or unverified historical mapping.
