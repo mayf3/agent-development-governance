@@ -191,7 +191,7 @@ the authority for what is mandatory.
 
 This protocol defines assurance obligations, not a universal tool mandate. Select the smallest toolchain that can produce the required evidence for the affected behavior. Record the tool, exact version/container digest, command, configuration/bounds, input hashes, output receipt, and limitations in the existing Change Brief or Conformance Record.
 
-A practical reference profile is maintained in the shared primitives repository: [Model Engineering Toolchain](https://github.com/mayf3/primitives/blob/1f3d2d9a2a2fa90daf24bceca5b6ba6a4dadac86/MODEL_ENGINEERING_TOOLCHAIN.md). It is a reference architecture, not a live dependency or automatic consumer update. A consumer adopting it MUST pin an exact primitives source commit in its own adoption/source-lock record and MUST NOT rely on a moving main branch.
+A practical reference profile is maintained in the shared primitives repository: [Model Engineering Toolchain](https://github.com/mayf3/primitives/blob/1456f5b39fe6f39d106d90504a75adab5422b45e/MODEL_ENGINEERING_TOOLCHAIN.md). It is a reference architecture, not a live dependency or automatic consumer update. A consumer adopting it MUST pin an exact primitives source commit in its own adoption/source-lock record and MUST NOT rely on a moving main branch.
 
 ### Tool selection guide
 
