@@ -283,7 +283,7 @@ the rules above remain usable without opening it.
 
 ## Model-code conformance and assumption probes
 
-For critical stateful behavior, apply the supplemental [Model-Code Conformance V1](.agents/protocol/MODEL_CODE_CONFORMANCE_V1.md) guidance within existing authority and assurance rules. Establish a concrete-to-abstract relation, initial-state correspondence, step simulation and observation mapping; state I/O/runtime boundaries. For async/concurrent systems, use structured traces with exact model/code revisions and causal IDs. Combine trace replay with reproducible stateful property tests and runtime invariants when risk warrants it; finite traces/tests are not full refinement proofs.
+For critical stateful behavior, apply the supplemental [Model-Code Conformance V1](protocol/MODEL_CODE_CONFORMANCE_V1.md) guidance within existing authority and assurance rules. Establish a concrete-to-abstract relation, initial-state correspondence, step simulation and observation mapping; state I/O/runtime boundaries. For async/concurrent systems, use structured traces with exact model/code revisions and causal IDs. Combine trace replay with reproducible stateful property tests and runtime invariants when risk warrants it; finite traces/tests are not full refinement proofs.
 
 Register each load-bearing environmental assumption with its proposition, owner, probe, timing, validity, failure behavior, evidence and blind spots. A positive probe supports only its observed environment snapshot when probe soundness is justified; stale, unavailable, timed-out or unknown results are not PASS. Recheck mutable premises at use/recovery boundaries.
 
