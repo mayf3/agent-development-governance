@@ -269,4 +269,4 @@ ORIGINAL_ACCEPTANCE_RECEIPT = <original ACC evidence>
 
 A missing or inapplicable item must be stated explicitly. Do not fabricate a PASS for unavailable tools or unexecuted stages. The graph, manifest and receipts are derived evidence; the accepted Spec and project model remain their respective semantic authorities.
 
-For a detailed tool selection and adapter implementation reference, consumers may pin an exact revision of the shared [Model Engineering Toolchain guide](https://github.com/mayf3/primitives/blob/main/MODEL_ENGINEERING_TOOLCHAIN.md). The guide is supplemental engineering material, not Product Authority or a permission source.
+For a detailed tool selection and adapter implementation reference, consumers may pin an exact revision of the shared [Model Engineering Toolchain guide](https://github.com/mayf3/primitives/blob/63d9854bf35aa14522461f1725cdc357973d73a5/MODEL_ENGINEERING_TOOLCHAIN.md). The guide is supplemental engineering material, not Product Authority or a permission source.
