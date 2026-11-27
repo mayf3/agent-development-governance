@@ -6,7 +6,7 @@
   "files": [
     {
       "path": ".agents/README.md",
-      "sha256": "007be42163db07f7e2a96139adad892fadc364bb0a165edb63289d4bb90e90cd",
+      "sha256": "a1f4ea93f6210bbb27594a5cfe158f2869bf01f48d706396542c3bf314dc633a",
       "size": 28504
     },
     {
@@ -21,7 +21,7 @@
     },
     {
       "path": ".agents/protocol/MODEL_CODE_CONFORMANCE_V1.md",
-      "sha256": "afc445d686e2b8cf428c1a7160ffeb4592009e42581b567171f442fa8955df86",
+      "sha256": "4dab74e6d46b92be481fd0e21df879b1b8012e7929d0886e473df261406a3ede",
       "size": 14050
     },
     {
@@ -101,7 +101,7 @@
     },
     {
       "path": ".agents/templates/CHANGE_BRIEF_TEMPLATE.md",
-      "sha256": "7b9737c88a4d9079093b1908bcfbc9c986928d1728d50f2e96826e9231f412ed",
+      "sha256": "20f7186855536fe728c1df4a935b29e85729a84a90f678da37b28b86a2eacbd1",
       "size": 7991
     },
     {
