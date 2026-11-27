@@ -126,3 +126,25 @@ ACCEPTED_AT =
 SEMANTIC_DELTA_AFTER_REVIEW = NONE | DETECTED
 FINAL_HEAD_RECHECK = PASS | FAIL
 ```
+
+
+## Refinement and assumption-probe review (conditional)
+
+For affected critical stateful behavior, check:
+
+- concrete/abstract relation, initial correspondence, step simulation and
+  observation mapping; verify the claim does not exceed its proof/test scope;
+- structured traces bind exact code/model revisions, transition IDs and causal
+  relations; incomplete collection cannot produce PASS;
+- model-driven tests retain seeds and replayable counterexamples; runtime
+  invariant failures have explicit product behavior;
+- every load-bearing environment assumption has a named owner, proposition,
+  probe, timing, validity, failure behavior, evidence and blind spots;
+- positive probe results are snapshot-scoped; stale, unavailable and UNKNOWN
+  results do not satisfy a premise;
+- verifier/oracle/probe changes include positive and negative controls;
+- changed model/code/verifier/environment coordinates invalidate affected
+  evidence, while reused evidence has an explicit bounded impact rationale.
+
+Do not require a full refinement proof where a bounded test is the declared
+assurance method. Do not call a bounded trace/property test a general proof.
