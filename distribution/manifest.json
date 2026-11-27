@@ -6,8 +6,8 @@
   "files": [
     {
       "path": ".agents/README.md",
-      "sha256": "a9c2086ebc68e1cc7a0f4748d53c77a545afceb34d75cfe63829db5eb06a4350",
-      "size": 27852
+      "sha256": "89ddb325f650c4ab86da9e44a1908951a15e715922870dad4d1b5b16e7f00286",
+      "size": 28504
     },
     {
       "path": ".agents/protocol/SPEC_GOVERNANCE_V0.md",
@@ -21,8 +21,8 @@
     },
     {
       "path": ".agents/protocol/MODEL_CODE_CONFORMANCE_V1.md",
-      "sha256": "60c525dd4744fd25a4e4543a6f58dc4b223cc5c7c416a6057544304cc89080f8",
-      "size": 9075
+      "sha256": "699e1eebf4983051127666549881d7c0bc0e130643df1234648b343fcf928c6c",
+      "size": 14050
     },
     {
       "path": ".agents/protocol/SPEC_FORMAT_V0.md",
@@ -101,8 +101,8 @@
     },
     {
       "path": ".agents/templates/CHANGE_BRIEF_TEMPLATE.md",
-      "sha256": "484067b456de50848e2bbd420777ec801c5aedab1b19d5867dce021fb0885e16",
-      "size": 6812
+      "sha256": "20f7186855536fe728c1df4a935b29e85729a84a90f678da37b28b86a2eacbd1",
+      "size": 7991
     },
     {
       "path": ".agents/templates/EXEC_PLAN_TEMPLATE.md",
