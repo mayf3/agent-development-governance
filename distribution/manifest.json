@@ -6,8 +6,8 @@
   "files": [
     {
       "path": ".agents/README.md",
-      "sha256": "4f8a0030e0fa5cfaaa9e551eb3e237585f4d0362eb8f41ea35d30ff98111f259",
-      "size": 27860
+      "sha256": "a9c2086ebc68e1cc7a0f4748d53c77a545afceb34d75cfe63829db5eb06a4350",
+      "size": 27852
     },
     {
       "path": ".agents/protocol/SPEC_GOVERNANCE_V0.md",
