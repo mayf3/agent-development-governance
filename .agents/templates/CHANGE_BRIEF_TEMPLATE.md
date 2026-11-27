@@ -142,3 +142,24 @@ EVIDENCE_INVALIDATION = <affected proof/test/probe evidence and recheck decision
 A trace/test result is bounded execution evidence, not a full refinement proof.
 A positive probe is snapshot-scoped and requires a soundness argument. Preserve
 UNKNOWN for unavailable, stale, incomplete or unexecuted evidence.
+
+
+## Toolchain selection (conditional)
+
+For non-trivial model-based assurance, record the actual tools used and their exact versions/configuration. Do not list tools that were not executed.
+
+```text
+TOOLCHAIN_PROFILE = <profile ID/revision | NOT_APPLICABLE>
+MODEL_LANGUAGE_AND_VERSION = <tool/version | NOT_APPLICABLE>
+MODEL_CHECKER_AND_SCOPE = <tool/version/bound/config | NOT_APPLICABLE>
+PROOF_TOOLCHAIN = <tool/version/axiom audit | NOT_APPLICABLE>
+PROPERTY_TESTER = <tool/version/seed/replay policy | NOT_APPLICABLE>
+IMPLEMENTATION_ADAPTER = <path/symbol/revision | NOT_APPLICABLE>
+TRACE_SCHEMA_AND_VALIDATOR = <schema/verifier revision | NOT_APPLICABLE>
+ASSUMPTION_PROBE_RUNNER = <tool/revision/TTL | NOT_APPLICABLE>
+CI_IDENTITY_AND_REQUIRED_CHECK = <independent check identity | NOT_APPLICABLE>
+TOOLCHAIN_LOCK = <lockfile/container digest/receipt | NOT_APPLICABLE>
+LIMITATIONS = <bounds, excluded paths, unexecuted checks, unknowns>
+```
+
+A tool appearing in the reference guide is not evidence that the consumer adopted or ran it. Bounded model checks, finite PBT and observed traces must retain their own evidence type; they cannot be promoted to a general program proof.
