@@ -95,3 +95,37 @@ Each load-bearing result names `EVD-*` relations with source Observations, targe
 A trace or finite property-test run is bounded evidence, not a complete
 refinement proof. A probe PASS is snapshot-scoped, not a future guarantee.
 Keep unexecuted, stale, partial, unavailable and UNKNOWN evidence visible.
+
+
+## Toolchain and machine evidence coordinates (when applicable)
+
+Use this section only when the assurance claim depends on these mechanisms. Reuse
+existing receipts and project identifiers; do not fill an empty matrix for
+routine/editorial work.
+
+```text
+SPEC_REVISION =
+MODEL_REVISION =
+MODEL_CHECKER_AND_VERSION = <tool/version | NOT_APPLICABLE>
+MODEL_CHECK_SCOPE = <finite scope/bound/inductive claim | NOT_APPLICABLE>
+LEAN_TOOLCHAIN = <exact version | NOT_APPLICABLE>
+LEAN_AXIOM_AUDIT = <receipt/hash | NOT_APPLICABLE>
+IMPLEMENTATION_REVISION =
+MAPPING_REVISION = <adapter/map commit | NOT_APPLICABLE>
+PBT_FRAMEWORK_AND_VERSION = <tool/version | NOT_APPLICABLE>
+PBT_SEED_AND_REPLAY = <seed/path/corpus | NOT_APPLICABLE>
+TRACE_SCHEMA_REVISION = <schema | NOT_APPLICABLE>
+TRACE_VALIDATOR_REVISION = <verifier commit | NOT_APPLICABLE>
+TRACE_COMPLETENESS_RECEIPT = <watermark/sequence/segment-close | NOT_APPLICABLE>
+ASSUMPTION_PROBE_REVISION = <probe commit | NOT_APPLICABLE>
+ENVIRONMENT_SNAPSHOT_AND_TTL = <scope hash/time/expiry | NOT_APPLICABLE>
+VERIFIER_NEGATIVE_CONTROL_RECEIPT = <run/artifact | NOT_APPLICABLE>
+EVIDENCE_GRAPH_HASH = <generated graph hash | NOT_APPLICABLE>
+ORIGINAL_ACCEPTANCE_RECEIPT =
+```
+
+Model checking, bounded testing, Trace Validation, theorem proof and original
+acceptance remain distinct claim types. A trace without completeness evidence
+cannot be recorded as complete conformance. A probe PASS applies only to its
+observed scope and validity period. Generated Evidence Graphs are indexes, not
+authoritative Specs or manually maintained source files.
