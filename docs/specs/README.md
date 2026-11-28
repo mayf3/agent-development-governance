@@ -20,6 +20,7 @@ Implementation progress, verification coverage, runtime state, and conformance a
 | `AGENT_OPERATIONAL_LAYER_V1` | accepted | implementation | contracts | Define bounded task Skills and a typed, non-normative repository-local Record corpus |
 | `AGENT_DEVELOPMENT_GOVERNANCE_V1` | accepted | implementation | contracts | Replace the single heavy non-mechanical route with independent Authority, Plan, and Assurance decisions while preserving V0 protections |
 | `AGENT_SIX_PACK_DELIVERY_PROFILE_V1` | accepted | implementation | contracts | Define a faithful six-role software-delivery profile with exact-commit handoffs, mutation hardening, and independent final QA |
+| [`AGENT_MULTI_REPO_SIX_PACK_HOST_V1`](AGENT_MULTI_REPO_SIX_PACK_HOST_V1.md) | accepted | implementation | contracts | Define shared worker pool hosting across repositories, bounded writes, lease recovery, and controller authority limits |
 | `AGENT_MODEL_CONVERGENCE_V1` | accepted | implementation | contracts | Define historical-model convergence and subtraction-first refactoring; distributed since v1.1.0, with consumer-local adoption still required |
 
 `AGENT_MODEL_CONVERGENCE_V1` is accepted source-repository authority on `main`; its distributed implementation shipped in v1.1.0. The [author scenario probes](../rationale/model-convergence/SCENARIO_REVIEW.md) and PR #16 acceptance discussion are historical provenance, not pending activation steps. Source acceptance, distribution publication, consumer adoption, and actual cleanup remain distinct.
