@@ -6,7 +6,7 @@
   "files": [
     {
       "path": ".agents/README.md",
-      "sha256": "acd009b17fe6ae582c0f2a1d640345d8da5e3bc56bc617e5225fced2770f4400",
+      "sha256": "94fcc820e2f7309b034499a03fd44585bf34b0af6817f3801d74d3ee179ae0b1",
       "size": 29462
     },
     {
@@ -16,7 +16,7 @@
     },
     {
       "path": ".agents/protocol/SPEC_GOVERNANCE_V1.md",
-      "sha256": "1e908cd2d1b134b95cdaa390bc631c256843f771bd4214f6d2baba8a5c2a4719",
+      "sha256": "28c2053118669468253e2b88a8de9bddf68caf2fca34e9b261e6c0b9f5110414",
       "size": 15943
     },
     {
