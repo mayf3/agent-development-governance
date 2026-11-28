@@ -55,6 +55,25 @@ class DistributionToolsTest(unittest.TestCase):
         )
         self.assertEqual(expected, actual)
 
+    def test_spec_index_matches_local_spec_frontmatter(self) -> None:
+        specs = ROOT / "docs/specs"
+        fields = ("spec_id", "status", "spec_kind", "implementation_authority")
+        expected = []
+        for source in sorted(specs.glob("*.md")):
+            if source.name == "README.md":
+                continue
+            frontmatter = re.match(r"\A---\n(.*?)\n---\n", source.read_text(encoding="utf-8"), re.S)
+            self.assertIsNotNone(frontmatter, source.name)
+            metadata = dict(re.findall(r"^(\w+): (.+)$", frontmatter[1], re.M))
+            expected.append(tuple(metadata[field] for field in fields))
+
+        rows = re.findall(
+            r"^\|\s*(?:\[)?`([^`]+)`(?:\]\([^)]+\))?\s*\|\s*(\w+)\s*\|\s*(\w+)\s*\|\s*(\w+)\s*\|",
+            (specs / "README.md").read_text(encoding="utf-8"),
+            re.M,
+        )
+        self.assertCountEqual(rows, expected)
+
     def test_manifest_includes_mode_router_and_local_verifier(self) -> None:
         manifest = build_manifest.build_manifest(ROOT)
         paths = {entry["path"] for entry in manifest["files"]}
