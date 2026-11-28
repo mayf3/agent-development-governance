@@ -24,19 +24,24 @@ Do not preload every protocol, template, rationale, prior review, or example. Re
 
 ## Minimum loop
 
+Keep these eight fields in the current delivery record or its daily view.
+
 ```text
-1. Fix target repository, candidate Head, and integration Base.
-2. State GOAL/TARGET and CURRENT_GAP.
-3. Locate Product Authority in precedence order.
-4. Separate OBSERVATION from WORKING_GUESS when interpretation affects routing.
-5. Classify independently: AUTHORITY_ACTION, PLAN_LEVEL, ASSURANCE_LEVEL.
-6. Check Execution Mandate, load-bearing SPEC_GAP, Evidence reviewability,
-   live authority gap, and candidate/Base movement.
-7. Select the shortest authorized route and artifact set; assess affected models for behavior changes.
-8. Execute only within accepted Contracts and the mandate.
-9. Review the affected surface with executed Evidence.
-10. DONE_WHEN met without EXPANSION_TRIGGER -> STOP.
+GOAL = desired result
+CURRENT_GAP = verified gap and any routing-relevant working guess
+AUTHORITY = applicable accepted authority and actual task authorization
+SCOPE = target repository, exact Head and Base, allowed and forbidden effects
+RISK = failure consequences and applicable blockers or gates
+REQUIRED_EVIDENCE = observations needed to execute and verify the result
+DONE_WHEN = observable hand-off or completion condition
+NEXT_ACTION = next authorized action, failed prerequisite, or STOP
 ```
+
+For a non-trivial route, keep the existing PREFLIGHT fields and independent
+Authority, Plan, and Assurance decisions under [Goal and stop controls](#goal-and-stop-controls).
+Complex tasks reference their existing plan, gates, and accepted Contracts from
+this view. Assess affected models for behavior changes and review the affected
+surface with executed Evidence.
 
 ## Semantic primitives
 
@@ -369,13 +374,18 @@ EVIDENCE_NEEDED
 DONE_WHEN
 ```
 
-Durable, controlled, or expansion-prone work also records `EXPANSION_TRIGGER`. Use `NEXT_REAL_ACTION` when governance/infrastructure drift is plausible.
+`DONE_WHEN` states the observable outcome and the evidence needed to close this
+delivery. Durable, controlled, or expansion-prone work also records a concrete
+`EXPANSION_TRIGGER`. Record `NEXT_REAL_ACTION` when governance or infrastructure
+drift is plausible.
 
 ```text
 DONE_WHEN met + EXPANSION_TRIGGER not fired -> STOP
 ```
 
 Optional platform work, extra fault research, Agent availability, sunk effort, and non-load-bearing harness imperfection are not expansion triggers.
+When a trigger fires, reassess the affected scope and authority before expanding
+the work. The existing acceptance and readiness gates still apply.
 
 ## Proportional conformance
 
@@ -391,7 +401,13 @@ Use one current Brief, task, PR, or release record, not a new control-plane docu
 
 Freeze the acceptance scope and applicable gates for that delivery. Reviewers may expose violations and genuinely missing dependencies, not silently add product requirements. Newly discovered concrete security/data-loss risks, missing authority, false Evidence, required-gate failures, and business/runtime canary failures still stop affected work. Optional hardening remains follow-up debt. Changing the accepted scope or gates needs the owning authority's explicit disposition, not a review preference.
 
-Retain review/repair history against the original business outcome, not proposal filenames or candidate names. Suggested working pattern: one initial review, a consolidated repair pass, then affected delta review. Repeated work without new evidence is a reason to reassess scope, split optional work, or try a simpler authorized path. This is diagnostic guidance, not a numeric cutoff, new acceptance gate, or reason to forbid an otherwise authorized repair. Any task-specific budget comes from its applicable authorization; existing Blockers, Done When, and Expansion Trigger remain controlling.
+Retain review and repair history against the original delivery goal across
+candidate renames. A usual pattern is one review, a consolidated repair pass,
+and a review of the affected delta. When repeated work produces no new evidence, return
+to the current record and identify the unresolved prerequisite and its owner.
+Use a simpler authorized path or split optional work when that advances the
+goal. Any task-specific budget comes from its applicable authorization. The
+recorded blockers, `DONE_WHEN`, and `EXPANSION_TRIGGER` govern continuation.
 
 When the next action is within current authorization and its required gates pass, perform it rather than producing another unchanged ready packet. If it is blocked, report that action, the failed prerequisite, its owner, and the minimum fix. Do not try a known unsafe or unauthorized action merely to obtain an error. No new observation means no new recursive review or authority-reconciliation cycle. Report real waiting states as waiting; a child review task's completion is not delivery of the business outcome.
 
