@@ -187,57 +187,86 @@ optional formalization. The project's accepted Contracts and proof gates remain
 the authority for what is mandatory.
 
 
-## 9. Toolchain selection and consumer adoption
+## 9. Reference toolchain (select by assurance need)
 
-This protocol defines assurance obligations, not a universal tool mandate. Select the smallest toolchain that can produce the required evidence for the affected behavior. Record the tool, exact version/container digest, command, configuration/bounds, input hashes, output receipt, and limitations in the existing Change Brief or Conformance Record.
+This protocol defines evidence obligations, not a universal mandated toolchain.
+The owning repository selects tools proportional to the behavior and risk.
+Pin exact tool versions, configuration, adapter revision and CI environment.
 
-A practical reference profile is maintained in the shared primitives repository: [Model Engineering Toolchain](https://github.com/mayf3/primitives/blob/1456f5b39fe6f39d106d90504a75adab5422b45e/MODEL_ENGINEERING_TOOLCHAIN.md). It is a reference architecture, not a live dependency or automatic consumer update. A consumer adopting it MUST pin an exact primitives source commit in its own adoption/source-lock record and MUST NOT rely on a moving main branch.
-
-### Tool selection guide
-
-| Need | Candidate | Evidence boundary |
+| Need | Practical reference | Scope and limitation |
 |---|---|---|
-| State-machine specification | Quint; existing TLA+ projects may retain TLA+ | Model source and assumptions; not production-code proof |
-| Finite state exploration | TLC | Exhaustive only within the declared finite state/configuration scope |
-| Symbolic/bounded exploration | Apalache | Record bound, finite parameters, solver and version; bounded results are not unbounded proof |
-| Relational satisfiability / structural counterexamples | Alloy 6 | Record scope; not arbitrary unbounded behavior |
-| Key mathematical properties | Lean 4 | Bind theorem, model revision, toolchain and axiom audit |
-| Rust model-to-code MBT | Quint Connect; proptest for general PBT | Quint Connect's published integration is Rust-focused; other languages need their own adapters |
-| TypeScript command/state testing | fast-check | Use command model runner; scheduled runner can explore async interleavings, within generated tests |
-| Python stateful testing | Hypothesis RuleBasedStateMachine | Generated finite sequences and shrunk counterexamples |
-| Kotlin property testing | Kotest | Add explicit scheduler/fault harness for concurrency claims |
-| Dart/Flutter | package:test baseline; evaluate kiri_check or property_testing | Treat third-party stateful libraries as candidates until tested against the consumer's actual reducer and replay needs |
-| Cross-process correlation | OpenTelemetry Trace/Span/Links | Correlation only; correctness completeness requires a separate ledger/protocol |
+| State-machine specification and simulation | Quint; existing TLA+ models may remain TLA+ | Explicit states, actions, invariants and scenarios; model quality still needs requirement review |
+| Finite state exploration | TLC | Exhaustive only within the declared finite model/parameter scope |
+| Symbolic/bounded exploration | Apalache | Record bound, parameters and solver; bounded results are not unbounded proofs |
+| Structural satisfiability/counterexamples | Alloy 6 | Record finite scope; does not establish production code conformance |
+| Mathematical theorem proof | Lean 4 | Bind theorem to exact model/property and audit transitive axioms/toolchain |
+| Model-to-code replay | Quint Connect for Rust; project-owned adapters for other languages | Do not claim official Dart/Kotlin support unless an adapter is actually maintained and tested |
+| Stateful property testing | Hypothesis (Python), Kotest (Kotlin), proptest (Rust), fast-check (TypeScript); Dart package:test plus a project harness, with third-party stateful libraries evaluated before adoption | Record seed, replayable command sequence and shrink result; finite testing is not a general proof |
+| Runtime causal correlation | OpenTelemetry TraceId/SpanId/parent/links plus a correctness-event schema | OpenTelemetry correlates spans but sampling, drops and export gaps mean it does not prove trace completeness |
+| Evidence graph | Generated JSON/JSON Schema and deterministic checker | Derived index only; never a manually maintained second source of truth |
 
-Do not require all tools in one project. Do not select a tool because it appears in a template. Tool maturity, platform compatibility, license, maintenance, determinism, shrinking/replay, and adapter trust must be evaluated for the actual project and pinned version.
+A tool reference is not a required dependency. A project may use another tool when it supplies equivalent, reviewable evidence. In particular, Quint Connect's documented integration is Rust-oriented; other language support is a consumer-owned adapter obligation.
 
-### Minimum adoption record
+## 10. Recommended CI sequence and typed outcomes
 
-For any non-trivial model-based verification route, record:
+For a critical stateful slice, a practical pipeline is:
+
+1. **Freeze coordinates** — exact Spec, model, theorem, implementation, mapping, verifier, toolchain and environment revisions.
+2. **Check traceability** — duplicate IDs, dangling links, required REQ→MODEL/ACC coverage and MODEL/PROP→THM/MAP coverage.
+3. **Check model sanity** — non-empty initial state, satisfiable constraints, required success-path witnesses, required positive and negative scenarios.
+4. **Explore the model** — TLC exhaustive finite scope or Apalache bounded/inductiveness checks; preserve bounds and counterexamples.
+5. **Check Lean proofs** — clean build, theorem/property binding, toolchain pin, transitive axiom audit and approved trust base.
+6. **Run implementation adapters** — model-generated commands/traces against the real state core; record PBT seeds and minimized counterexamples.
+7. **Validate runtime traces** — transition legality, exact revisions, causal constraints and explicit completeness/watermark status.
+8. **Check environment assumptions** — probe freshness, scope hash, failure behavior and UNKNOWN handling.
+9. **Run independent negative controls** — illegal transition must be rejected; missing event must be INCOMPLETE/UNKNOWN; stale coordinates must be STALE; expired assumption must withdraw the dependent guarantee.
+10. **Run original acceptance** — execute the original Spec/Contract acceptance in its target environment.
+
+Use typed results such as:
 
 ```text
-TOOLCHAIN_PROFILE = <profile ID/revision>
-MODEL_LANGUAGE = <tool/version | NOT_APPLICABLE>
-MODEL_CHECKER = <tool/version/config/bound | NOT_APPLICABLE>
-PROOF_TOOLCHAIN = <Lean/Dafny/Verus/etc exact version | NOT_APPLICABLE>
-PROPERTY_TESTER = <tool/version/seed policy | NOT_APPLICABLE>
-IMPLEMENTATION_ADAPTER = <path/symbol/revision | NOT_APPLICABLE>
-TRACE_SCHEMA_AND_VALIDATOR = <schema/verifier revision | NOT_APPLICABLE>
-ASSUMPTION_PROBE_RUNNER = <tool/revision | NOT_APPLICABLE>
-CI_IDENTITY_AND_REQUIRED_CHECK = <independent workflow/check identity>
-TOOLCHAIN_LOCK = <lockfile/container digest/receipt>
-LIMITATIONS = <scope, bounds, excluded paths, unavailable guarantees>
+MODEL_PROVEN
+MODEL_CHECKED_EXHAUSTIVE_WITHIN_SCOPE
+MODEL_CHECKED_BOUNDED
+PROGRAM_VERIFIED
+TRACE_CONFORMANT
+TRACE_INCOMPLETE
+TRACE_DRIFTED
+TESTED
+SIMULATED
+ASSUMPTIONS_VALID
+UNKNOWN
+STALE
+ACCEPTED
 ```
 
-### P0 execution gates
+These are claim types, not an automatic promotion ladder. For example, `TRACE_CONFORMANT` cannot be promoted to `PROGRAM_VERIFIED`, and neither implies `ACCEPTED`.
 
-A first pilot should be one critical state machine, not a cross-project platform. It must freeze the original Spec, failure evidence and exact code coordinates; establish model non-emptiness and a required success witness; check required negative scenarios; prove selected properties or clearly label bounded model checks; drive the real SUT through an adapter; validate trace completeness; check assumption freshness; run positive and negative controls; and finally execute the original Acceptance.
+## 11. Machine-readable evidence coordinates
 
-At minimum, negative controls must show:
-- illegal transition → FAIL / TRACE_DRIFTED;
-- missing event or unclosed trace segment → UNKNOWN / TRACE_INCOMPLETE, never PASS;
-- expired or scope-mismatched assumption evidence → STALE/UNKNOWN and the dependent guarantee is withdrawn.
+Where the assurance claim warrants it, the Conformance Record should bind the following coordinates (reuse existing project IDs and receipts; do not require empty fields for unrelated routine work):
 
-A positive control must also pass, so an always-failing validator cannot satisfy the gate. The coding Agent may generate adapters and tests, but a protected/independent CI identity must execute the final checks. Changes to the verifier, normalizer, trace schema or negative-control corpus are verification-mechanism changes and must rerun the verifier's own conformance suite.
+```text
+SPEC_REVISION = <authority/spec revision>
+MODEL_REVISION = <exact model source revision>
+MODEL_CHECKER_AND_VERSION = <tool/version or NOT_APPLICABLE>
+MODEL_CHECK_SCOPE = <finite scope/bound/inductive claim>
+LEAN_TOOLCHAIN = <exact version or NOT_APPLICABLE>
+LEAN_AXIOM_AUDIT = <receipt/hash or NOT_APPLICABLE>
+IMPLEMENTATION_REVISION = <commit>
+MAPPING_REVISION = <adapter/map commit>
+PBT_FRAMEWORK_AND_VERSION = <tool/version or NOT_APPLICABLE>
+PBT_SEED_AND_REPLAY = <seed/path/corpus or NOT_APPLICABLE>
+TRACE_SCHEMA_REVISION = <schema revision>
+TRACE_VALIDATOR_REVISION = <verifier commit>
+TRACE_COMPLETENESS_RECEIPT = <close/watermark/sequence receipt>
+ASSUMPTION_PROBE_REVISION = <probe commit>
+ENVIRONMENT_SNAPSHOT_AND_TTL = <scope hash/time/expiry>
+VERIFIER_NEGATIVE_CONTROL_RECEIPT = <run/artifact>
+EVIDENCE_GRAPH_HASH = <generated graph hash or NOT_APPLICABLE>
+ORIGINAL_ACCEPTANCE_RECEIPT = <original ACC evidence>
+```
 
-The consumer owns business semantics, adapters, runtime evidence and Acceptance. The shared primitives repository owns reusable mathematical/tooling interfaces. Governance owns authority, change separation, evidence review and merge/acceptance gates. No business FSM is moved into the shared primitives repository.
+A missing or inapplicable item must be stated explicitly. Do not fabricate a PASS for unavailable tools or unexecuted stages. The graph, manifest and receipts are derived evidence; the accepted Spec and project model remain their respective semantic authorities.
+
+For a detailed tool selection and adapter implementation reference, consumers may pin an exact revision of the shared [Model Engineering Toolchain guide](https://github.com/mayf3/primitives/blob/63d9854bf35aa14522461f1725cdc357973d73a5/MODEL_ENGINEERING_TOOLCHAIN.md). The guide is supplemental engineering material, not Product Authority or a permission source.
