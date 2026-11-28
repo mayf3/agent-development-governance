@@ -295,13 +295,10 @@ Changed coordinates do not inherit old `VERIFIED`.
 
 ## Stop and adoption
 
-```text
-DONE_WHEN met + EXPANSION_TRIGGER not fired = STOP
-```
-
-Optional platform work, extra fault research, Agent availability, sunk cost, and unrequested cleanup are not progress.
-
-Resume from one current delivery record as described in the grammar's Bounded delivery loop. Freeze its accepted scope and applicable gates; new real risks still stop dependent work, while reviewer preferences do not add gates. Keep all valid blockers visible even when prioritizing one. Count unsuccessful repair/review rounds against the original delivery goal across candidate renames; at three rounds make a scope/split/authority/abandon decision, not another unbounded expansion. Continue the next authorized gated action; do not substitute another unchanged report for execution. Recovery using existing accepted mechanisms and valid controlled authorization need not wait for optional redesign.
+Use the grammar's [Goal and stop controls](../README.md#goal-and-stop-controls)
+for `DONE_WHEN` and `EXPANSION_TRIGGER`. Its [Bounded delivery loop](../README.md#bounded-delivery-loop)
+applies to repeated repair and review. Resume from the current delivery record,
+preserve its valid blockers and applicable gates, and take the next authorized action.
 
 These cross-turn controls are Agent policy, not an implemented scheduler or persistent delivery ledger. The route validator checks the supplied record; it does not prove history, authorization, or that a real operation occurred.
 
